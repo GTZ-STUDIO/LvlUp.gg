@@ -4,7 +4,7 @@ Welcome to Levelup.gg, your ultimate online destination for game guides and comm
 
 What Sets Us Apart:
 
-Comprehensive Game Guides: Delve into a treasure trove of game guides that cater to a wide spectrum of titles. Our contributors, seasoned players with a wealth of experience, share valuable insights, strategies, and tips to help you navigate the challenges within your favorite games.
+Comprehensive Game Guides: Delve into game guides that cater to a wide spectrum of titles. Our contributors, seasoned players with hundreds maybe thousands of hours, share valuable insights, strategies, and tips to help you navigate the challenges within your favorite games.
 
 Engaging Blogs: Immerse yourself in the vibrant gaming culture through our diverse blog section. From personal gaming experiences to industry trends and everything in between, our community of writers brings you captivating content that goes beyond the conventional.
 
