@@ -1,6 +1,6 @@
 # COMP-4350
-#Levelup.gg - Your Gaming Hub for Guides and Community Insights
-Welcome to Levelup.gg, your ultimate online destination for a rich blend of game guides and community-driven content. Whether you're a seasoned gamer or just embarking on your gaming adventures, Levelup.gg is your go-to platform for insightful articles and in-depth guides.
+# Levelup.gg - Your Gaming Hub for Guides and Community Insights
+Welcome to Levelup.gg, your ultimate online destination for game guides and community-driven content. Whether you're a seasoned gamer or a nub, Levelup.gg is your go-to platform for insightful articles and in-depth guides.
 
 What Sets Us Apart:
 
