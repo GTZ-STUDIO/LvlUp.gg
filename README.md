@@ -1,5 +1,21 @@
 # COMP-4350
-# Levelup.gg - Your Gaming Hub for Guides and Community Insights
+
+## The Team
+
+- Gabriel Zacci, Coloma (Verzaccii)
+- Nicolas, Brandt-Ganding (NicBG)
+- Thamira, Randeniya (Thamira2001)
+- Xin Nie (xinnie-ca)
+- Zen, Kristalovich (ZenonKristalovich)
+
+## Languages/Technologies
+
+- **FrontEnd** React.js
+- **BackEnd** Django Framework
+- **Database** PostgreSQL
+
+## Levelup.gg - Your Gaming Hub for Guides and Community Insights
+
 Welcome to Levelup.gg, your ultimate online destination for game guides and community-driven content. Whether you're a seasoned gamer or a nub, Levelup.gg is your go-to platform for insightful articles and in-depth guides.
 
 What Sets Us Apart:
@@ -21,3 +37,9 @@ Explore Game Guides: Navigate through our extensive collection of game guides, e
 Dive into Blog Posts: Immerse yourself in thought-provoking articles, personal narratives, and community discussions in our blog section. Stay informed about the latest gaming trends and contribute your own unique perspectives to the ongoing conversation.
 
 Levelup.gg isn't just a platform, it's a dynamic community-driven space where gamers come together to enhance their gaming experiences and share their passion. Elevate your gaming journey with Levelup.gg today!
+
+## Core Features
+
+1.  Account management (Sprint 2)
+2.  Managing blog post (Sprint 2)
+3.  Explore Page (Sprint 3)
