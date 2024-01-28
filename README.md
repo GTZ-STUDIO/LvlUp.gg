@@ -45,4 +45,23 @@ Levelup.gg isn't just a platform, it's a dynamic community-driven space where ga
 3.  Explore Page (Sprint 3)
 
 ## Meeting Records
+
 [Meetings](https://github.com/GTZ-STUDIO/Levelup.gg/blob/master/Meetings.md)
+
+## Block Diagram
+
+```mermaid
+flowchart TD
+
+subgraph S["Server Side"]
+    SA[Server App\n Django Framework] -->|Access\nCRUD| SD[Database\n Postgres]
+end
+
+subgraph C["Client Side"]
+  CA[Web Broswer] <-->|Interation| CB[Front End UI Component\nReact.js]
+end
+subgraph Z["Levelup.gg "]
+direction LR
+S<-->|HTTP Protocol\nAPIs|C
+end
+```
