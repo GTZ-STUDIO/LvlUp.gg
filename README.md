@@ -43,3 +43,6 @@ Levelup.gg isn't just a platform, it's a dynamic community-driven space where ga
 1.  Account management (Sprint 2)
 2.  Managing blog post (Sprint 2)
 3.  Explore Page (Sprint 3)
+
+## Meeting Records
+[Meetings](https://github.com/GTZ-STUDIO/Levelup.gg/blob/master/Meetings.md)
