@@ -139,6 +139,6 @@ Dropping the Blog Share Feature in Favour of the
     Handing in for proposal
     Hand in for Sprint 1
 
--Next Meeting (min 30)
+- Next Meeting (min 30)
  Thursday Meeting 7, Long meeting planned. To help start Sprint 2
 
