@@ -14,9 +14,9 @@
 - **BackEnd** Django Framework
 - **Database** PostgreSQL
 
-## Levelup.gg - Your Gaming Hub for Guides and Community Insights
+## LvlUp.gg - Your Gaming Hub for Guides and Community Insights
 
-Welcome to Levelup.gg, your ultimate online destination for game guides and community-driven content. Whether you're a seasoned gamer or a nub, Levelup.gg is your go-to platform for insightful articles and in-depth guides.
+Welcome to LvlUp.gg, your ultimate online destination for game guides and community-driven content. Whether you're a seasoned gamer or a nub, LvlUp.gg is your go-to platform for insightful articles and in-depth guides.
 
 What Sets Us Apart:
 
@@ -24,19 +24,19 @@ Comprehensive Game Guides: Delve into game guides that cater to a wide spectrum 
 
 Engaging Blogs: Immerse yourself in the vibrant gaming culture through our diverse blog section. From personal gaming experiences to industry trends and everything in between, our community of writers brings you captivating content that goes beyond the conventional.
 
-Community Participation: Levelup.gg is more than just a website, it's a thriving community. Join the conversation, ask questions, and share your thoughts with fellow gamers who are equally passionate about the virtual worlds we explore.
+Community Participation: LvlUp.gg is more than just a website, it's a thriving community. Join the conversation, ask questions, and share your thoughts with fellow gamers who are equally passionate about the virtual worlds we explore.
 
 User Contributions: Be a part of the excitement by contributing your own content. Share your unique perspectives, strategies, and experiences through blog posts or game guides, contributing to the collective knowledge and enjoyment of the gaming community.
 
 Getting Started:
 
-Create Your Profile: Unlock a personalized experience by creating your Levelup.gg profile. Connect with other gamers, save your favorite content, and tailor your feed to match your gaming interests.
+Create Your Profile: Unlock a personalized experience by creating your LvlUp.gg profile. Connect with other gamers, save your favorite content, and tailor your feed to match your gaming interests.
 
-Explore Game Guides: Navigate through our extensive collection of game guides, each crafted to empower you on your gaming journey. From mastering complex game mechanics to uncovering hidden secrets, Levelup.gg is your companion in excellence.
+Explore Game Guides: Navigate through our extensive collection of game guides, each crafted to empower you on your gaming journey. From mastering complex game mechanics to uncovering hidden secrets, LvlUp.gg is your companion in excellence.
 
 Dive into Blog Posts: Immerse yourself in thought-provoking articles, personal narratives, and community discussions in our blog section. Stay informed about the latest gaming trends and contribute your own unique perspectives to the ongoing conversation.
 
-Levelup.gg isn't just a platform, it's a dynamic community-driven space where gamers come together to enhance their gaming experiences and share their passion. Elevate your gaming journey with Levelup.gg today!
+LvlUp.gg isn't just a platform, it's a dynamic community-driven space where gamers come together to enhance their gaming experiences and share their passion. Elevate your gaming journey with LvlUp.gg today!
 
 ## Core Features
 
@@ -46,7 +46,7 @@ Levelup.gg isn't just a platform, it's a dynamic community-driven space where ga
 
 ## Meeting Records
 
-[Meetings](https://github.com/GTZ-STUDIO/Levelup.gg/blob/master/Meetings.md)
+[Meetings](https://github.com/GTZ-STUDIO/LvlUp.gg/blob/master/Meetings.md)
 
 ## Block Diagram
 
@@ -60,7 +60,7 @@ end
 subgraph C["Client Side"]
   CA[Web Broswer] <-->|Interation| CB[Front End UI Component\nReact.js]
 end
-subgraph Z["Levelup.gg "]
+subgraph Z["Lvlup.gg "]
 direction LR
 S<-->|HTTP Protocol\nAPIs|C
 end
