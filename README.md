@@ -50,6 +50,6 @@ LvlUp.gg isn't just a platform, it's a dynamic community-driven space where game
 
 ## Other
 - Please find more documentations in [Wiki page](https://github.com/GTZ-STUDIO/LvlUp.gg/wiki)
-- You can find the issues/features in [Issue](https://github.com/GTZ-STUDIO/LvlUp.gg/issues)
-- The project Management detail is in [Prjects](https://github.com/GTZ-STUDIO/LvlUp.gg/projects)
+- You can find the issues/features in [Issues](https://github.com/GTZ-STUDIO/LvlUp.gg/issues)
+- The project Management detail is in [Projects](https://github.com/GTZ-STUDIO/LvlUp.gg/projects)
 
