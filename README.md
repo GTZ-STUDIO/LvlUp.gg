@@ -44,24 +44,9 @@ LvlUp.gg isn't just a platform, it's a dynamic community-driven space where game
 2.  Managing blog post (Sprint 2)
 3.  Explore Page (Sprint 3)
 
-## Meeting Records
+## [Meeting Records](https://github.com/GTZ-STUDIO/LvlUp.gg/wiki/Meeting-Records)
 
-[Meetings](https://github.com/GTZ-STUDIO/LvlUp.gg/blob/master/Meetings.md)
+## [Block Diagram](https://github.com/GTZ-STUDIO/LvlUp.gg/wiki/Block-Diagram)
 
-## Block Diagram
 
-```mermaid
-flowchart TD
 
-subgraph S["Server Side"]
-    SA[Server App\n Django Framework] -->|Access\nCRUD| SD[Database\n Postgres]
-end
-
-subgraph C["Client Side"]
-  CA[Web Broswer] <-->|Interation| CB[Front End UI Component\nReact.js]
-end
-subgraph Z["Lvlup.gg "]
-direction LR
-S<-->|HTTP Protocol\nAPIs|C
-end
-```
