@@ -10,10 +10,10 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   backend:
-    build: .
+    build: ./lvlgg_backend
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/lvlgg_backend/code
     ports:
       - "8000:8000"
     environment:
@@ -29,3 +29,12 @@ services:
         PGADMIN_DEFAULT_PASSWORD: postgres
     ports:
       - "5050:80"
+  frontend:
+    build: ./lvlgg_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./lvlgg_frontend:/app
+    depends_on:
+      - backend
+    
