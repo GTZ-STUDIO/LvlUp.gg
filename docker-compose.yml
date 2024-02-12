@@ -6,7 +6,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./lvlgg_backend/data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -19,7 +19,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./lvlgg_backend:/LvlUp.gg/backend
+      - ./lvlgg_backend:/LvlUp.gg/lvlgg_backend
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres

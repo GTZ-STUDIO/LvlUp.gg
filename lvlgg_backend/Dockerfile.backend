@@ -13,7 +13,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your application code
-COPY . .
+COPY . /LvlUp.gg/lvlgg_backend/
 
 # Expose the port your Django app runs on
 EXPOSE 8000
