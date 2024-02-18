@@ -1,6 +1,6 @@
 import './App.css';
 
-import React from 'react'
+import React, {useState} from 'react'
 import Navbar from './Components/Navbar'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './App.css'
@@ -12,11 +12,13 @@ import SignIn from './Components/Pages/SignIn'
 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <>
     <Router>
       <Navbar />
       <Switch>
+        <Route path='/signin' component={SignIn} />
         <Route path='/' exact component={Explore} />
         <Route path='/signup' component={SignUp} />
         <Route path='/about' component={About} />
