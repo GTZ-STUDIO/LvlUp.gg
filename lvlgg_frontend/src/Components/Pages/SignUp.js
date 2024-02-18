@@ -23,38 +23,20 @@ const SignUp = () => {
   };
 
   return (
-    <div className='signup'>
-      <div>
+    <div className='signup'>    
+      <div className='signup-form'>
         <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-        />
+        <input type="text" id="username" name="username" value={username} onChange={e => setUsername(e.target.value)} className='signin-input'/>
       </div>
-      <div>
+      <div className='signup-form'>
         <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
+        <input type="email" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)} className='signin-input'/>
       </div>
-      <div>
+      <div className='signup-form'>
         <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+        <input type="password" id="password" name="password" value={password} onChange={e => setPassword(e.target.value)} className='signin-input'/>
       </div>
-      <button onClick={handleSignUp}>Create Account</button>
+      <button onClick={handleSignUp} className="signup-button">Create Account</button>
     </div>
   );
 };

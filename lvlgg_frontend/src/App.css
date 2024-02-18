@@ -20,12 +20,47 @@
   }
 
   .signin {
+    flex-direction: column;
+    height: 100vh;
     background-image: url('../public/images/img-2.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    color: #1e0063;
-    font-size: 100px;
+  }
+
+  .signin-form {
+    width: 300px;
+    background-color: rgba(134, 158, 224, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(139, 38, 38, 0.1);
+  }
+  
+  .signin-label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .signin-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 2px solid #2d97dd;
+    border-radius: 5px;
+  }
+  
+  .signin-button {
+    width: 5.5%;
+    padding: 10px;
+    background-color: #080808;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signin-button:hover {
+    background-color: #bfbdc7;
   }
 
   
@@ -37,14 +72,49 @@
     color: #4a00f8;
     font-size: 100px;
   }
-  
+
   .signup {
+    flex-direction: column;
+    height: 100vh;
     background-image: url('../public/images/img-2.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    color: #1e0063;
-    font-size: 100px;
+  }
+
+  .signup-form {
+    width: 300px;
+    background-color: rgba(134, 158, 224, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(139, 38, 38, 0.1);
+  }
+  
+  .signup-label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .signup-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 2px solid #2791d8;
+    border-radius: 5px;
+  }
+  
+  .signup-button {
+    width: 100px;
+    padding: 10px;
+    background-color: #080808;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signup-button:hover {
+    background-color: #bfbdc7;
   }
 
   .about {
