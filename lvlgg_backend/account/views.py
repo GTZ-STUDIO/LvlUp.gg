@@ -1,44 +1,89 @@
-from django.shortcuts import render
-from django.http import HttpResponseBadRequest, Http404
-from django.views import View
 import json
-from .models import Client
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render
 from rest_framework.response import Response
-from .serializer import ClientSerializer
 from rest_framework.views import APIView
-from django.views.decorators.csrf import csrf_exempt
+
+from .models import Client
+from .serializer import ClientSerializer
 
 # Create your views here.
 
 
-class SignUpView(APIView):
-    def post(self, request):
+class ClientDetailView(APIView):
 
+    def post(self, request):
+        """User sign up
+
+        Args:
+            request (Post): with username, password, firstname
+                            lastname, email. email and username
+                            cannot be duplicate
+
+        Returns:
+            Repsonse: 400 - duplicate username or email
+                            create unsuccessful
+                      200 - successful created a user
+        """
         data = json.loads(request.body.decode("utf-8"))
-        print(data)
         username = data.get("username")
-        passowrd = data.get("password")
+        password = data.get("password")
+        first_name = data.get("firstname")
+        last_name = data.get("lastname")
         email = data.get("email")
 
-        # User or email exist in the db already, refuse registration
-        if (
-            Client.objects.filter(username=username).exists()
-            or Client.objects.filter(email=email).exists()
-        ):
-            return Response(
-                status=400,
-                data={"error": "client and email already exist"},
-            )
+        if first_name and last_name:
+            if username == "":
+                Response(status=400, data={"error": "username cannot be empty"})
+            else:
+                # User or email exist in the db already, refuse registration
+                if (
+                    Client.objects.filter(username=username).exists()
+                    or Client.objects.filter(email=email).exists()
+                ):
+                    return Response(
+                        status=400,
+                        data={"error": "client and email already exist"},
+                    )
 
-        Client.objects.create_user(username=username, password=passowrd, email=email)
-        return Response(
-            status=200,
-            data={"success": f"client {username} created"},
-        )
+                Client.objects.create_user(
+                    email=email,
+                    username=username,
+                    password=password,
+                    first_name=first_name,
+                    last_name=last_name,
+                )
+                return Response(
+                    status=200,
+                    data={"success": f"client {username} created"},
+                )
 
 
-class UserListView(APIView):
+class ClientListView(APIView):
     def get(self, request):
         users = Client.objects.all()
         serializer = ClientSerializer(users, many=True)
         return Response(serializer.data)
+
+
+class SignInView(APIView):
+    def post(self, request):
+        """check usernae and password to signin
+
+        Args:
+            request (_type_): POST
+            with username and password
+        """
+        data = json.loads(request.body.decode("utf-8"))
+        username = data.get("username")
+        password = data.get("password")
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            Response(status=200, data={"message": f"{username} log in successfule"})
+        else:
+            # Unauthorized client 401
+            Response(status=401, data={"message": "Invalid username or password"})
