@@ -14,7 +14,7 @@ RUN npm install @mui/icons-material
 RUN npm install axios
 
 # Copy the rest of your application code
-COPY . .
+COPY . /LvlUp.gg/lvlgg_frontend
 
 # Expose the port your React app runs on
 EXPOSE 3000
