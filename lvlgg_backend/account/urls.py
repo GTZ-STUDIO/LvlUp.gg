@@ -1,3 +1,4 @@
+
 # accounts/urls.py
 from django.urls import path
 
@@ -8,3 +9,4 @@ urlpatterns = [
     path("signup/", ClientDetailView.as_view()),
     path("signin/", SignInView().as_view()),
 ]
+

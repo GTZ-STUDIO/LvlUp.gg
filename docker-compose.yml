@@ -42,4 +42,6 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./lvlgg_frontend:/LvlUp.gg/frontend
+      - ./lvlgg_frontend:/LvlUp.gg/lvlgg_frontend
+
+
