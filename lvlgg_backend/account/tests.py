@@ -93,6 +93,7 @@ class ClientDetailTestCase(TestCase):
         self.client.post(url_post, payload, content_type="application/json")
 
         response = self.client.get("/account/1/")
+        print(json.loads(response.content))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data["username"], "user1")

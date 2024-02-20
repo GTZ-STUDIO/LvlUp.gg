@@ -11,8 +11,8 @@ class CustomUserManager(BaseUserManager):
         self,
         email,
         username,
-        first_name,
-        last_name,
+        firstname,
+        lastname,
         password=None,
         **extra_fields,
     ):
@@ -24,8 +24,8 @@ class CustomUserManager(BaseUserManager):
         user = self.model(
             email=email,
             username=username,
-            first_name=first_name,
-            last_name=last_name,
+            firstname=firstname,
+            lastname=lastname,
             **extra_fields,
         )
         user.set_password(password)
@@ -36,8 +36,8 @@ class CustomUserManager(BaseUserManager):
         self,
         email,
         username,
-        first_name,
-        last_name,
+        firstname,
+        lastname,
         password=None,
         **extra_fields,
     ):
@@ -47,8 +47,8 @@ class CustomUserManager(BaseUserManager):
             email=email,
             username=username,
             password=password,
-            first_name=first_name,
-            last_name=last_name,
+            firstname=firstname,
+            lastname=lastname,
             **extra_fields,
         )
 
@@ -56,15 +56,15 @@ class CustomUserManager(BaseUserManager):
 class Client(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=50, unique=True, null=True)
     email = models.EmailField()
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    firstname = models.CharField(max_length=30)
+    lastname = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["first_name", "last_name", "email", "password"]
+    REQUIRED_FIELDS = ["firstname", "lastname", "email", "password"]
 
     def __str__(self):
-        return self.username
+        return "__all__"
