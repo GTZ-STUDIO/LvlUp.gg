@@ -28,6 +28,10 @@ jobs:
       - name: Install dependancies
         working-directory : ./lvlgg_frontend
         run: npm install
+
+      - name: Run the tests
+        working-directory : ./lvlgg_frontend
+        run: npm run test
         
       - name: Build
         working-directory : ./lvlgg_frontend
