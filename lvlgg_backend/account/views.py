@@ -33,31 +33,35 @@ class ClientDetailView(APIView):
         last_name = data.get("lastname")
         email = data.get("email")
 
-        if first_name and last_name:
-            if username == "":
-                return Response(status=400, data={"error": "username cannot be empty"})
-            else:
-                # User or email exist in the db already, refuse registration
-                if (
-                    Client.objects.filter(username=username).exists()
-                    or Client.objects.filter(email=email).exists()
-                ):
-                    return Response(
-                        status=400,
-                        data={"error": "client and email already exist"},
-                    )
+        # Sign up required fieldss
+        if first_name and last_name and username and password and email:
 
-                Client.objects.create_user(
-                    email=email,
-                    username=username,
-                    password=password,
-                    first_name=first_name,
-                    last_name=last_name,
-                )
+            # User or email exist in the db already, refuse registration
+            if (
+                Client.objects.filter(username=username).exists()
+                or Client.objects.filter(email=email).exists()
+            ):
                 return Response(
-                    status=200,
-                    data={"success": f"client {username} created"},
+                    status=400,
+                    data={"Error": "Username or email already exist"},
                 )
+
+            Client.objects.create_user(
+                email=email,
+                username=username,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+            )
+            return Response(
+                status=200,
+                data={"success": f"client {username} created"},
+            )
+        else:
+            return Response(
+                status=400,
+                data={"Error": "Missing required field for createing account"},
+            )
 
 
 class ClientListView(APIView):
