@@ -12,7 +12,7 @@ from .serializer import ClientSerializer
 
 
 class ClientDetailView(APIView):
-
+    # TODO: update user info, delete a user.testing
     def post(self, request):
         """User sign up
 
@@ -35,7 +35,7 @@ class ClientDetailView(APIView):
 
         if first_name and last_name:
             if username == "":
-                Response(status=400, data={"error": "username cannot be empty"})
+                return Response(status=400, data={"error": "username cannot be empty"})
             else:
                 # User or email exist in the db already, refuse registration
                 if (
