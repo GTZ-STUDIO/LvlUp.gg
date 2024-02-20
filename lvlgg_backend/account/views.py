@@ -71,11 +71,16 @@ class ClientDetailView(APIView):
             status=200, data={"Message": f"Client {pk} is deleted successfully"}
         )
 
+    def get(self, request, pk):
+        client = get_object_or_404(Client, pk=pk)
+        serializer = ClientSerializer(client)
+        return Response(serializer.data)
+
 
 class ClientListView(APIView):
     def get(self, request):
-        users = Client.objects.all()
-        serializer = ClientSerializer(users, many=True)
+        clients = Client.objects.all()
+        serializer = ClientSerializer(clients, many=True)
         return Response(serializer.data)
 
 
@@ -95,7 +100,7 @@ class SignInView(APIView):
 
         if user is not None:
             login(request, user)
-            Response(status=200, data={"message": f"{username} log in successfule"})
+            Response(status=200, data={"message": f"{username} log in successfully"})
         else:
             # Unauthorized client 401
             Response(status=401, data={"message": "Invalid username or password"})
