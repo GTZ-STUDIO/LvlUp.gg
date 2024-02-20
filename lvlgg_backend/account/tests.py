@@ -53,7 +53,7 @@ class ClientDetailTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
         payload["lastname"] = "tom"
 
-    def test_delete(self):
+    def test_delete_user(self):
         payload = {
             "username": "user1",
             "email": "user1@hotmail.com",
@@ -80,3 +80,23 @@ class ClientDetailTestCase(TestCase):
         # Delete second user
         response = self.client.delete("/account/delete/2/")
         self.assertEqual(response.status_code, 200)
+
+    def test_get_user(self):
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+        url_post = "/account/signup/"
+        self.client.post(url_post, payload, content_type="application/json")
+
+        response = self.client.get("/account/1/")
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEqual(data["username"], "user1")
+        self.assertEqual(data["email"], "user1@hotmail.com")
+
+        response = self.client.get("/account/5/")
+        self.assertEqual(response.status_code, 404)
