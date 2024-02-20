@@ -11,9 +11,12 @@ WORKDIR /LvlUp.gg/lvlgg_backend
 # Copy requirements file and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install djangorestframework
 
 # Copy the rest of your application code
-COPY . /LvlUp.gg/lvlgg_backend
+
+COPY . /LvlUp.gg/lvlgg_backend/
+
 
 # Expose the port your Django app runs on
 EXPOSE 8000
