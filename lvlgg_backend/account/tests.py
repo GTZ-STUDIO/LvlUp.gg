@@ -100,3 +100,39 @@ class ClientDetailTestCase(TestCase):
 
         response = self.client.get("/account/5/")
         self.assertEqual(response.status_code, 404)
+
+
+class SignInTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
+    def test_sign_in(self):
+        payload = {
+            "username": "user1",
+            "password": "12345",
+        }
+        url = "/account/signin/"
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        payload["password"] = "123"
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 401)
+
+        payload["password"] = ""
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+
+        payload["username"] = ""
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
