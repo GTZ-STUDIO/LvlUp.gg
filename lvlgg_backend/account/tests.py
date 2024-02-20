@@ -52,3 +52,31 @@ class ClientDetailTestCase(TestCase):
         response = self.client.post(url, payload, content_type="application/json")
         self.assertEqual(response.status_code, 400)
         payload["lastname"] = "tom"
+
+    def test_delete(self):
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+
+        url_post = "/account/signup/"
+
+        for i in range(2):
+            payload["username"] = f"user{i}"
+            payload["email"] = f"user{i}@hotmail.com"
+            self.client.post(url_post, payload, content_type="application/json")
+
+        # Delete a non-exist user
+        response = self.client.delete("/account/delete/5/")
+        self.assertEqual(response.status_code, 404)
+
+        # Delete first user
+        response = self.client.delete("/account/delete/1/")
+        self.assertEqual(response.status_code, 200)
+
+        # Delete second user
+        response = self.client.delete("/account/delete/2/")
+        self.assertEqual(response.status_code, 200)

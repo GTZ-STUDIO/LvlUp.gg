@@ -1,8 +1,7 @@
 import json
 
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render
-
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -33,7 +32,6 @@ class ClientDetailView(APIView):
         first_name = data.get("firstname")
         last_name = data.get("lastname")
         email = data.get("email")
-
         # Sign up required fieldss
         if first_name and last_name and username and password and email:
 
@@ -63,6 +61,15 @@ class ClientDetailView(APIView):
                 status=400,
                 data={"Error": "Missing required field for createing account"},
             )
+
+    def delete(self, request, pk):
+
+        client = get_object_or_404(Client, pk=pk)
+        client.delete()
+
+        return Response(
+            status=200, data={"Message": f"Client {pk} is deleted successfully"}
+        )
 
 
 class ClientListView(APIView):
