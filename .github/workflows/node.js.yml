@@ -29,7 +29,7 @@ jobs:
         run: npm install
 
       - name: Run the tests and generate code coverage report
-        run: npm test -- --coverage
+        run: npm run test -- --coverage
 
       - name: Build
         run: npm run build --if-present
