@@ -76,6 +76,15 @@ class ClientDetailView(APIView):
         serializer = ClientSerializer(client)
         return Response(serializer.data)
 
+    def put(self, request, pk):
+        data = json.loads(request.body.decode("utf-8"))
+        client = get_object_or_404(Client, pk=pk)
+        serializer = ClientSerializer(client, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=200, data={"Message": "Update successful"})
+        return Response(status=400, data={"Message": serializer.error_messages})
+
 
 class ClientListView(APIView):
     def get(self, request):
@@ -95,12 +104,18 @@ class SignInView(APIView):
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
         password = data.get("password")
+        if not username or not password:
+            return Response(status=400, data={"Error": "Missing username or password"})
 
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
-            Response(status=200, data={"message": f"{username} log in successfully"})
+            return Response(
+                status=200, data={"message": f"{username} log in successfully"}
+            )
         else:
             # Unauthorized client 401
-            Response(status=401, data={"message": "Invalid username or password"})
+            return Response(
+                status=401, data={"message": "Incorrect username or password"}
+            )
