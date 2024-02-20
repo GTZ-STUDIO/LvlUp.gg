@@ -10,7 +10,7 @@ const SignIn = () => {
   const handleSignIn = () => {
     // Handle sign-in logic here
     console.log('Signing in...');
-    axios.get('http://localhost:8000/users/', {
+    axios.get('http://localhost:8000/account/signin', {
       username,
       password,
     })

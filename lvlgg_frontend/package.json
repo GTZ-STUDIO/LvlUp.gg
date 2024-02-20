@@ -37,13 +37,14 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@babel/plugin-proposal-private-property-in-object": "^7.16.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@babel/preset-env": "^7.17.0",
     "@babel/preset-react": "^7.16.7",
     "@testing-library/react": "^14.2.1",
     "babel-jest": "^27.4.6",
     "file-loader": "^6.2.0",
+    "jest": "^27.5.1",
     "react-test-renderer": "^18.2.0"
   },
   "jest": {
