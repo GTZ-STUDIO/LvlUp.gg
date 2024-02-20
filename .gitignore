@@ -187,3 +187,4 @@ cython_debug/
 #.idea/
 # exclude the local db file
 /data
+.vscode/settings.json
