@@ -7,7 +7,7 @@ urlpatterns = [
     path("", ClientListView.as_view()),
     path("delete/<int:pk>/", ClientDetailView.as_view()),
     path("<int:pk>/", ClientDetailView.as_view()),
-    path("update/<int:pk>/", ClientDetailView.as_view()),
+    path("update/<int:pk>/", ClientDetailView.as_view(), name="update"),
     path("signup/", ClientDetailView.as_view()),
     path("signin/", SignInView.as_view()),
 ]

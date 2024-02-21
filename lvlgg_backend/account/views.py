@@ -104,8 +104,6 @@ class ClientDetailView(APIView):
         client = get_object_or_404(Client, pk=pk)
         serializer = ClientSerializer(client, data=data)
 
-        print(serializer.is_valid())
-        print(serializer.errors)
         if serializer.is_valid():
             serializer.save()
             return Response(
@@ -113,7 +111,7 @@ class ClientDetailView(APIView):
             )
         return Response(
             status=status.HTTP_400_BAD_REQUEST,
-            data={"Error": serializer.error_messages},
+            data={"Error": serializer.errors},
         )
 
 
