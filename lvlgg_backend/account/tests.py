@@ -3,6 +3,7 @@ import json
 from django.test import TestCase
 from django.test.client import Client
 
+from .models import Client as C
 from .views import ClientDetailView, ClientListView, SignInView
 
 
@@ -69,17 +70,15 @@ class ClientDetailTestCase(TestCase):
             payload["email"] = f"user{i}@hotmail.com"
             self.client.post(url_post, payload, content_type="application/json")
 
+        user_ids = [user.id for user in C.objects.all()]
+        for id in user_ids:
+            # Delete first user
+            response = self.client.delete(f"/account/delete/{id}/")
+            self.assertEqual(response.status_code, 200)
+
         # Delete a non-exist user
-        response = self.client.delete("/account/delete/5/")
+        response = self.client.delete("/account/delete/100/")
         self.assertEqual(response.status_code, 404)
-
-        # Delete first user
-        response = self.client.delete("/account/delete/1/")
-        self.assertEqual(response.status_code, 200)
-
-        # Delete second user
-        response = self.client.delete("/account/delete/2/")
-        self.assertEqual(response.status_code, 200)
 
     def test_get_user(self):
         payload = {
@@ -92,8 +91,8 @@ class ClientDetailTestCase(TestCase):
         url_post = "/account/signup/"
         self.client.post(url_post, payload, content_type="application/json")
 
-        response = self.client.get("/account/1/")
-        print(json.loads(response.content))
+        user_id = C.objects.first().id
+        response = self.client.get(f"/account/{user_id}/")
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertEqual(data["username"], "user1")

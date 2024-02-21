@@ -67,4 +67,4 @@ class Client(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["firstname", "lastname", "email", "password"]
 
     def __str__(self):
-        return "__all__"
+        return self.username
