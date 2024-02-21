@@ -173,3 +173,27 @@ class SignInTestCase(TestCase):
         payload["username"] = ""
         response = self.client.post(url, payload, content_type="application/json")
         self.assertEqual(response.status_code, 400)
+
+
+class ClientListTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_get_list_of_users(self):
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+        self.client.post(reverse("sign_up"), payload, content_type="application/json")
+        payload["username"] = "user2"
+        payload["email"] = "user2@hotmail.com"
+        self.client.post(reverse("sign_up"), payload, content_type="application/json")
+
+        response = self.client.get(reverse("user_list"))
+        self.assertEqual(response.status_code, 200)
+
+        users = C.objects.all()
+        self.assertEqual(len(users), 2)
