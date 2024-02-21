@@ -5,7 +5,6 @@ from django.test.client import Client
 from django.urls import reverse
 
 from .models import Client as C
-from .views import ClientDetailView, ClientListView, SignInView
 
 
 # Create your tests here.
@@ -113,14 +112,15 @@ class ClientDetailTestCase(TestCase):
         url_post = "/account/signup/"
         self.client.post(url_post, payload, content_type="application/json")
 
+        # Test update user's username
         user_id = C.objects.first().id
         url_put = reverse("update", kwargs={"pk": user_id})
         payload["username"] = "new_name"
         response = self.client.put(url_put, payload, content_type="application/json")
-        data = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
         user = C.objects.filter(pk=user_id).first()
         self.assertEqual(user.username, "new_name")
+        old_password = user.password
         # create another client, and test cannot upate username which is duplicate
         # with others
         payload2 = {
@@ -132,11 +132,19 @@ class ClientDetailTestCase(TestCase):
         }
         self.client.post(url_post, payload2, content_type="application/json")
 
+        # Cannot change username that is duplicate with any other users
         payload["username"] = "user2"
         response = self.client.put(url_put, payload, content_type="application/json")
         self.assertEqual(response.status_code, 400)
-        # Cannnot change the name due to duplication
         self.assertEqual(user.username, "new_name")
+
+        # test update password for user "new_name"
+        payload3 = {"password": "123456"}
+        response = self.client.put(url_put, payload3, content_type="application/json")
+        # User after update password, password is hashed, but it is different with
+        # previouse password
+        user = C.objects.filter(username="new_name").first()
+        self.assertNotEqual(old_password, user.password)
 
 
 class SignInTestCase(TestCase):
