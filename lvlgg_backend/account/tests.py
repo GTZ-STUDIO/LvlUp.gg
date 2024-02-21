@@ -2,6 +2,7 @@ import json
 
 from django.test import TestCase
 from django.test.client import Client
+from django.urls import reverse
 
 from .models import Client as C
 from .views import ClientDetailView, ClientListView, SignInView
@@ -100,6 +101,42 @@ class ClientDetailTestCase(TestCase):
 
         response = self.client.get("/account/5/")
         self.assertEqual(response.status_code, 404)
+
+    def test_update_user(self):
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+        url_post = "/account/signup/"
+        self.client.post(url_post, payload, content_type="application/json")
+
+        user_id = C.objects.first().id
+        url_put = reverse("update", kwargs={"pk": user_id})
+        payload["username"] = "new_name"
+        response = self.client.put(url_put, payload, content_type="application/json")
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        user = C.objects.filter(pk=user_id).first()
+        self.assertEqual(user.username, "new_name")
+        # create another client, and test cannot upate username which is duplicate
+        # with others
+        payload2 = {
+            "username": "user2",
+            "email": "user2@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+        self.client.post(url_post, payload2, content_type="application/json")
+
+        payload["username"] = "user2"
+        response = self.client.put(url_put, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        # Cannnot change the name due to duplication
+        self.assertEqual(user.username, "new_name")
 
 
 class SignInTestCase(TestCase):
