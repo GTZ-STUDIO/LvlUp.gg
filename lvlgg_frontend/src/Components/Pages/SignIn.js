@@ -10,14 +10,17 @@ const SignIn = () => {
   const handleSignIn = () => {
     // Handle sign-in logic here
     console.log('Signing in...');
-    axios.get('http://localhost:8000/account/signin', {
+    axios.post('http://localhost:8000/account/signin/', {
       username,
       password,
     })
     .then(response => {
-      console.log('Successful sign in:', response.data);
-      history.push('/')
-      // Redirect or perform other actions upon successful login
+      if (response.status === 200) {
+        console.log('Account created successfully:', response.data);
+        history.push('/')
+      } else {
+        console.error('Unexpected response status:', response.status);
+      }
 
     })
     .catch(error => {
