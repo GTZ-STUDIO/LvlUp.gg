@@ -102,7 +102,7 @@ class ClientDetailView(APIView):
         data = request.data
 
         client = get_object_or_404(Client, pk=pk)
-        serializer = ClientSerializer(client, data=data)
+        serializer = ClientSerializer(client, data=data, partial=True)
 
         if serializer.is_valid():
             serializer.save()
