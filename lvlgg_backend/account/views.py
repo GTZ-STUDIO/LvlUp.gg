@@ -130,6 +130,10 @@ class SignInView(APIView):
         Args:
             request (_type_): POST
             with username and password
+
+        Return:
+            200: successful
+            401: Unauthorize, invalid username or password
         """
         data = request.data
         username = data.get("username")
