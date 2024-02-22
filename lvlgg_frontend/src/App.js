@@ -12,7 +12,6 @@ import SignIn from './Components/Pages/SignIn'
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <>
     <Router>
