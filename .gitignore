@@ -203,3 +203,6 @@ cython_debug/
 *.vsix
 
 .vscode/settings.json
+
+#Node dependencies
+/node_modules
