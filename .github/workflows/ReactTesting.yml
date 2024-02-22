@@ -27,7 +27,13 @@ jobs:
 
       - name: Install dependancies
         working-directory : ./lvlgg_frontend
-        run: npm install
+        run: |
+          npm install
+          npm install react-scripts
+          npm install react-router-dom
+          npm install @mui/material @emotion/react @emotion/styled
+          npm install @mui/icons-material
+          npm install axios
 
       - name: Run the tests
         working-directory : ./lvlgg_frontend
