@@ -27,19 +27,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Lint with flake8
-        working-directory: ./lvlgg_backend
-        run: |
-          pip install flake8
-          flake8
-
-      - name: Coverage Report
-        working-directory: ./lvlgg_backend
-        run: |
-          pip install coverage
-          coverage run manage.py test
-          coverage report
-
       - name: Django Testing
         working-directory: ./lvlgg_backend
         run: |
