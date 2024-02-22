@@ -135,9 +135,13 @@ class SignInView(APIView):
             200: successful
             401: Unauthorize, invalid username or password
         """
+        print(request.data)
         data = request.data
         username = data.get("username")
         password = data.get("password")
+
+        print(username)
+        print(password)
 
         # username and password are madatory
         if not username or not password:
