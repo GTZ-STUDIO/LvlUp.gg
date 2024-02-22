@@ -10,14 +10,17 @@ const SignIn = () => {
   const handleSignIn = () => {
     // Handle sign-in logic here
     console.log('Signing in...');
-    axios.get('http://localhost:8000/users/', {
+    axios.post('http://localhost:8000/account/signin/', {
       username,
       password,
     })
     .then(response => {
-      console.log('Successful sign in:', response.data);
-      history.push('/')
-      // Redirect or perform other actions upon successful login
+      if (response.status === 200) {
+        console.log('Account created successfully:', response.data);
+        history.push('/')
+      } else {
+        console.error('Unexpected response status:', response.status);
+      }
 
     })
     .catch(error => {
@@ -29,11 +32,11 @@ const SignIn = () => {
     <div className='signin'>
     <div className='signin-form'>
       <label htmlFor="username">Username:</label>
-      <input type="text" id="username" name="username" className='signin-input' />
+      <input type="text" id="username" name="username" onChange={e => setUsername(e.target.value)} className='signin-input' />
     </div>
     <div className='signin-form'>
       <label htmlFor="password">Password:</label>
-      <input type="password" id="password" name="password" className='signin-input' />
+      <input type="password" id="password" name="password" onChange={e =>setPassword(e.target.value)} className='signin-input' />
     </div>
     <button onClick={handleSignIn} className='signin-button'>Sign In</button>
     <Link to='/signup' className='btn-mobile'>
