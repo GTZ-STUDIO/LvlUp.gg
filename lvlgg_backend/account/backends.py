@@ -1,4 +1,5 @@
 from django.contrib.auth.backends import BaseBackend
+
 from .models import Client
 
 
@@ -9,7 +10,7 @@ class AccountBackend(BaseBackend):
         except Client.DoesNotExist:
             return None
 
-        if user.check_password(password=password):
+        if user.check_password(password):
             return user
         return None
 

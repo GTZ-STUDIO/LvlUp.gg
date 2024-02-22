@@ -188,6 +188,7 @@ cython_debug/
 # exclude the local db file
 /data
 
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -200,4 +201,8 @@ cython_debug/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
 .vscode/settings.json
+
+#Node dependencies
+/node_modules
