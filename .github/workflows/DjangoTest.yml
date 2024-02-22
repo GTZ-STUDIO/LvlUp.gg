@@ -31,4 +31,4 @@ jobs:
       - name: Django Testing
         working-directory: ./lvlgg_backend
         run: |
-          python3 manage.py test
+          python manage.py test
