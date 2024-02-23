@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../../Contexts/AuthContext'
 
 const SignIn = () => {
+  const {setIsSignedIn} = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -16,7 +18,8 @@ const SignIn = () => {
     })
     .then(response => {
       if (response.status === 200) {
-        console.log('Account created successfully:', response.data);
+        console.log('Successful login:', response.data);
+        setIsSignedIn(true);
         history.push('/')
       } else {
         console.error('Unexpected response status:', response.status);
@@ -24,7 +27,10 @@ const SignIn = () => {
 
     })
     .catch(error => {
-      console.error('Error:', error);
+      if (error.response.status === 401) {
+        console.error('error:', error.response.data);
+        alert(JSON.stringify(error.response.data));
+      } 
     });
   };
 
