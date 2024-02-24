@@ -28,7 +28,9 @@ class ClientDetailView(APIView):
                             create unsuccessful
                       200 - successful created a user
         """
+
         data = request.data
+
         username = data.get("username")
         password = data.get("password")
         firstname = data.get("firstname")
@@ -61,7 +63,7 @@ class ClientDetailView(APIView):
         else:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"Error": "Missing required field for createing account"},
+                data={"Error": "Missing required field for creating account"},
             )
 
     def delete(self, request, pk):
