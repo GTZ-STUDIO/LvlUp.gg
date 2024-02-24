@@ -46,7 +46,7 @@ const SignIn = () => {
     </div>
     <button onClick={handleSignIn} className='signin-button'>Sign In</button>
     <Link to='/signup' className='btn-mobile'>
-      <button className='signup-button'>Sign Up</button>
+      <button className='signin-button'>Sign Up</button>
     </Link>
   </div>
   );

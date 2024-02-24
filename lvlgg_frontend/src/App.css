@@ -21,42 +21,43 @@
 
   .signin {
     flex-direction: column;
-    height: 100vh;
-    background-image: url('../public/images/img-2.jpg');
+    height: 98vh;
+    background-image: url('../public/images/img-test.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    font-size: 20px;
+    font-family: OCR A Std, monospace;
+    color: rgb(14, 148, 226);
   }
 
   .signin-form {
-    width: 300px;
-    background-color: rgba(134, 158, 224, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(139, 38, 38, 0.1);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
   }
   
   .signin-label {
-    display: block;
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
   
   .signin-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 2px solid #2d97dd;
-    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
   }
   
   .signin-button {
-    width: 5.5%;
-    padding: 10px;
-    background-color: #080808;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    margin-top: 20px;
     cursor: pointer;
+    background-color: rgb(31, 84, 165);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 17px;
+    text-align: center;
+    font-family: OCR A Std, monospace;
   }
   
   .signin-button:hover {
@@ -65,52 +66,56 @@
 
   
   .guides {
-    background-image: url('../public/images/img-2.jpg');
+    flex-direction: column;
+    height: 98vh;
+    background-image: url('../public/images/img-test.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    color: #4a00f8;
-    font-size: 100px;
+    font-size: 70px;
+    font-family: OCR A Std, monospace;
+    color: rgb(14, 148, 226);
   }
 
   .signup {
     flex-direction: column;
-    height: 100vh;
-    background-image: url('../public/images/img-2.jpg');
+    height: 98vh;
+    background-image: url('../public/images/img-test.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    font-size: 20px;
+    font-family: OCR A Std, monospace;
+    color: rgb(14, 148, 226);
   }
 
   .signup-form {
-    width: 300px;
-    background-color: rgba(134, 158, 224, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(139, 38, 38, 0.1);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
   }
   
   .signup-label {
-    display: block;
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
   
   .signup-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 2px solid #2791d8;
-    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
   }
   
   .signup-button {
-    width: 100px;
-    padding: 10px;
-    background-color: #080808;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    margin-top: 20px;
     cursor: pointer;
+    background-color: rgb(31, 84, 165);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 17px;
+    text-align: center;
+    font-family: OCR A Std, monospace;
   }
   
   .signup-button:hover {
@@ -118,11 +123,14 @@
   }
 
   .about {
-    background-image: url('../public/images/img-2.jpg');
+    flex-direction: column;
+    height: 98vh;
+    background-image: url('../public/images/img-test.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    color: #4a00f8;
-    font-size: 100px;
+    font-size: 70px;
+    font-family: OCR A Std, monospace;
+    color: rgb(14, 148, 226);
   }
   
