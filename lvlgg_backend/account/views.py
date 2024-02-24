@@ -28,7 +28,7 @@ class ClientDetailView(APIView):
                             create unsuccessful
                       200 - successful created a user
         """
-        data = json.loads(request.body.decode("utf-8"))
+        data = request.data
         username = data.get("username")
         password = data.get("password")
         firstname = data.get("firstname")
