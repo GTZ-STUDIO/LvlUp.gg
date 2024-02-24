@@ -6,20 +6,11 @@ import { AuthContext } from '../Contexts/AuthContext';
 
 function Navbar() {
     const [click, setClick] = useState(false)
-    const [button, setButton] = useState(true)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
 
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false)
-
-const showButton = () => {
-    if(window.innerWidth <= 960) {
-        setButton(false)
-    } else {
-        setButton(true)
-    }
-};
 
 const handleDropDown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -32,8 +23,6 @@ const closeDropdown = () => {
 const handleSignOut = () => {  
     setIsSignedIn(false); 
 };
-
-window.addEventListener('resize', showButton);
 
     return (
     <>
