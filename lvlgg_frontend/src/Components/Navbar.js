@@ -24,8 +24,6 @@ const handleSignOut = () => {
     setIsSignedIn(false); 
 };
 
-window.addEventListener('resize', showButton);
-
     return (
     <>
         <nav className='navbar'>
