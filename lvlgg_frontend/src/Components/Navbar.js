@@ -6,7 +6,6 @@ import { AuthContext } from '../Contexts/AuthContext';
 
 function Navbar() {
     const [click, setClick] = useState(false)
-    const [button, setButton] = useState(true)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
 
