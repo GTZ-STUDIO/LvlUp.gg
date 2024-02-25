@@ -22,6 +22,7 @@ const SignUp = () => {
     .then(response => {
       if (response.status === 200) {
         console.log('Account created successfully:', response.data);
+        alert('account created successfully');
         history.push('/signin')
       } else {
         console.error('Unexpected response status:', response.status);
@@ -30,10 +31,10 @@ const SignUp = () => {
       // Redirect or perform other actions upon successful account creation
     })
     .catch(error => {
-      if (error.response.status === 400) {
+      if (error.response && error.response.status === 400) {
         console.error('error:', error.response.data);
         alert(JSON.stringify(error.response.data));
-      } 
+      }
     });
   };
 
