@@ -1,8 +1,5 @@
-import json
-
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,7 +11,6 @@ from .serializer import ClientSerializer
 
 
 class ClientDetailView(APIView):
-    # TODO: update user info
     def post(self, request):
         """User sign up
 
@@ -83,10 +79,10 @@ class ClientDetailView(APIView):
             data={"Message": f"Client {pk} is deleted successfully"},
         )
 
-    def get(self, request, pk):
+    def get(self, request, pk=None):
         """
-        retrieve a user based on pk
-
+        retrieve a client based on pk
+        or if pk is not provided, it is a log out request
         Args:
             request (_type_): http request with pk in url
             pk (_type_): primary key
@@ -94,9 +90,21 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success or 404 for client does not exist
         """
-        client = get_object_or_404(Client, pk=pk)
-        serializer = ClientSerializer(client)
-        return Response(serializer.data)
+        # use pk to retrieve a client
+        if pk != None:
+            client = get_object_or_404(Client, pk=pk)
+            serializer = ClientSerializer(client)
+            return Response(serializer.data)
+        else:
+            if request.user.is_authenticated:
+                logout(request=request)
+                return Response(
+                    status=status.HTTP_200_OK, data={"message": "Log out successfully"}
+                )
+            else:
+                return Response(
+                    status=status.HTTP_400_BAD_REQUEST, data={"message": "Log in first"}
+                )
 
     def put(self, request, pk):
         data = request.data

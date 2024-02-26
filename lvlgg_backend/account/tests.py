@@ -182,6 +182,28 @@ class SignInTestCase(TestCase):
         response = self.client.post(url, payload, content_type="application/json")
         self.assertEqual(response.status_code, 400)
 
+    def test_sign_out(self):
+
+        # test with no user sign in
+        url = reverse("sign_out")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 400)
+
+        # User Sign in
+        payload = {
+            "username": "user1",
+            "password": "12345",
+        }
+        url = "/account/signin/"
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.wsgi_request.user.is_authenticated, True)
+        url = reverse("sign_out")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.wsgi_request.user.is_authenticated, False)
+
 
 class ClientListTestCase(TestCase):
     def setUp(self):
