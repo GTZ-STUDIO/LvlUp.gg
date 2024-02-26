@@ -5,7 +5,6 @@ from django.test.client import Client
 from account.models import Client
 from blog.models import Blog
 from comment.models import Comment
-from django.urls import reverse
 
 # Create your tests here.
 

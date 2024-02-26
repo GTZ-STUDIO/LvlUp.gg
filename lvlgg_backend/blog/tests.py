@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.test.client import Client
 from account.models import Client
 from blog.models import Blog
-from django.urls import reverse
 
 # Create your tests here.
 
