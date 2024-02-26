@@ -21,13 +21,15 @@ const closeDropdown = () => {
 };
 
 const handleSignOut = () => {  
+    //localStorage.removeItem('token');
     setIsSignedIn(false); 
+    closeDropdown();
 };
 
     return (
     <>
         <nav className='navbar'>
-            <div className='navbar-container'>
+            <div data-testid="Navbar-1" className='navbar-container'>
                 <Link to="/" className="navbar-logo">
                     LVLUP  <i className="fa-solid fa-arrow-up"></i>
                 </Link>
@@ -60,7 +62,7 @@ const handleSignOut = () => {
                         </button>
                         {isDropdownOpen && (
                             <div className="dropdown-content">
-                                <button onClick={() => { handleSignOut(); closeDropdown(); }}>Sign Out</button>
+                                <button onClick={() => { handleSignOut(); }}>Sign Out</button>
                             </div>
                         )}
                     </div>
