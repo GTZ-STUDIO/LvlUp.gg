@@ -1,7 +1,10 @@
-# accounts/urls.py
 from django.urls import path
-from .views import BlogDetailView
+from .views import *
 
 urlpatterns = [
-    path("blog/", BlogDetailView.as_view()),
+    path("create_blog/", Blogs.as_view()),
+    path("getlist/", Blogs.as_view()),
+    path("delete_blog/<int:pk>/", Blogs.as_view()),
+    path("get_blog/<int:pk>/", GetBlogs.as_view()),
+    path("update_blog/<int:pk>/", Blogs.as_view()),
 ]
