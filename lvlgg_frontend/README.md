@@ -6,6 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm install`
+Make sure do run this first in the lvlgg_frontend directory to make sure you have all the necessary dependencies.
+
 ### `npm start`
 
 Runs the app in the development mode.\

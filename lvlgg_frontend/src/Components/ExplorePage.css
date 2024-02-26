@@ -1,5 +1,7 @@
 video {
     object-fit: cover;
+    top: 0%;
+    right: 0%;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -9,27 +11,28 @@ video {
 .explore-container {
     /*background: url('images/img-home.jpg') center center/cover 
     no-repeat; */
-    height: 100vh;
+    height: 90vh;
     width: 100%;
     display:flex;
     flex-direction: column;
     align-items: center;
     box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.2);
     object-fit: contain;
+    font-family: OCR A Std, monospace;
 }
 
 .explore-container > h1 {
-    color: #c3fcff;
-    font-size: 30px;
-    margin-top: 200px;
+    color: #1129af;
+    font-size: 40px;
+    margin-top: 300px;
+    font-family: OCR A Std, monospace;
   }
 
 .explore-container > p {
-    margin-top: 8px;
-    color: #c3fcff;
-    font-size: 16px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
+    margin-top: 15px;
+    color: #1129af;
+    font-size: 20px;
+    font-family: OCR A Std, monospace;
   }
 
 .explore-btns{
@@ -44,6 +47,7 @@ video {
 .fa-play-circle {
     margin-left: 4px;
 }
+  
   
 @media screen and (max-width: 960px) {
     .explore-container > h1 {
