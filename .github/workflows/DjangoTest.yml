@@ -15,9 +15,9 @@ jobs:
         python-version: ["3.10"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -32,4 +32,4 @@ jobs:
       - name: Django Testing
         working-directory: ./lvlgg_backend
         run: |
-          python3 manage.py test
+          python manage.py test
