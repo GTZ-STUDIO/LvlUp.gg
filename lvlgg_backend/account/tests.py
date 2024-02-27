@@ -54,6 +54,10 @@ class ClientDetailTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
         payload["lastname"] = "tom"
 
+        payload["email"] = "wrong_format"
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+
     def test_delete_user(self):
         payload = {
             "username": "user1",

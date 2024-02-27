@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
@@ -30,34 +31,40 @@ class ClientDetailView(APIView):
         firstname = data.get("firstname")
         lastname = data.get("lastname")
         email = data.get("email")
-        # Sign up required fieldss
-        if firstname and lastname and username and password and email:
+        try:
+            # Sign up required fieldss
+            if firstname and lastname and username and password and email:
 
-            # User or email exist in the db already, refuse registration
-            if (
-                Client.objects.filter(username=username).exists()
-                or Client.objects.filter(email=email).exists()
-            ):
+                # User or email exist in the db already, refuse registration
+                if (
+                    Client.objects.filter(username=username).exists()
+                    or Client.objects.filter(email=email).exists()
+                ):
+                    return Response(
+                        status=status.HTTP_400_BAD_REQUEST,
+                        data={"Error": "Username or email already exist"},
+                    )
+
+                Client.objects.create_user(
+                    email=email,
+                    username=username,
+                    password=password,
+                    firstname=firstname,
+                    lastname=lastname,
+                )
+                return Response(
+                    status=status.HTTP_200_OK,
+                    data={"success": f"client {username} created"},
+                )
+            else:
                 return Response(
                     status=status.HTTP_400_BAD_REQUEST,
-                    data={"Error": "Username or email already exist"},
+                    data={"Error": "Missing required field for createing account"},
                 )
-
-            Client.objects.create_user(
-                email=email,
-                username=username,
-                password=password,
-                firstname=firstname,
-                lastname=lastname,
-            )
-            return Response(
-                status=status.HTTP_200_OK,
-                data={"success": f"client {username} created"},
-            )
-        else:
+        except ValidationError:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"Error": "Missing required field for createing account"},
+                data={"Error": "Invalid Email Format"},
             )
 
     def delete(self, request, pk):
