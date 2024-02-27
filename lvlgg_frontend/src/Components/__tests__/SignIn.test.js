@@ -4,9 +4,27 @@ import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter as Router } from 'react-router-dom';
 import SignIn from '../../Components/Pages/SignIn';
 import axios from 'axios';
-import { AuthProvider } from '../../Contexts/AuthContext';
+import { AuthContext, AuthProvider } from '../../Contexts/AuthContext.js';
 
 jest.mock('axios');
+
+test('renders SignIn component', () => {
+  const mockContextValue = { setIsSignedIn: jest.fn() };
+
+  render(
+    <Router> {/* Wrap your component with BrowserRouter */}
+      <AuthContext.Provider value={mockContextValue}>
+        <SignIn />
+      </AuthContext.Provider>
+    </Router>
+  );
+
+  const usernameInput = screen.getByLabelText('Username:');
+  const passwordInput = screen.getByLabelText('Password:');
+
+  expect(usernameInput).toBeInTheDocument();
+  expect(passwordInput).toBeInTheDocument();
+});
 
 test('allows user to sign in', async () => {
     render(
