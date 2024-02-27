@@ -25,6 +25,8 @@ const handleSignOut = () => {
     axios.get("http://localhost:8000/account/signout/")
         .then(response => {
             if (response.status === 200) {
+                console.log('Successful logout:', response.data);
+                alert(JSON.stringify(response.data));
                 setIsSignedIn(false);
                 closeDropdown();
             } else {
