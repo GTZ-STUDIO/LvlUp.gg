@@ -14,6 +14,7 @@ const SignIn = () => {
     console.log("Signing in...");
     axios
       .post("http://localhost:8000/account/signin/", {
+        withCredentials: true,
         username,
         password,
       })
@@ -27,7 +28,7 @@ const SignIn = () => {
         }
       })
       .catch(error => {
-        if (error.response.status === 401) {
+        if (error.response && (error.response.status === 401 || error.response.status === 400)) {
           console.error('error:', error.response.data);
           alert(JSON.stringify(error.response.data));
         } 

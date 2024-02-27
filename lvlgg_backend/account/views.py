@@ -96,15 +96,11 @@ class ClientDetailView(APIView):
             serializer = ClientSerializer(client)
             return Response(serializer.data)
         else:
-            if request.user.is_authenticated:
-                logout(request=request)
-                return Response(
-                    status=status.HTTP_200_OK, data={"message": "Log out successfully"}
-                )
-            else:
-                return Response(
-                    status=status.HTTP_400_BAD_REQUEST, data={"message": "Log in first"}
-                )
+            logout(request=request)
+            return Response(
+                status=status.HTTP_200_OK, data={"message": "Log out successfully"}
+            )
+            
 
     def put(self, request, pk):
         data = request.data
