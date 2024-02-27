@@ -14,7 +14,6 @@ const SignIn = () => {
     console.log("Signing in...");
     axios
       .post("http://localhost:8000/account/signin/", {
-        withCredentials: true,
         username,
         password,
       })
