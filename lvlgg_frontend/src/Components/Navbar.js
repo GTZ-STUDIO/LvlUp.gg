@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import './Navbar.css';
 import { Button } from './Button';
 import { AuthContext } from '../Contexts/AuthContext';
+import axios from 'axios';
 
 function Navbar() {
     const [click, setClick] = useState(false)
@@ -20,12 +21,24 @@ const closeDropdown = () => {
     setIsDropdownOpen(false);
 };
 
-const handleSignOut = () => {  
-    //localStorage.removeItem('token');
-    setIsSignedIn(false); 
-    closeDropdown();
+const handleSignOut = () => {
+    axios.get("http://localhost:8000/account/signout/")
+        .then(response => {
+            if (response.status === 200) {
+                console.log('Successful logout:', response.data);
+                alert(JSON.stringify(response.data));
+                setIsSignedIn(false);
+                closeDropdown();
+            } else {
+                // Handle error
+                console.error(response.data.message);
+            }
+        })
+        .catch(error => {
+            // Handle error
+            console.error(error);
+        });
 };
-
     return (
     <>
         <nav className='navbar'>

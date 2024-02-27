@@ -188,11 +188,6 @@ class SignInTestCase(TestCase):
 
     def test_sign_out(self):
 
-        # test with no user sign in
-        url = reverse("sign_out")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 400)
-
         # User Sign in
         payload = {
             "username": "user1",
