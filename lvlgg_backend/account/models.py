@@ -55,7 +55,7 @@ class CustomUserManager(BaseUserManager):
 
 class Client(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=50, unique=True, null=True)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     firstname = models.CharField(max_length=30)
     lastname = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
@@ -68,3 +68,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)

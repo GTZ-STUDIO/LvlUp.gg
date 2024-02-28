@@ -54,6 +54,10 @@ class ClientDetailTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
         payload["lastname"] = "tom"
 
+        payload["email"] = "wrong_format"
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+
     def test_delete_user(self):
         payload = {
             "username": "user1",
@@ -181,6 +185,23 @@ class SignInTestCase(TestCase):
         payload["username"] = ""
         response = self.client.post(url, payload, content_type="application/json")
         self.assertEqual(response.status_code, 400)
+
+    def test_sign_out(self):
+
+        # User Sign in
+        payload = {
+            "username": "user1",
+            "password": "12345",
+        }
+        url = "/account/signin/"
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.wsgi_request.user.is_authenticated, True)
+        url = reverse("sign_out")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.wsgi_request.user.is_authenticated, False)
 
 
 class ClientListTestCase(TestCase):

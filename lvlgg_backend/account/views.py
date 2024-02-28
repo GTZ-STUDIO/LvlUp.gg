@@ -1,8 +1,6 @@
-import json
-
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,7 +12,6 @@ from .serializer import ClientSerializer
 
 
 class ClientDetailView(APIView):
-    # TODO: update user info
     def post(self, request):
         """User sign up
 
@@ -34,34 +31,40 @@ class ClientDetailView(APIView):
         firstname = data.get("firstname")
         lastname = data.get("lastname")
         email = data.get("email")
-        # Sign up required fieldss
-        if firstname and lastname and username and password and email:
+        try:
+            # Sign up required fieldss
+            if firstname and lastname and username and password and email:
 
-            # User or email exist in the db already, refuse registration
-            if (
-                Client.objects.filter(username=username).exists()
-                or Client.objects.filter(email=email).exists()
-            ):
+                # User or email exist in the db already, refuse registration
+                if (
+                    Client.objects.filter(username=username).exists()
+                    or Client.objects.filter(email=email).exists()
+                ):
+                    return Response(
+                        status=status.HTTP_400_BAD_REQUEST,
+                        data={"Error": "Username or email already exist"},
+                    )
+
+                Client.objects.create_user(
+                    email=email,
+                    username=username,
+                    password=password,
+                    firstname=firstname,
+                    lastname=lastname,
+                )
+                return Response(
+                    status=status.HTTP_200_OK,
+                    data={"success": f"client {username} created"},
+                )
+            else:
                 return Response(
                     status=status.HTTP_400_BAD_REQUEST,
-                    data={"Error": "Username or email already exist"},
+                    data={"Error": "Missing required field for createing account"},
                 )
-
-            Client.objects.create_user(
-                email=email,
-                username=username,
-                password=password,
-                firstname=firstname,
-                lastname=lastname,
-            )
-            return Response(
-                status=status.HTTP_200_OK,
-                data={"success": f"client {username} created"},
-            )
-        else:
+        except ValidationError:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"Error": "Missing required field for createing account"},
+                data={"Error": "Invalid Email Format"},
             )
 
     def delete(self, request, pk):
@@ -83,10 +86,10 @@ class ClientDetailView(APIView):
             data={"Message": f"Client {pk} is deleted successfully"},
         )
 
-    def get(self, request, pk):
+    def get(self, request, pk=None):
         """
-        retrieve a user based on pk
-
+        retrieve a client based on pk
+        or if pk is not provided, it is a log out request
         Args:
             request (_type_): http request with pk in url
             pk (_type_): primary key
@@ -94,9 +97,17 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success or 404 for client does not exist
         """
-        client = get_object_or_404(Client, pk=pk)
-        serializer = ClientSerializer(client)
-        return Response(serializer.data)
+        # use pk to retrieve a client
+        if pk != None:
+            client = get_object_or_404(Client, pk=pk)
+            serializer = ClientSerializer(client)
+            return Response(serializer.data)
+        else:
+            logout(request=request)
+            return Response(
+                status=status.HTTP_200_OK, data={"message": "Log out successfully"}
+            )
+            
 
     def put(self, request, pk):
         data = request.data
