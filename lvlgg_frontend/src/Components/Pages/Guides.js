@@ -1,12 +1,12 @@
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import '../../App.css';
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
-import { AuthContext } from '../../Contexts/AuthContext'
+import { Link } from "react-router-dom";
+//import axios from "axios";
+//import { AuthContext } from '../../Contexts/AuthContext'
 
 
 export default function Guides() {
-  const {setIsSignedIn} = useContext(AuthContext);
+  //const {setIsSignedIn} = useContext(AuthContext);
   return (
     <div className='guides'>
       <Link to='/createguide'>

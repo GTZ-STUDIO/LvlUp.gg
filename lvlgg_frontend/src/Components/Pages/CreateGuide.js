@@ -1,8 +1,8 @@
-import React, {useContext, useState} from 'react';
+//import React, {useContext, useState} from 'react';
 import '../../App.css';
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
-import { AuthContext } from '../../Contexts/AuthContext';
+//import { Link, useHistory } from "react-router-dom";
+//import axios from "axios";
+//import { AuthContext } from '../../Contexts/AuthContext';
 
 
 export default function CreateGuide() {
