@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
-import { AuthContext } from '../../Contexts/AuthContext';
+//import { AuthContext } from '../../Contexts/AuthContext';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
