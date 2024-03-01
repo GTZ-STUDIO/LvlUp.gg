@@ -1,9 +1,10 @@
 import React, {useState, useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import './Navbar.css';
 import { Button } from './Button';
 import { AuthContext } from '../Contexts/AuthContext';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 function Navbar() {
     const [click, setClick] = useState(false)
@@ -12,6 +13,8 @@ function Navbar() {
 
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false)
+
+    const history = useHistory();
 
 const handleDropDown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -22,13 +25,14 @@ const closeDropdown = () => {
 };
 
 const handleSignOut = () => {
-    axios.get("http://localhost:8000/account/signout/")
+    axios.get("http://localhost:8000/account/signout/", { withCredentials: true })
         .then(response => {
             if (response.status === 200) {
                 console.log('Successful logout:', response.data);
                 alert(JSON.stringify(response.data));
                 setIsSignedIn(false);
                 closeDropdown();
+                history.push('/');
             } else {
                 // Handle error
                 console.error(response.data.message);
