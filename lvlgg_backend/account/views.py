@@ -158,11 +158,14 @@ class SignInView(APIView):
 
         if user is not None:
             login(request, user)
-            return Response(
-                status=200, data={"message": f"{username} log in successfully"}
-            )
+            user = get_object_or_404(Client, username=username)
+            serializer = ClientSerializer(user)
+            return Response(status=200, data=serializer.data)
         else:
             # Unauthorized client 401
             return Response(
-                status=401, data={"message": "Incorrect username or password"}
+                status=401,
+                data={
+                    "message": "The username and password provided does not match with any user"
+                },
             )
