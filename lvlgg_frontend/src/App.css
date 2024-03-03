@@ -83,6 +83,94 @@
 
 }
 
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  flex-direction: column;
+  height: 98vh;
+  background-image: url('../public/images/img-test.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  font-family: OCR A Std, monospace;
+  color: rgb(37, 175, 255);
+}
+
+.settings h1 {
+  margin-top: 150px; /* Add space above the h1 */
+  z-index: 1
+}
+
+.rectangle {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%; /* Adjust the width as needed */
+  height: 85vh; /* Adjust the height as needed */
+  background: linear-gradient(to right, #0c416d, #03062b); 
+  border-radius: 20px; /* Adjust the border radius to make the edges round */
+  z-index: 0;
+}
+
+.settings-btn {
+  margin-bottom: 20px; 
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: rgb(3, 12, 36);
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.settings-btn-delete{
+  margin-bottom: 100px; 
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #ff0000;
+  color: rgb(0, 0, 0);
+  font-size: medium;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1;
+}
+
+.settings-btn:hover {
+  background-color: #0056b3;
+}
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.input-wrapper input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input-overlay {
+  position: absolute; /* Position input element absolutely */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the input element */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1; /* Ensure input is above buttons */
+}
 
 .createguide {
   flex-direction: column;

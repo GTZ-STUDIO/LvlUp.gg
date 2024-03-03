@@ -78,6 +78,7 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success, 404 for client does not exist
         """
+
         client = get_object_or_404(Client, pk=pk)
         client.delete()
 

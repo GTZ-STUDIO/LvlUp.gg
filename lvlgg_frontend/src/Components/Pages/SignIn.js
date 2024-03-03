@@ -5,6 +5,7 @@ import { AuthContext } from '../../Contexts/AuthContext'
 
 const SignIn = () => {
   const {setIsSignedIn} = useContext(AuthContext);
+  const {setUserPk} = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -12,8 +13,7 @@ const SignIn = () => {
   const handleSignIn = () => {
     // Handle sign-in logic here
     console.log("Signing in...");
-    axios
-      .post("http://localhost:8000/account/signin/", {
+    axios.post("http://localhost:8000/account/signin/", {
         username,
         password,
       })
@@ -21,7 +21,10 @@ const SignIn = () => {
         if (response.status === 200) {
           console.log('Successful login:', response.data);
           setIsSignedIn(true);
+          console.log(response.data.id)
+          setUserPk(parseInt(response.data.id))
           history.push('/')
+          
         } else {
           console.error('Unexpected response status:', response.status);
         }
