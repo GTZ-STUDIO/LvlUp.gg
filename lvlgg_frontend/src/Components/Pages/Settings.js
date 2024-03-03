@@ -132,7 +132,6 @@ const Settings = () => {
   return (
     <div className="settings">
       <div className='rectangle'></div>
-
         <h1>Account Settings</h1>
         <div className="input-wrapper">
           <input
@@ -169,9 +168,7 @@ const Settings = () => {
         </div>
         <button className="settings-btn-delete" onClick={handleDeleteConfirmation}>
           Delete Account
-        </button>
-      
-      
+        </button>  
     </div>
   );
 };

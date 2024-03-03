@@ -81,9 +81,7 @@ const handleSignOut = () => {
                         {isDropdownOpen && (
                             <div className="dropdown-content">
                                 <Link to='/settings'>
-                                    <button>
-                                        Settings
-                                    </button>
+                                    <button onClick={() => { handleDropDown(); }}>Settings</button>
                                 </Link>
                                 <button onClick={() => { handleSignOut(); }}>Sign Out</button>
                             </div>
