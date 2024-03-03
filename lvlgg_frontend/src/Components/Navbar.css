@@ -1,5 +1,5 @@
 .navbar {
-  background: linear-gradient(90deg, #060f1b 0%, #002666 100%);
+  background: linear-gradient(90deg, #060f1b 0%, #051531 100%);
   height: 50px;
   display: flex;
   justify-content: center;
@@ -20,12 +20,12 @@
   }
   
   .navbar-logo {
-    color: #c3fcff;
+    color: #02f2ff;
     justify-self: start;
-    margin-left: 10px;
+    margin-left: 0px;
     cursor: pointer;
     text-decoration: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     font-family: OCR A Std, monospace;
@@ -62,7 +62,7 @@
   }
   
   .nav-links:hover {
-    border-bottom: 4px solid #fff;
+    padding-bottom: 5px;
     transition: all 0.2s ease-out;
   }
   
