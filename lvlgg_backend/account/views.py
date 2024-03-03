@@ -107,13 +107,14 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success or 404 for client does not exist
         """
-        if not request.user.is_authenticated:
-            return Response(
-                status=status.HTTP_403_FORBIDDEN,
-                data={"Error": "Please log in first to proceed."},
-            )
+
         # use pk to retrieve a client
         if pk != None:
+            if not request.user.is_authenticated:
+                return Response(
+                    status=status.HTTP_403_FORBIDDEN,
+                    data={"Error": "Please log in first to proceed."},
+                )
             client = get_object_or_404(Client, pk=pk)
             serializer = ClientSerializer(client)
             return Response(serializer.data)
