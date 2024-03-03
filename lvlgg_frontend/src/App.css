@@ -23,13 +23,13 @@
 .signin {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 20px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
 }
 
 .signin-form {
@@ -50,10 +50,10 @@
 }
 
 .signin-button {
-  margin-top: 20px;
+  margin-top: 30px;
   cursor: pointer;
   background-color: rgb(31, 84, 165);
-  color: white;
+  color: #02f2ff;
   padding: 10px;
   border: none;
   border-radius: 17px;
@@ -69,13 +69,13 @@
 .guides {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 70px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
 }
 
 .guides-button{
@@ -86,45 +86,46 @@
 .settings {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: flex-start; 
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  font-size: 20px;
+  font-size: 15px;
   font-family: OCR A Std, monospace;
-  color: rgb(37, 175, 255);
+  color: #02f2ff;
 }
 
 .settings h1 {
-  margin-top: 150px; /* Add space above the h1 */
-  z-index: 1
+  font-family: OCR A Std, monospace;
+  margin-top: 230px; /* Add space above the h1 */
+  z-index: 1;
 }
 
 .rectangle {
-  position: absolute;
+  position: fixed;
   top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 30%; /* Adjust the width as needed */
-  height: 85vh; /* Adjust the height as needed */
-  background: linear-gradient(to right, #0c416d, #03062b); 
-  border-radius: 20px; /* Adjust the border radius to make the edges round */
+  width: 25%;
+  height: 70vh; 
+  background-color:#021125d3;
+  border-radius: 1px; /* Adjust the border radius to make the edges round */
   z-index: 0;
 }
 
 .settings-btn {
-  margin-bottom: 20px; 
+  margin-bottom: 10px; 
   display: inline-block;
-  padding: 10px 20px;
+  padding: 8px 32px;
   margin-right: 10px;
   background-color: #007bff;
   color: rgb(3, 12, 36);
   text-decoration: none;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -133,7 +134,7 @@
   display: inline-block;
   padding: 10px 20px;
   margin-right: 10px;
-  background-color: #ff0000;
+  background-color: #b0d4ec;
   color: rgb(0, 0, 0);
   font-size: medium;
   text-decoration: none;
@@ -149,33 +150,23 @@
 }
 
 .input-wrapper {
-  position: relative;
-  display: inline-block;
+  display: flex;
+  z-index: 4;
+  margin-bottom:80px;
 }
 
 .input-wrapper input {
   display: block;
   margin-bottom: 10px;
-  padding: 5px;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.input-overlay {
-  position: absolute; /* Position input element absolutely */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Center the input element */
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-  padding: 20px;
-  border-radius: 5px;
-  z-index: 1; /* Ensure input is above buttons */
+  border-radius: 0px;
 }
 
 .createguide {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -187,13 +178,13 @@
 .signup {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 20px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
 }
 
 .signup-form {
@@ -208,7 +199,7 @@
 
 .signup-input {
   padding: 10px;
-  background-color: white;
+  background-color: rgb(129, 145, 153);
   border: none;
   border-radius: 10px;
 }
@@ -217,7 +208,7 @@
   margin-top: 20px;
   cursor: pointer;
   background-color: rgb(31, 84, 165);
-  color: white;
+  color: #02f2ff;
   padding: 10px;
   border: none;
   border-radius: 17px;
@@ -229,14 +220,19 @@
   background-color: #bfbdc7;
 }
 
+.signup-font{
+  font-size: 15px;
+  margin-top: 30px;
+}
+
 .about {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 70px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
 }
