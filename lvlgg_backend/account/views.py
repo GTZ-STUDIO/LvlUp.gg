@@ -78,7 +78,17 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success, 404 for client does not exist
         """
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
         client = get_object_or_404(Client, pk=pk)
+        if client.username != request.user.username:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "You cannot delete other user's profile"},
+            )
         client.delete()
 
         return Response(
@@ -97,23 +107,37 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success or 404 for client does not exist
         """
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
         # use pk to retrieve a client
         if pk != None:
             client = get_object_or_404(Client, pk=pk)
             serializer = ClientSerializer(client)
             return Response(serializer.data)
         else:
-            print(request.user.is_authenticated)
-
             logout(request=request)
             return Response(
                 status=status.HTTP_200_OK, data={"message": "Log out successfully"}
             )
 
     def put(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
         data = request.data
 
         client = get_object_or_404(Client, pk=pk)
+        if client.username != request.user.username:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "You can only change your own user profile"},
+            )
+
         serializer = ClientSerializer(client, data=data, partial=True)
 
         if serializer.is_valid():

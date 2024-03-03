@@ -68,17 +68,14 @@ class ClientDetailTestCase(TestCase):
         }
 
         url_post = "/account/signup/"
+        self.client.post(url_post, payload, content_type="application/json")
 
-        for i in range(2):
-            payload["username"] = f"user{i}"
-            payload["email"] = f"user{i}@hotmail.com"
-            self.client.post(url_post, payload, content_type="application/json")
+        payload = {"username": "user1", "password": "12345"}
+        self.client.post(reverse("sign_in"), payload, content_type="application/json")
 
-        user_ids = [user.id for user in C.objects.all()]
-        for id in user_ids:
-            # Delete first user
-            response = self.client.delete(f"/account/delete/{id}/")
-            self.assertEqual(response.status_code, 200)
+        user_id = C.objects.all()
+        # Delete first user
+        response = self.client.delete(f"/account/delete/{user_id}/")
 
         # Delete a non-exist user
         response = self.client.delete("/account/delete/100/")
@@ -94,6 +91,9 @@ class ClientDetailTestCase(TestCase):
         }
         url_post = "/account/signup/"
         self.client.post(url_post, payload, content_type="application/json")
+
+        payload = {"username": "user1", "password": "12345"}
+        self.client.post(reverse("sign_in"), payload, content_type="application/json")
 
         user_id = C.objects.first().id
         response = self.client.get(f"/account/{user_id}/")
@@ -116,6 +116,10 @@ class ClientDetailTestCase(TestCase):
         url_post = "/account/signup/"
         self.client.post(url_post, payload, content_type="application/json")
 
+        # Sign in
+        payload = {"username": "user1", "password": "12345"}
+        self.client.post(reverse("sign_in"), payload, content_type="application/json")
+
         # Test update user's username
         user_id = C.objects.first().id
         url_put = reverse("update", kwargs={"pk": user_id})
@@ -125,6 +129,7 @@ class ClientDetailTestCase(TestCase):
         user = C.objects.filter(pk=user_id).first()
         self.assertEqual(user.username, "new_name")
         old_password = user.password
+
         # create another client, and test cannot upate username which is duplicate
         # with others
         payload2 = {
@@ -137,6 +142,9 @@ class ClientDetailTestCase(TestCase):
         self.client.post(url_post, payload2, content_type="application/json")
 
         # Cannot change username that is duplicate with any other users
+        # Sign in
+        payload = {"username": "new_name", "password": "12345"}
+        self.client.post(reverse("sign_in"), payload, content_type="application/json")
         payload["username"] = "user2"
         response = self.client.put(url_put, payload, content_type="application/json")
         self.assertEqual(response.status_code, 400)
