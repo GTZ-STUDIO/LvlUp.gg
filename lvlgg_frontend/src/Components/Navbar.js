@@ -31,6 +31,7 @@ const handleSignOut = () => {
                 console.log('Successful logout:', response.data);
                 alert(JSON.stringify(response.data));
                 setIsSignedIn(false);
+                localStorage.removeItem('isSignedIn');
                 closeDropdown();
                 history.push('/');
             } else {
@@ -79,6 +80,9 @@ const handleSignOut = () => {
                         </button>
                         {isDropdownOpen && (
                             <div className="dropdown-content">
+                                <Link to='/settings'>
+                                    <button onClick={() => { handleDropDown(); }}>Settings</button>
+                                </Link>
                                 <button onClick={() => { handleSignOut(); }}>Sign Out</button>
                             </div>
                         )}
