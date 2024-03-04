@@ -1,4 +1,5 @@
 from django.http import JsonResponse, Http404
+from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
@@ -7,12 +8,18 @@ from account.models import Client
 import json
 from .models import Blog
 
+
 class Blogs(View):
     def post(self, request):
+
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not Logged In'}, status=404)
+
         data = json.loads(request.body.decode('utf-8')) 
         title = data.get('title')
         content = data.get('content')
         author_id = data.get('author')
+        game = data.get('game')
         
         if not all([title, content, author_id]):
             return JsonResponse({'error': 'Incomplete data provided'}, status=400)
@@ -28,13 +35,18 @@ class Blogs(View):
             blog = Blog.objects.create(
                 title=title,
                 content=content,
-                author=author  # Pass the Client instance, not the ID
+                author=author,  # Pass the Client instance, not the ID
+                game=game
             )
             return JsonResponse({'message': 'Blog created successfully'}, status=200)  
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
     
     def delete(self, request, pk):
+
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not Logged In'}, status=404)
+        
         # Handle DELETE request to delete a specific blog
         try:
             # Attempt to retrieve the blog with the provided primary key
@@ -52,6 +64,9 @@ class Blogs(View):
             return JsonResponse({'error': str(e)}, status=500)
     
     def put(self, request, pk):
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not Logged In'}, status=404)
+        
         try:
             blog = get_object_or_404(Blog, pk=pk)
             data = json.loads(request.body.decode('utf-8'))
@@ -73,21 +88,50 @@ class Blogs(View):
         blogs = Blog.objects.all()
         
         # Convert each blog instance into a dictionary
-        blogs_list = list(blogs.values('id', 'title', 'content', 'date_posted', 'author'))
+        blogs_list = list(blogs.values('id', 'title', 'content', 'date_posted', 'author', 'likes', 'dislikes', 'game'))
         
         # Return the list as a JSON response
         return JsonResponse({'blogs': blogs_list})
         
-
 class GetBlogs(View):
     def get(self, request, pk):
         try:
             # Attempt to retrieve the specific blog by primary key and convert it into a dictionary
-            blog = Blog.objects.filter(pk=pk).values('id', 'title', 'content', 'date_posted', 'author').first()
+            blog = Blog.objects.filter(pk=pk).values('id', 'title', 'content', 'date_posted', 'author', 'likes', 'dislikes', 'game').first()
 
             # Return the blog as a JSON response
             return JsonResponse(blog)
 
+        except Blog.DoesNotExist:
+            return JsonResponse({'error': 'Blog not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+        
+    def put(self, request, pk):
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not Logged In'}, status=404)
+        
+        #Update Likes and Dislikes
+        try:
+            blog = get_object_or_404(Blog, pk=pk)
+            data = json.loads(request.body.decode('utf-8'))
+            
+            action = data.get('action')
+            value = data.get('value')
+            
+            if action == 'like':
+                blog.likes += value
+                if blog.likes < 0: 
+                    blog.likes = 0
+            elif action == 'dislike':
+                blog.dislikes += value
+                if blog.likes < 0: 
+                    blog.likes = 0
+            else:
+                return JsonResponse({'error': 'Invalid action'}, status=400)
+            
+            blog.save()
+            return JsonResponse({'message': f'Blog {action}d successfully', 'likes': blog.likes, 'dislikes': blog.dislikes}, status=200)
         except Blog.DoesNotExist:
             return JsonResponse({'error': 'Blog not found'}, status=404)
         except Exception as e:
