@@ -12,13 +12,25 @@ class BlogViewTestCase(TestCase):
     
     def setUp(self):
         # Create a Client instance
-        self.client_user = Client.objects.create(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
-        # Verify that the Client instance is created
+        self.client_user = Client.objects.create_user(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
+        # Verify that the Client instance is createds
         self.assertIsNotNone(self.client_user)
         # Verify that the primary key is retrieved correctly
         self.assertIsNotNone(self.client_user.pk)
         # Save the primary key for later use
         self.user_pk = self.client_user.pk
+
+        #Login
+        payload = {
+            "username" : "user1",
+            "password" : "testpassword"
+        }
+
+        url = "/account/signin/"
+
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
 
         self.blog_post = Blog.objects.create(
             title="Sample Blog Post",
@@ -37,7 +49,8 @@ class BlogViewTestCase(TestCase):
         payload = {
             "content": "Stuff for a bloggggg",
             "title": "My Title",
-            "author": self.user_pk
+            "author": self.user_pk,
+            "game" : "Minecraft"
         }
 
         url = "/blog/create_blog/"
@@ -67,7 +80,8 @@ class BlogViewTestCase(TestCase):
         payload = {
             "content": "Stuff for a bloggggg",
             "title": "My Title",
-            "author": self.user_pk
+            "author": self.user_pk,
+            "game" : "Minecraft"
         }
         create_url = "/blog/create_blog/"
         response = self.client.post(create_url, payload, content_type="application/json")
@@ -172,6 +186,30 @@ class BlogViewTestCase(TestCase):
         response = self.client.put(update_url, update, content_type="application/json")
         self.assertEqual(response.status_code, 404)
 
+    def test_update_likes(self):
+        """
+        Test updating a blog
+        """
+
+        update_url = f"/blog/likes/{self.blog_pk}/"
+
+        update = {
+            "action": "like",
+            "value": 1,
+        }
+
+        response = self.client.put(update_url, update, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        update['action'] = 'dislike'
+        response = self.client.put(update_url, update, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        update['action'] = 'like'
+
+        update['amount'] = -1
+        response = self.client.put(update_url, update, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
     def test_specific_get(self):
         """
         Test getting a specific blog
@@ -210,3 +248,7 @@ class BlogViewTestCase(TestCase):
         url = f"/blog/delete_blog/{key}/"
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 404)
+
+    
+
+

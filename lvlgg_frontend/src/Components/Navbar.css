@@ -107,7 +107,7 @@
     position: absolute;
     top: 100%;
     right: -40px;
-    background-color: #07264d;
+    background-color: #020913;
     min-width: 160px;
     z-index: 50;
   }
@@ -120,7 +120,7 @@
     border: none;
     outline: none;
     cursor: pointer;
-    color: #16ace7;
+    color: #02f2ff;
   }
   
   .dropdown-content button:hover {
