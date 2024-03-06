@@ -1,7 +1,7 @@
 # accounts/urls.py
 from django.urls import path, re_path
 
-from .views import ClientDetailView, ClientListView, SignInView
+from .views import ClientDetailView, ClientListView, FollowFriendView, SignInView
 
 urlpatterns = [
     path("signout/", ClientDetailView.as_view(), name="sign_out"),
@@ -11,4 +11,5 @@ urlpatterns = [
     path("update/<int:pk>/", ClientDetailView.as_view(), name="update"),
     path("signup/", ClientDetailView.as_view(), name="sign_up"),
     path("signin/", SignInView.as_view(), name="sign_in"),
+    path("friend/", FollowFriendView.as_view(), name="add_friend"),
 ]

@@ -1,3 +1,5 @@
+from blog.models import Blog
+from comment.models import Comment
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
@@ -7,8 +9,6 @@ from rest_framework.views import APIView
 
 from .models import Client
 from .serializer import ClientSerializer
-
-# Create your views here.
 
 
 class ClientDetailView(APIView):
@@ -194,3 +194,45 @@ class SignInView(APIView):
                     "message": "The username and password provided does not match with any user"
                 },
             )
+
+
+class FollowFriendView(APIView):
+    def post(self, request):
+        """
+        Add a client as a friend
+
+        Args:
+            request: request is account/friend with a payload
+                     {"username":"Friend's username"}
+
+        Returns:
+            200: success
+            400: payload does does contain any username
+            404: no such user under that username
+            403: request user is not authenticated
+        """
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
+
+        data = request.data
+
+        username = data.get("username")
+
+        # Return 400 if missing username in the payload
+        if not username:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"Error": "Missing friend's username"},
+            )
+
+        client = get_object_or_404(Client, pk=request.user.id)
+        friend = get_object_or_404(Client, username=username)
+
+        client.friends.add(friend)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={"Message": f"{friend.username} has been added to the friend list"},
+        )

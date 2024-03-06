@@ -234,3 +234,62 @@ class ClientListTestCase(TestCase):
 
         users = C.objects.all()
         self.assertEqual(len(users), 2)
+
+
+class FollowFriendTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+        # Create users to add friend
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
+        payload = {
+            "username": "user2",
+            "email": "user2@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry2",
+            "lastname": "tom2",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
+    def test_add_friend(self):
+        # Without sign in a client
+        add_friend_payload = {"username": "user2"}
+        response = self.client.post(
+            reverse("add_friend"), add_friend_payload, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 403)
+        # Add user 2 as a friend of user 1
+        sign_in_payload = {"username": "user1", "password": "12345"}
+        self.client.post(
+            reverse("sign_in"), sign_in_payload, content_type="application/json"
+        )
+        add_friend_payload = {"username": "user2"}
+        response = self.client.post(
+            reverse("add_friend"), add_friend_payload, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+
+        # Add non exist client
+        add_friend_payload["username"] = "none_exist_name"
+        response = self.client.post(
+            reverse("add_friend"), add_friend_payload, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 404)
+
+        # Test symetric
+        user1_friend = C.objects.filter(username="user1").first().friends.first()
+        self.assertEqual(user1_friend.username, "user2")
+        user2_friend = C.objects.filter(username="user2").first().friends.first()
+        self.assertEqual(user2_friend.username, "user1")
