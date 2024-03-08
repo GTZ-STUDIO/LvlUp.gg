@@ -240,6 +240,20 @@ class FollowFriendView(APIView):
 
 class RemoveFriendView(APIView):
     def post(self, request):
+        """
+        Remove a friend from user's friend list
+
+        Args:
+            request (HTTP request): payload is username of
+                                    the friend client wants
+                                    to add.
+
+        Returns:
+            Repsonse: 200 success
+                      400 missing username in payload
+                      403 unauthenticated
+                      404 cannot find the friend in DB
+        """
         if not request.user.is_authenticated:
             return Response(
                 status=status.HTTP_403_FORBIDDEN,
@@ -274,5 +288,12 @@ class FriendListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
+        """
+        Overright the get_query method in DRF to return a list of
+        client's friend.
+
+        Returns:
+            A list of friends of a authenticated user.
+        """
         client = self.request.user
         return client.friends.all()
