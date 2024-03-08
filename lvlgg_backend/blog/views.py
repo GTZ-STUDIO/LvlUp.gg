@@ -72,8 +72,11 @@ class Blogs(View):
          # Query all blog instances
         blogs = Blog.objects.all()
         
-        # Convert each blog instance into a dictionary
-        blogs_list = list(blogs.values('id', 'title', 'content', 'date_posted', 'author'))
+        # Query the 10 newest blog instances, ordered by date posted in descending order
+        blogs = Blog.objects.order_by('-date_posted')[:10]
+
+            # Convert each blog instance into a dictionary with only id and title
+        blogs_list = list(blogs.values('id', 'title'))
         
         # Return the list as a JSON response
         return JsonResponse({'blogs': blogs_list})
