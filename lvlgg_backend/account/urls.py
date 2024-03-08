@@ -5,6 +5,7 @@ from .views import (
     ClientDetailView,
     ClientListView,
     FollowFriendView,
+    FriendListView,
     RemoveFriendView,
     SignInView,
 )
@@ -19,4 +20,5 @@ urlpatterns = [
     path("signin/", SignInView.as_view(), name="sign_in"),
     path("follow/", FollowFriendView.as_view(), name="add_friend"),
     path("unfollow/", RemoveFriendView.as_view(), name="remove_friend"),
+    path("friends/", FriendListView.as_view(), name="friend_list"),
 ]

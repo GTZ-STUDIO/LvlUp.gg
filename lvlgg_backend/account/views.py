@@ -270,8 +270,9 @@ class RemoveFriendView(APIView):
 
 
 class FriendListView(generics.ListAPIView):
-    seriallizer_class = ClientSerializer
+    serializer_class = ClientSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         client = self.request.user
+        return client.friends.all()

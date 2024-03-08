@@ -345,3 +345,51 @@ class RemoveFriendTestCase(TestCase):
             content_type="application/json",
         )
         self.assertEqual(response.status_code, 404)
+
+
+class FriendListTestCase(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+        # Create users to add friend
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
+        payload = {
+            "username": "user2",
+            "email": "user2@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry2",
+            "lastname": "tom2",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
+        # Sign in
+        sign_in_payload = {"username": "user1", "password": "12345"}
+        self.client.post(
+            reverse("sign_in"), sign_in_payload, content_type="application/json"
+        )
+
+        # Add friend
+        add_friend_payload = {"username": "user2"}
+        self.client.post(
+            reverse("add_friend"), add_friend_payload, content_type="application/json"
+        )
+
+    def test_get_list(self):
+        response = self.client.get(reverse("friend_list"))
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.content)
+        self.assertEqual(len(response_data), 1)
+        self.assertEqual(response_data[0]["username"], "user2")
