@@ -10,5 +10,8 @@ class Blog(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
+    likes = models.IntegerField(default=0) 
+    dislikes = models.IntegerField(default=0)  
+    game = models.TextField(default="null")  
     def __str__(self):
         return self.title
