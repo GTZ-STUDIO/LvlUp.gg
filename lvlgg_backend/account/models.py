@@ -60,7 +60,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
     lastname = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    friends = models.ManyToManyField("self", symmetrical=True, blank=True)
+    friends = models.ManyToManyField("self", symmetrical=False, blank=True)
 
     objects = CustomUserManager()
 

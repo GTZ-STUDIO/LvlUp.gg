@@ -3,7 +3,7 @@ from comment.models import Comment
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, status
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -236,3 +236,42 @@ class FollowFriendView(APIView):
             status=status.HTTP_200_OK,
             data={"Message": f"{friend.username} has been added to the friend list"},
         )
+
+
+class RemoveFriendView(APIView):
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
+
+        data = request.data
+
+        username = data.get("username")
+
+        # Return 400 if missing username in the payload
+        if not username:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"Error": "Missing friend's username"},
+            )
+
+        client = get_object_or_404(Client, pk=request.user.id)
+        friend = get_object_or_404(Client, username=username)
+
+        client.friends.remove(friend)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "Message": f"{friend.username} has been removed from the friend list"
+            },
+        )
+
+
+class FriendListView(generics.ListAPIView):
+    seriallizer_class = ClientSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        client = self.request.user
