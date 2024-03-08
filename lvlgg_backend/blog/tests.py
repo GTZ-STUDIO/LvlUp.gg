@@ -111,7 +111,7 @@ class BlogViewTestCase(TestCase):
             self.assertIn('id', blog)
             self.assertIn('title', blog)
            
-        first_blog = blogs[1]
+        first_blog = blogs[0]
         self.assertEqual(first_blog['title'], payload['title'])
      
 
