@@ -67,20 +67,105 @@
 
 
 .guides {
-  flex-direction: column;
+  position: relative;
   height: 98vh;
   background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  font-size: 70px;
   font-family: OCR A Std, monospace;
   color: #02f2ff;
+  padding: 20px;
 }
 
-.guides-button{
+.guides-button {
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #0e94e2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.guides-button:hover {
+  background-color: #0c7abf;
+}
+
+.guide-titles {
+  font-size: 30px;
+  margin-top: 0; /* Remove default margin */
+  margin-bottom: 70px; /* Add margin to separate from buttons */
+  position: absolute; /* Position absolute to move to top left corner */
+  top: 40px; /* Distance from top */
+  left: 20px; /* Distance from left */
+}
+
+.guide-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+ 
+
+.guide-list li {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.guide-title {
+  padding: 10px;
+  background-color: #0e94e2;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+}
+
+.guide-title:hover {
+  background-color: #0c7abf;
+}
+
+.guide-content {
+  margin-top: 20px;
+}
+
+.guide-content h2 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-family: OCR A Std, monospace;
+}
+
+.guide-content p {
+  font-size: 12px;
+  margin-bottom: 5px;
+  font-family: OCR A Std, monospace;
+}
+
+.guide-content .date {
+  font-style: italic;
+}
+
+.guide-content .author {
+  font-weight: bold;
+}
 
 
+
+.top-right {
+  position: absolute;
+  top: 30px;
+  right: 20px;
 }
 
 .settings {
@@ -164,15 +249,40 @@
 }
 
 .createguide {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 98vh;
   background-color: #020913;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  font-size: 70px;
-  font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #0e94e2;
+  padding: 20px;
+}
+
+.createguide input,
+.createguide textarea,
+.createguide button {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #0e94e2;
+  border-radius: 5px;
+  background-color: #020913;
+  color: #0e94e2;
+  font-size: 16px;
+}
+
+.createguide button {
+  cursor: pointer;
+  background-color: #0e94e2;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.createguide button:hover {
+  background-color: #0c7abf;
 }
 
 .signup {
