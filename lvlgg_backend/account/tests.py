@@ -393,3 +393,94 @@ class FriendListTestCase(TestCase):
         response_data = json.loads(response.content)
         self.assertEqual(len(response_data), 1)
         self.assertEqual(response_data[0]["username"], "user2")
+
+
+class FriendBlogsTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+        # Create users to add friend
+        payload = {
+            "username": "user1",
+            "email": "user1@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry",
+            "lastname": "tom",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
+        payload = {
+            "username": "user2",
+            "email": "user2@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry2",
+            "lastname": "tom2",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
+        # Sign in
+        sign_in_payload = {"username": "user1", "password": "12345"}
+        self.client.post(
+            reverse("sign_in"), sign_in_payload, content_type="application/json"
+        )
+
+        # Add friend
+        add_friend_payload = {"username": "user2"}
+        self.client.post(
+            reverse("add_friend"), add_friend_payload, content_type="application/json"
+        )
+
+        # Sign in user 2
+        sign_in_payload = {"username": "user2", "password": "12345"}
+        self.client.post(
+            reverse("sign_in"), sign_in_payload, content_type="application/json"
+        )
+        # user2 post blog
+        user2_id = C.objects.filter(username="user2").first().id
+        payload = {
+            "content": "Stuff for a bloggggg",
+            "title": "My Title",
+            "author": user2_id,
+            "game": "Minecraft",
+        }
+
+        url = "/blog/create_blog/"
+
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        url = reverse("sign_out")
+        self.client.get(url)
+
+    def test_get_friend_blogs(self):
+
+        # Test without log in
+        friend_name = "user2"
+        url = f"/account/friend/{friend_name}/blogs"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
+
+        # Sign in as user1
+        sign_in_payload = {"username": "user1", "password": "12345"}
+        self.client.post(
+            reverse("sign_in"), sign_in_payload, content_type="application/json"
+        )
+
+        # Check friend user2's posts
+        friend_name = "user2"
+        url = f"/account/friend/{friend_name}/blogs"
+        response = self.client.get(url)
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0]["title"], "My Title")
+
+        # Check an user that is not a friend
+        friend_name = "test_name"
+        url = f"/account/friend/{friend_name}/blogs"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)

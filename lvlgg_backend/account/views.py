@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Client
-from .serializer import ClientSerializer
+from .serializer import BlogSerializer, ClientSerializer
 
 
 class ClientDetailView(APIView):
@@ -153,6 +153,10 @@ class ClientDetailView(APIView):
 
 
 class ClientListView(generics.ListAPIView):
+    """
+    View list of friend of the Client
+    """
+
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
 
@@ -297,3 +301,39 @@ class FriendListView(generics.ListAPIView):
         """
         client = self.request.user
         return client.friends.all()
+
+
+class FriendBlogsView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = BlogSerializer
+
+    def get_queryset(self):
+        """
+        View list of blog from a friend
+        TODO: Adding filters when search for blogs
+
+        Returns:
+            A list of friend blogs
+            200: Successful
+            403: Unauthorzied.
+            404: Friend not found
+        """
+        my_friends = self.request.user.friends.all()
+        friend_name = self.kwargs["username"]
+        target_friend = my_friends.filter(username=friend_name).first()
+        if not target_friend:
+            return None
+        else:
+            friend_blog = target_friend.blog_set.all()
+            return friend_blog
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        if queryset is not None:
+            serlizer = self.get_serializer(queryset, many=True)
+            return Response(serlizer.data)
+        else:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"Error": "This user is not in your friend list."},
+            )
