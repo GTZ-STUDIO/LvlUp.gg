@@ -1,3 +1,4 @@
+from blog.models import Blog
 from rest_framework import serializers
 
 from .models import Client
@@ -24,3 +25,9 @@ class ClientSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = "__all__"
