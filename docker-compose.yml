@@ -13,6 +13,7 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   backend:
+    image: verzaccii/lvlupgg-backend
     build: 
       context: ./lvlgg_backend
       dockerfile: Dockerfile.backend
@@ -36,6 +37,7 @@ services:
       - "5050:80"
 
   frontend:
+    image: verzaccii/lvlupgg-frontend
     build: 
       context: ./lvlgg_frontend
       dockerfile: Dockerfile.frontend

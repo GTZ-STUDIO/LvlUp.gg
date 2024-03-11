@@ -52,6 +52,10 @@ class Blogs(View):
             # Attempt to retrieve the blog with the provided primary key
             blog = get_object_or_404(Blog, pk=pk)
             
+            #Make sure user that is deleting is the user that created
+            if request.user.id != blog.author.id:
+                return JsonResponse({'error': 'Account cannot delete blog it did not create'}, status=404)
+
             # Delete the blog
             blog.delete()
             
@@ -67,8 +71,12 @@ class Blogs(View):
         if not request.user.is_authenticated:
             return JsonResponse({'error': 'Not Logged In'}, status=404)
         
-        try:
+        try:  
             blog = get_object_or_404(Blog, pk=pk)
+
+            if request.user.id != blog.author.id:
+                return JsonResponse({'error': 'Account cannot update blog it did not create'}, status=404)
+            
             data = json.loads(request.body.decode('utf-8'))
             title = data.get('title')
             content = data.get('content')
@@ -90,25 +98,48 @@ class Blogs(View):
         # Query the 10 newest blog instances, ordered by date posted in descending order
         blogs = Blog.objects.order_by('-date_posted')[:10]
 
-            # Convert each blog instance into a dictionary with only id and title
+        # Convert each blog instance into a dictionary with only id and title
         blogs_list = list(blogs.values('id', 'title'))
         
         # Return the list as a JSON response
         return JsonResponse({'blogs': blogs_list})
         
 class GetBlogs(View):
-    def get(self, request, pk):
-        try:
-            # Attempt to retrieve the specific blog by primary key and convert it into a dictionary
-            blog = Blog.objects.filter(pk=pk).values('id', 'title', 'content', 'date_posted', 'author', 'likes', 'dislikes', 'game').first()
+    def get(self, request, *args, **kwargs):
+        # Access query parameters
+        filters = request.GET
 
-            # Return the blog as a JSON response
-            return JsonResponse(blog)
+        if 'id' in filters:
+            # If 'id' is provided, fetch the single blog with this ID.
+            blog = get_object_or_404(Blog, id=filters['id'])
+            blog_data = {'id': blog.id, 'title': blog.title}
+            return JsonResponse({'blogs': [blog_data]})
 
-        except Blog.DoesNotExist:
-            return JsonResponse({'error': 'Blog not found'}, status=404)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+        # Filter queryset based on query parameters
+        queryset = Blog.objects.all()
+
+        if 'game' in filters:
+            queryset = queryset.filter(game=filters['game'])
+        if 'author' in filters:
+            queryset = queryset.filter(author=filters['author'])
+        if 'title' in filters:
+            # Perform case-insensitive substring matching on the title field
+            queryset = queryset.filter(title__icontains=filters['title'])
+
+        # Order the queryset by date posted
+            
+        if 'order' in filters:
+            if filters['order'] == 'old':
+                queryset = queryset.order_by('date_posted')[:10]
+            elif filters['order'] == 'likes':
+                queryset = queryset.order_by('-likes')[:10]
+        else:
+            queryset = queryset.order_by('-date_posted')[:10]
+
+        # Convert each blog instance into a dictionary with only id and title
+        blogs_list = list(queryset.values('id', 'title'))
+
+        return JsonResponse({'blogs': blogs_list})
         
     def put(self, request, pk):
         if not request.user.is_authenticated:
