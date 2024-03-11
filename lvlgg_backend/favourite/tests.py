@@ -131,7 +131,6 @@ class FavouriteBlogsTestCase(TestCase):
         # Unsubscribe a unfavourite blog
         url = f"/favourite/unsubscribe/{blog_id_last}/"
         response = self.client.delete(url)
-        print(response.content)
         self.assertEqual(response.status_code, 400)
 
         # Subscribe another blog from user 2
