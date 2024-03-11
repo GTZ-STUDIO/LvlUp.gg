@@ -52,6 +52,10 @@ class Comments(View):
         
         try:
             comment = get_object_or_404(Comment, pk=pk)
+
+            if request.user.id != comment.author.id:
+                return JsonResponse({'error': 'Account cannot delete blog it did not create'}, status=404)
+
             comment.delete()
             return JsonResponse({'message': 'Comment deleted successfully'}, status=200)
         except Http404:
@@ -67,6 +71,10 @@ class Comments(View):
         
         try:
             comment = get_object_or_404(Comment, pk=pk)
+
+            if request.user.id != comment.author.id:
+                return JsonResponse({'error': 'Account cannot update blog it did not create'}, status=404)
+            
             data = json.loads(request.body.decode('utf-8'))
             content = data.get('content')
             if not content:
