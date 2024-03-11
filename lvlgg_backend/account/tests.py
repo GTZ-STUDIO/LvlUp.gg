@@ -460,7 +460,7 @@ class FriendBlogsTestCase(TestCase):
 
         # Test without log in
         friend_name = "user2"
-        url = f"/account/friend/{friend_name}/blogs"
+        url = f"/account/friend/{friend_name}/blogs/"
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
 
@@ -472,7 +472,7 @@ class FriendBlogsTestCase(TestCase):
 
         # Check friend user2's posts
         friend_name = "user2"
-        url = f"/account/friend/{friend_name}/blogs"
+        url = f"/account/friend/{friend_name}/blogs/"
         response = self.client.get(url)
         data = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
@@ -481,6 +481,6 @@ class FriendBlogsTestCase(TestCase):
 
         # Check an user that is not a friend
         friend_name = "test_name"
-        url = f"/account/friend/{friend_name}/blogs"
+        url = f"/account/friend/{friend_name}/blogs/"
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
