@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "favourite.apps.FavouriteConfig",
     "blog.apps.BlogConfig",
     "account.apps.AccountConfig",
     "comment.apps.CommentConfig",
@@ -157,10 +158,4 @@ CORS_ALLOWED_METHODS = [
     "PUT",
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
-
-
-
-
-
-
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
