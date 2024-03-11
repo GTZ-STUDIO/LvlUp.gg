@@ -6,6 +6,7 @@ export default function CreateGuide() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const { userPk } = useContext(AuthContext);
+  const [ game, setGame ] = useState('');
 
   const getCookie = (name) => {
     const cookieValue = document.cookie
@@ -26,6 +27,7 @@ export default function CreateGuide() {
         title,
         content,
         author: userPk, // Use the current user's ID as the author
+        game,
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -51,6 +53,15 @@ export default function CreateGuide() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder={'Title'}
+        required
+      />
+      <input
+        type="game"
+        id="game"
+        name="game"
+        value={game}
+        onChange={(e) => setGame(e.target.value)}
+        placeholder={'game'}
         required
       />
       <textarea
