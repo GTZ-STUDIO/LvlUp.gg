@@ -36,6 +36,17 @@ class FavouriteBlogsTestCase(TestCase):
         url = "/account/signup/"
         self.client.post(url, payload, content_type="application/json")
 
+        payload = {
+            "username": "user3",
+            "email": "user3@hotmail.com",
+            "password": "12345",
+            "firstname": "jerry3",
+            "lastname": "tom3",
+        }
+
+        url = "/account/signup/"
+        self.client.post(url, payload, content_type="application/json")
+
         # Sign in
         sign_in_payload = {"username": "user1", "password": "12345"}
         self.client.post(
@@ -57,9 +68,15 @@ class FavouriteBlogsTestCase(TestCase):
         }
 
         url = "/blog/create_blog/"
+        self.client.post(url, payload, content_type="application/json")
 
-        response = self.client.post(url, payload, content_type="application/json")
-        self.assertEqual(response.status_code, 200)
+        # User2's second blog
+        payload = {
+            "content": "Stuff for a bloggggg2",
+            "title": "My Title2",
+            "author": user2_id,
+            "game": "Minecraft",
+        }
 
         url = reverse("sign_out")
         self.client.get(url)
@@ -91,3 +108,41 @@ class FavouriteBlogsTestCase(TestCase):
         url = f"/favourite/subscribe/100/"
         response = self.client.post(url)
         self.assertEqual(response.status_code, 404)
+
+    def test_delete_favourite(self):
+        user2_id = C.objects.filter(username="user2").first().id
+        blog_id = Blog.objects.filter(author=user2_id).first().id
+        blog_id_last = Blog.objects.filter(author=user2_id).last().id
+
+        # Sign in as user1
+        sign_in_payload = {"username": "user1", "password": "12345"}
+        self.client.post(
+            reverse("sign_in"), sign_in_payload, content_type="application/json"
+        )
+        # Favourite user2's first blog
+        url = f"/favourite/subscribe/{blog_id}/"
+        self.client.post(url)
+
+        # Unsubscribe the user2's first blog
+        url = f"/favourite/unsubscribe/{blog_id}/"
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, 200)
+
+        # Unsubscribe a unfavourite blog
+        url = f"/favourite/unsubscribe/{blog_id_last}/"
+        response = self.client.delete(url)
+        print(response.content)
+        self.assertEqual(response.status_code, 400)
+
+        # Subscribe another blog from user 2
+        url = f"/favourite/subscribe/{blog_id}/"
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 200)
+
+        # Sign out user 1
+        self.client.get(reverse("sign_out"))
+
+        # Try unsubscribe
+        url = f"/favourite/unsubscribe/{blog_id}/"
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, 403)

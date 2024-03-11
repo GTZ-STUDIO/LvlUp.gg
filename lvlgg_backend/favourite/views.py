@@ -25,7 +25,19 @@ class FavouriteBlogsView(APIView):
         pass
 
     def post(self, request, blog_pk):
+        """
+        Client add favourite blog to their list
 
+        Args:
+            request: http request
+            blog_pk: primary key of a blog client would like to add
+
+        Returns:
+            A list of favourite blogs of current client
+            200: Successful
+            403: Unabuthorized
+            404: Blog not found
+        """
         client = request.user
         blog = get_object_or_404(Blog, pk=blog_pk)
 
@@ -40,6 +52,23 @@ class FavouriteBlogsView(APIView):
         favourite_blog = Favourite.objects.create(client=client, blog=blog)
         serializer = FavouriteSerializer(favourite_blog)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, blog_pk):
+        client = request.user
+        blog = get_object_or_404(Blog, pk=blog_pk)
+        favourite = Favourite.objects.filter(client=client, blog=blog)
+
+        # Check either this favourite record does not exist or this favourite record
+        # does not belong to current log in user
+        if not favourite:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"Error": "Client has not favourited this blog yet."},
+            )
+        favourite.delete()
+        return Response(
+            status=status.HTTP_200_OK, data={"Message": "Unsubscribe successfully"}
+        )
 
 
 class FavouriteBlogsListView(generics.ListAPIView):
