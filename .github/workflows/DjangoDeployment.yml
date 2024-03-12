@@ -24,8 +24,11 @@ env:
   PYTHON_VERSION: '3.10'              # set this to the Python version to use
 
 on:
-  push:
+  workflow_run:
     branches: [ "master" ]
+    workflows: ["Django CI", "Node.js CI"]
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
