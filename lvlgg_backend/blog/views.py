@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.core import serializers
 from django.views import View
 from account.models import Client
+from django.core.serializers.json import DjangoJSONEncoder
 import json
 from .models import Blog
 
@@ -112,8 +113,17 @@ class GetBlogs(View):
         if 'id' in filters:
             # If 'id' is provided, fetch the single blog with this ID.
             blog = get_object_or_404(Blog, id=filters['id'])
-            blog_data = {'id': blog.id, 'title': blog.title}
-            return JsonResponse({'blogs': [blog_data]})
+            blog_data = {
+                'id': blog.id,
+                'title': blog.title,
+                'content': blog.content,
+                'date_posted': blog.date_posted.strftime("%Y-%m-%d %H:%M:%S"),
+                'author': blog.author.username if blog.author else None,
+                'likes': blog.likes,
+                'dislikes': blog.dislikes,
+                'game': blog.game
+            }
+            return JsonResponse({'blogs': [blog_data]}, encoder=DjangoJSONEncoder)
 
         # Filter queryset based on query parameters
         queryset = Blog.objects.all()
