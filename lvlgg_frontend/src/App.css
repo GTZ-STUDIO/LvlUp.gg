@@ -285,6 +285,60 @@
   background-color: #0c7abf;
 }
 
+/* Style the dropdown container */
+.dropdown-container {
+  position: relative;
+}
+
+/* Style the dropdown select */
+.dropdown-select {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #0e94e2;
+  border-radius: 5px;
+  background-color: #020913;
+  color: gray
+}
+
+/* Style the dropdown arrow */
+.dropdown-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure the arrow does not interfere with clicking the select */
+}
+
+/* Style the dropdown options */
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  max-height: 200px; /* Adjust as needed */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(124, 124, 124, 0.1);
+}
+
+/* Style the dropdown option items */
+.dropdown-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: gray
+}
+
+/* Style the selected option */
+.dropdown-option.selected {
+  background-color: #f0f0f0;
+}
+
+
 .signup {
   flex-direction: column;
   height: 98vh;

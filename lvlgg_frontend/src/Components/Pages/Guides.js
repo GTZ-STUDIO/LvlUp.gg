@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../App.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 //import { AuthContext } from '../../Contexts/AuthContext'
 
@@ -9,21 +9,30 @@ export default function Guides() {
   //const {setIsSignedIn} = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const location = useLocation();
+  const game = new URLSearchParams(location.search).get('gameName');
 
   useEffect(() => {
-    axios.get('http://localhost:8000/blog/getlist/')
+    let url = 'http://localhost:8000/blog/get_blog/';
+    if (game) {
+      url = `http://localhost:8000/blog/get_blog/?game=${game}`;
+    }
+
+    axios.get(url)
       .then(response => {
         setBlogs(response.data.blogs);
       })
       .catch(error => {
         console.error('Error fetching blogs:', error);
       });
-  }, []);
+  }, [game]); 
 
   const handleBlogClick = (blogId) => {
-    axios.get(`http://localhost:8000/blog/get_blog/${blogId}/`)
+    axios.get(`http://localhost:8000/blog/get_blog/?id=${blogId}`)
       .then(response => {
-        setSelectedBlog(response.data);
+        console.log(response.data.blogs)
+        setSelectedBlog(response.data.blogs);
+        console.log(selectedBlog[0].content)
       })
       .catch(error => {
         console.error('Error fetching blog content:', error);
@@ -61,12 +70,12 @@ export default function Guides() {
       </ul>
     )}
     <div className='guide-content'>
-      {selectedBlog && (
+      {selectedBlog && selectedBlog.length > 0  && (
         <div>
-          <h2>{selectedBlog.title}</h2>
-          <p>{selectedBlog.content}</p>
-          <p>Date Posted: {formatDate(selectedBlog.date_posted)}</p>
-          <p>Author: {selectedBlog.author}</p>
+          <h2>{selectedBlog[0].title}</h2>
+          <p>{selectedBlog[0].content}</p>
+          <p>Date Posted: {formatDate(selectedBlog[0].date_posted)}</p>
+          <p>Author: {selectedBlog[0].author}</p>
         </div>
       )}
     </div>

@@ -55,15 +55,23 @@ export default function CreateGuide() {
         placeholder={'Title'}
         required
       />
-      <input
-        type="game"
+      <select
+        className='dropdown-select'
         id="game"
         name="game"
         value={game}
         onChange={(e) => setGame(e.target.value)}
-        placeholder={'game'}
+        defaultValue={""}
         required
-      />
+      >
+        <option value="" disabled selected>Select a game</option>
+        <option value="EldenRing">EldenRing</option>
+        <option value="Dota2">Dota2</option>
+        <option value="LeagueOfLegends">LeagueOfLegends</option>
+        <option value="BaldursGate3">BaldursGate3</option>
+        <option value="CSGO">CSGO</option>
+      </select>
+      
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
