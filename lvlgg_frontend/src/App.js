@@ -9,6 +9,8 @@ import SignUp from './Components/Pages/SignUp'
 import About from './Components/Pages/About'
 import Guides from './Components/Pages/Guides'
 import SignIn from './Components/Pages/SignIn'
+import CreateGuide from './Components/Pages/CreateGuide'
+import Settings from './Components/Pages/Settings'
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
         <Route path='/about' component={About} />
         <Route path='/guides' component={Guides} />
         <Route path='/signin' component={SignIn} />
+        <Route path='/createguide' component={CreateGuide} />
+        <Route path='/settings' component={Settings} />
       </Switch>
     </Router>
     </>

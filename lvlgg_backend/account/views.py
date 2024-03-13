@@ -1,14 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from rest_framework import status
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Client
-from .serializer import ClientSerializer
-
-# Create your views here.
+from .serializer import BlogSerializer, ClientSerializer
 
 
 class ClientDetailView(APIView):
@@ -59,7 +57,7 @@ class ClientDetailView(APIView):
             else:
                 return Response(
                     status=status.HTTP_400_BAD_REQUEST,
-                    data={"Error": "Missing required field for createing account"},
+                    data={"Error": "Missing required field for creating account"},
                 )
         except ValidationError:
             return Response(
@@ -78,7 +76,17 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success, 404 for client does not exist
         """
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
         client = get_object_or_404(Client, pk=pk)
+        if client.username != request.user.username:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "You cannot delete other user's profile"},
+            )
         client.delete()
 
         return Response(
@@ -97,8 +105,14 @@ class ClientDetailView(APIView):
         Returns:
             DRF response, 200 for success or 404 for client does not exist
         """
+
         # use pk to retrieve a client
         if pk != None:
+            if not request.user.is_authenticated:
+                return Response(
+                    status=status.HTTP_403_FORBIDDEN,
+                    data={"Error": "Please log in first to proceed."},
+                )
             client = get_object_or_404(Client, pk=pk)
             serializer = ClientSerializer(client)
             return Response(serializer.data)
@@ -107,12 +121,22 @@ class ClientDetailView(APIView):
             return Response(
                 status=status.HTTP_200_OK, data={"message": "Log out successfully"}
             )
-            
 
     def put(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
         data = request.data
 
         client = get_object_or_404(Client, pk=pk)
+        if client.username != request.user.username:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "You can only change your own user profile"},
+            )
+
         serializer = ClientSerializer(client, data=data, partial=True)
 
         if serializer.is_valid():
@@ -126,11 +150,13 @@ class ClientDetailView(APIView):
         )
 
 
-class ClientListView(APIView):
-    def get(self, request):
-        clients = Client.objects.all()
-        serializer = ClientSerializer(clients, many=True)
-        return Response(serializer.data)
+class ClientListView(generics.ListAPIView):
+    """
+    View list of friend of the Client
+    """
+
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
 
 
 class SignInView(APIView):
@@ -159,11 +185,153 @@ class SignInView(APIView):
 
         if user is not None:
             login(request, user)
-            return Response(
-                status=200, data={"message": f"{username} log in successfully"}
-            )
+            user = get_object_or_404(Client, username=username)
+            serializer = ClientSerializer(user)
+            return Response(status=200, data=serializer.data)
         else:
             # Unauthorized client 401
             return Response(
-                status=401, data={"message": "Incorrect username or password"}
+                status=401,
+                data={
+                    "message": "The username and password provided does not match with any user"
+                },
+            )
+
+
+class FollowFriendView(APIView):
+    def post(self, request):
+        """
+        Add a client as a friend
+
+        Args:
+            request: request is account/friend with a payload
+                     {"username":"Friend's username"}
+
+        Returns:
+            200: success
+            400: payload does does contain any username
+            404: no such user under that username
+            403: request user is not authenticated
+        """
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
+
+        data = request.data
+
+        username = data.get("username")
+
+        # Return 400 if missing username in the payload
+        if not username:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"Error": "Missing friend's username"},
+            )
+
+        client = get_object_or_404(Client, pk=request.user.id)
+        friend = get_object_or_404(Client, username=username)
+
+        client.friends.add(friend)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={"Message": f"{friend.username} has been added to the friend list"},
+        )
+
+
+class RemoveFriendView(APIView):
+    def post(self, request):
+        """
+        Remove a friend from user's friend list
+
+        Args:
+            request (HTTP request): payload is username of
+                                    the friend client wants
+                                    to add.
+
+        Returns:
+            Repsonse: 200 success
+                      400 missing username in payload
+                      403 unauthenticated
+                      404 cannot find the friend in DB
+        """
+        if not request.user.is_authenticated:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"Error": "Please log in first to proceed."},
+            )
+
+        data = request.data
+
+        username = data.get("username")
+
+        # Return 400 if missing username in the payload
+        if not username:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"Error": "Missing friend's username"},
+            )
+
+        client = get_object_or_404(Client, pk=request.user.id)
+        friend = get_object_or_404(Client, username=username)
+
+        client.friends.remove(friend)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                "Message": f"{friend.username} has been removed from the friend list"
+            },
+        )
+
+
+class FriendListView(generics.ListAPIView):
+    serializer_class = ClientSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Overright the get_query method in DRF to return a list of
+        client's friend.
+
+        Returns:
+            A list of friends of a authenticated user.
+        """
+        client = self.request.user
+        return client.friends.all()
+
+
+class FriendBlogsView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = BlogSerializer
+
+    def get_queryset(self):
+        """
+        View list of blog from a friend
+        TODO: Adding filters when search for blogs
+
+        Returns:
+            A list of friend blogs
+            200: Successful
+            403: Unauthorzied.
+            404: Friend not found
+        """
+        my_friends = self.request.user.friends.all()
+        friend_name = self.kwargs["username"]
+        target_friend = my_friends.filter(username=friend_name).first()
+        if not target_friend:
+            return None
+        else:
+            friend_blog = target_friend.blog_set.all()
+            return friend_blog
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        if queryset is not None:
+            serlizer = self.get_serializer(queryset, many=True)
+            return Response(serlizer.data)
+        else:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={"Error": "This user is not in your friend list."},
             )

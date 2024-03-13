@@ -13,10 +13,24 @@ class CommentViewTestCase(TestCase):
 
     def setUp(self):
         # Create a Client instance
-        self.client_user = Client.objects.create(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
+        self.client_user = Client.objects.create_user(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
+        # Verify that the Client instance is createds
         self.assertIsNotNone(self.client_user)
+        # Verify that the primary key is retrieved correctly
         self.assertIsNotNone(self.client_user.pk)
+        # Save the primary key for later use
         self.user_pk = self.client_user.pk
+
+        #Login
+        payload = {
+            "username" : "user1",
+            "password" : "testpassword"
+        }
+
+        url = "/account/signin/"
+
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
 
         self.blog_post = Blog.objects.create(
             title="Sample Blog Post",

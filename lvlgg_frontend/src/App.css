@@ -11,7 +11,8 @@
 .guides,
 .about,
 .signup,
-.signin {
+.signin,
+.createguide {
   display: flex;
   height: 100vh;
   align-items: center;
@@ -22,13 +23,13 @@
 .signin {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 20px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
 }
 
 .signin-form {
@@ -49,10 +50,10 @@
 }
 
 .signin-button {
-  margin-top: 20px;
+  margin-top: 30px;
   cursor: pointer;
   background-color: rgb(31, 84, 165);
-  color: white;
+  color: #02f2ff;
   padding: 10px;
   border: none;
   border-radius: 17px;
@@ -66,27 +67,288 @@
 
 
 .guides {
-  flex-direction: column;
+  position: relative;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  font-size: 70px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
+  padding: 20px;
 }
+
+.guides-button {
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #0e94e2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.guides-button:hover {
+  background-color: #0c7abf;
+}
+
+.guide-titles {
+  font-size: 30px;
+  margin-top: 0; /* Remove default margin */
+  margin-bottom: 70px; /* Add margin to separate from buttons */
+  position: absolute; /* Position absolute to move to top left corner */
+  top: 40px; /* Distance from top */
+  left: 20px; /* Distance from left */
+}
+
+.guide-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+ 
+
+.guide-list li {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.guide-title {
+  padding: 10px;
+  background-color: #0e94e2;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+}
+
+.guide-title:hover {
+  background-color: #0c7abf;
+}
+
+.guide-content {
+  margin-top: 20px;
+}
+
+.guide-content h2 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-family: OCR A Std, monospace;
+}
+
+.guide-content p {
+  font-size: 12px;
+  margin-bottom: 5px;
+  font-family: OCR A Std, monospace;
+}
+
+.guide-content .date {
+  font-style: italic;
+}
+
+.guide-content .author {
+  font-weight: bold;
+}
+
+
+
+.top-right {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  flex-direction: column;
+  height: 98vh;
+  background-color: #020913;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 12px;
+  font-family: OCR A Std, monospace;
+  color: #02f2ff;
+}
+
+.settings h1 {
+  font-family: OCR A Std, monospace;
+  margin-top: 230px; /* Add space above the h1 */
+  z-index: 1;
+}
+
+.rectangle {
+  position: fixed;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  height: 70vh; 
+  background-color:#021125d3;
+  border-radius: 1px; /* Adjust the border radius to make the edges round */
+  z-index: 0;
+}
+
+.settings-btn {
+  margin-bottom: 10px; 
+  display: inline-block;
+  padding: 8px 32px;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: rgb(3, 12, 36);
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.settings-btn-delete{
+  margin-bottom: 100px; 
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #b0d4ec;
+  color: rgb(0, 0, 0);
+  font-size: medium;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1;
+}
+
+.settings-btn:hover {
+  background-color: #0056b3;
+}
+
+.input-wrapper {
+  display: flex;
+  z-index: 4;
+  margin-bottom:80px;
+}
+
+.input-wrapper input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+}
+
+.createguide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 98vh;
+  background-color: #020913;
+  color: #0e94e2;
+  padding: 20px;
+}
+
+.createguide input,
+.createguide textarea,
+.createguide button {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #0e94e2;
+  border-radius: 5px;
+  background-color: #020913;
+  color: #0e94e2;
+  font-size: 16px;
+}
+
+.createguide button {
+  cursor: pointer;
+  background-color: #0e94e2;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.createguide button:hover {
+  background-color: #0c7abf;
+}
+
+/* Style the dropdown container */
+.dropdown-container {
+  position: relative;
+}
+
+/* Style the dropdown select */
+.dropdown-select {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #0e94e2;
+  border-radius: 5px;
+  background-color: #020913;
+  color: gray
+}
+
+/* Style the dropdown arrow */
+.dropdown-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure the arrow does not interfere with clicking the select */
+}
+
+/* Style the dropdown options */
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  max-height: 200px; /* Adjust as needed */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(124, 124, 124, 0.1);
+}
+
+/* Style the dropdown option items */
+.dropdown-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: gray
+}
+
+/* Style the selected option */
+.dropdown-option.selected {
+  background-color: #f0f0f0;
+}
+
 
 .signup {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 20px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
 }
 
 .signup-form {
@@ -101,7 +363,7 @@
 
 .signup-input {
   padding: 10px;
-  background-color: white;
+  background-color: rgb(129, 145, 153);
   border: none;
   border-radius: 10px;
 }
@@ -110,7 +372,7 @@
   margin-top: 20px;
   cursor: pointer;
   background-color: rgb(31, 84, 165);
-  color: white;
+  color: #02f2ff;
   padding: 10px;
   border: none;
   border-radius: 17px;
@@ -122,14 +384,19 @@
   background-color: #bfbdc7;
 }
 
+.signup-font{
+  font-size: 15px;
+  margin-top: 30px;
+}
+
 .about {
   flex-direction: column;
   height: 98vh;
-  background-image: url('../public/images/img-test.jpg');
+  background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   font-size: 70px;
   font-family: OCR A Std, monospace;
-  color: rgb(14, 148, 226);
+  color: #02f2ff;
 }

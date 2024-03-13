@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "favourite.apps.FavouriteConfig",
     "blog.apps.BlogConfig",
     "account.apps.AccountConfig",
     "comment.apps.CommentConfig",
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -146,12 +148,14 @@ AUTH_USER_MODEL = "account.Client"
 AUTHENTICATION_BACKENDS = ["account.backends.AccountBackend"]
 
 CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-]
-
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]

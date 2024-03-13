@@ -2,6 +2,7 @@ from django.http import JsonResponse, Http404
 from account.models import Client
 from blog.models import Blog
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import authenticate
 from django.views.decorators.http import require_http_methods
 from django.views import View
 import json
@@ -10,6 +11,10 @@ from .models import Comment
 class Comments(View):
 
     def post(self, request):
+
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not Logged In'}, status=404)
+        
         data = json.loads(request.body.decode('utf-8')) 
         content = data.get('content')
         author_id = data.get('author')
@@ -41,8 +46,16 @@ class Comments(View):
     
 
     def delete(self, request, pk):
+
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not Logged In'}, status=404)
+        
         try:
             comment = get_object_or_404(Comment, pk=pk)
+
+            if request.user.id != comment.author.id:
+                return JsonResponse({'error': 'Account cannot delete blog it did not create'}, status=404)
+
             comment.delete()
             return JsonResponse({'message': 'Comment deleted successfully'}, status=200)
         except Http404:
@@ -52,8 +65,16 @@ class Comments(View):
     
     # Assuming you want to update comments as well
     def put(self, request, pk):
+
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not Logged In'}, status=404)
+        
         try:
             comment = get_object_or_404(Comment, pk=pk)
+
+            if request.user.id != comment.author.id:
+                return JsonResponse({'error': 'Account cannot update blog it did not create'}, status=404)
+            
             data = json.loads(request.body.decode('utf-8'))
             content = data.get('content')
             if not content:

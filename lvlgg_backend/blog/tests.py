@@ -12,13 +12,25 @@ class BlogViewTestCase(TestCase):
     
     def setUp(self):
         # Create a Client instance
-        self.client_user = Client.objects.create(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
-        # Verify that the Client instance is created
+        self.client_user = Client.objects.create_user(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
+        # Verify that the Client instance is createds
         self.assertIsNotNone(self.client_user)
         # Verify that the primary key is retrieved correctly
         self.assertIsNotNone(self.client_user.pk)
         # Save the primary key for later use
         self.user_pk = self.client_user.pk
+
+        #Login
+        payload = {
+            "username" : "user1",
+            "password" : "testpassword"
+        }
+
+        url = "/account/signin/"
+
+        response = self.client.post(url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
 
         self.blog_post = Blog.objects.create(
             title="Sample Blog Post",
@@ -37,7 +49,8 @@ class BlogViewTestCase(TestCase):
         payload = {
             "content": "Stuff for a bloggggg",
             "title": "My Title",
-            "author": self.user_pk
+            "author": self.user_pk,
+            "game" : "Minecraft"
         }
 
         url = "/blog/create_blog/"
@@ -67,14 +80,15 @@ class BlogViewTestCase(TestCase):
         payload = {
             "content": "Stuff for a bloggggg",
             "title": "My Title",
-            "author": self.user_pk
+            "author": self.user_pk,
+            "game" : "Minecraft"
         }
         create_url = "/blog/create_blog/"
         response = self.client.post(create_url, payload, content_type="application/json")
         self.assertEqual(response.status_code, 200)
 
         # Retrieve list of blogs
-        get_url = "/blog/getlist/"
+        get_url = "/blog/get_blog/"
         response = self.client.get(get_url)
 
         # Check response status code
@@ -96,25 +110,318 @@ class BlogViewTestCase(TestCase):
         for blog in blogs:
             self.assertIn('id', blog)
             self.assertIn('title', blog)
-            self.assertIn('content', blog)
-            self.assertIn('date_posted', blog)
-            self.assertIn('author', blog)
-
-        first_blog = blogs[1]
-        self.assertEqual(first_blog['content'], payload['content'])
+           
+        first_blog = blogs[0]
         self.assertEqual(first_blog['title'], payload['title'])
-        self.assertEqual(first_blog['author'], payload['author'])
+
+    def test_get_blogs_byId(self):
+        """
+        Test getting all blogs
+        """
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?id={self.blog_pk}"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertTrue(blogs)
+
+        # Check the structure of each blog in the list
+        for blog in blogs:
+            self.assertIn('id', blog)
+            self.assertIn('title', blog)
+           
+        first_blog = blogs[0]
+        self.assertEqual(first_blog['id'], self.blog_pk)
+
+    def test_get_blogs_byTitle(self):
+        """
+        Test getting all blogs
+        """
+        # Create a blog first
+        payload = {
+            "content": "Stuff for a bloggggg",
+            "title": "Sample Title Test",
+            "author": self.user_pk,
+            "game" : "Minecraft"
+        }
+        create_url = "/blog/create_blog/"
+        response = self.client.post(create_url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?title=Sample"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertEqual( len(blogs), 2)
+
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?title=Sample Title Test"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertEqual( len(blogs), 1)
+
+
+    def test_get_blogs_byGame(self):
+        """
+        Test getting all blogs
+        """
+        # Create a blog first
+        payload = {
+            "content": "Stuff for a bloggggg",
+            "title": "My Title",
+            "author": self.user_pk,
+            "game" : "Minecraft"
+        }
+        create_url = "/blog/create_blog/"
+        response = self.client.post(create_url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?game=Minecraft"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertTrue(blogs)
+
+        # Check the structure of each blog in the list
+        for blog in blogs:
+            self.assertIn('id', blog)
+            self.assertIn('title', blog)
+           
+        first_blog = blogs[0]
+        self.assertEqual(first_blog['title'], payload['title'])
+
+    def test_get_blogs_byAuthor(self):
+        """
+        Test getting all blogs
+        """
+        # Create a blog first
+        payload = {
+            "content": "Stuff for a bloggggg",
+            "title": "My Title",
+            "author": self.user_pk,
+            "game" : "Minecraft"
+        }
+        create_url = "/blog/create_blog/"
+        response = self.client.post(create_url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?author={self.user_pk}"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertTrue(blogs)
+
+        # Check the structure of each blog in the list
+        for blog in blogs:
+            self.assertIn('id', blog)
+            self.assertIn('title', blog)
+           
+        first_blog = blogs[0]
+        self.assertEqual(first_blog['title'], payload['title'])
+     
+    def test_get_blogs_byOrderOld(self):
+        """
+        Test getting all blogs
+        """
+        # Create a blog first
+        payload = {
+            "content": "Stuff for a bloggggg",
+            "title": "My Title",
+            "author": self.user_pk,
+            "game" : "Minecraft"
+        }
+        create_url = "/blog/create_blog/"
+        response = self.client.post(create_url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?order=old"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertTrue(blogs)
+
+        # Check the structure of each blog in the list
+        for blog in blogs:
+            self.assertIn('id', blog)
+            self.assertIn('title', blog)
+           
+        first_blog = blogs[1]
+        self.assertEqual(first_blog['title'], payload['title'])
+
+    def test_get_blogs_byOrderLikes(self):
+        """
+        Test getting all blogs
+        """
+        # Create a blog first
+        payload = {
+            "content": "Stuff for a bloggggg",
+            "title": "My Title",
+            "author": self.user_pk,
+            "game" : "Minecraft"
+        }
+        create_url = "/blog/create_blog/"
+        response = self.client.post(create_url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        #Update Likes
+
+        update_url = f"/blog/likes/{self.blog_pk}/"
+
+        update = {
+            "action": "like",
+            "value": 1,
+        }
+
+        response = self.client.put(update_url, update, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?order=likes"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertTrue(blogs)
+
+        # Check the structure of each blog in the list
+        for blog in blogs:
+            self.assertIn('id', blog)
+            self.assertIn('title', blog)
+           
+        first_blog = blogs[0]
+        self.assertEqual(first_blog['title'], "Sample Blog Post" )
+
+    def test_get_blogs_multiple_filters(self):
+        """
+        Test getting all blogs
+        """
+        # Create a blog first
+        payload = {
+            "content": "Stuff for a bloggggg",
+            "title": "My Title",
+            "author": self.user_pk,
+            "game" : "Minecraft"
+        }
+        create_url = "/blog/create_blog/"
+        response = self.client.post(create_url, payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        # Retrieve list of blogs
+        get_url = f"/blog/get_blog/?order=old&title=My Title&game=Minecraft"
+        response = self.client.get(get_url)
+
+        # Check response status code
+        self.assertEqual(response.status_code, 200)
+
+        # Parse JSON response
+        data = json.loads(response.content.decode('utf-8'))
+
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+
+        # Check if the returned list is not empty
+        self.assertTrue(blogs)
+
+        # Check the structure of each blog in the list
+        for blog in blogs:
+            self.assertIn('id', blog)
+            self.assertIn('title', blog)
+           
+        first_blog = blogs[0]
+        self.assertEqual(first_blog['title'], payload['title'])
 
     def test_get_blogs_empty(self):
         """
         Test getting all blogs when there are no blogs
         """
-        url = f"/blog/delete_blog/{self.blog_pk}/"
-        response = self.client.delete(url)
-        self.assertEqual(response.status_code, 200)
 
         # Retrieve list of blogs
-        get_url = "/blog/getlist/"
+        get_url = "/blog/get_blog/?game=NOTAGAME"
         response = self.client.get(get_url)
 
         # Check response status code
@@ -172,27 +479,29 @@ class BlogViewTestCase(TestCase):
         response = self.client.put(update_url, update, content_type="application/json")
         self.assertEqual(response.status_code, 404)
 
-    def test_specific_get(self):
+    def test_update_likes(self):
         """
-        Test getting a specific blog
+        Test updating a blog
         """
-        get_url = f"/blog/get_blog/{self.blog_pk}/"
-        response = self.client.get(get_url)
 
-        # Check response status code
+        update_url = f"/blog/likes/{self.blog_pk}/"
+
+        update = {
+            "action": "like",
+            "value": 1,
+        }
+
+        response = self.client.put(update_url, update, content_type="application/json")
         self.assertEqual(response.status_code, 200)
 
-        # Parse JSON response
-        data = json.loads(response.content.decode('utf-8'))
+        update['action'] = 'dislike'
+        response = self.client.put(update_url, update, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        update['action'] = 'like'
 
-        self.assertEqual(data['content'], "This is a sample blog post content.")
-        self.assertEqual(data['title'], "Sample Blog Post")
-
-        get_url = "/blog/get_blog/99/"
-        response = self.client.get(get_url)
-
-        # Check response status code
-        self.assertEqual(response.status_code, 500)
+        update['amount'] = -1
+        response = self.client.put(update_url, update, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
 
     def test_delete(self):
         """
@@ -210,3 +519,7 @@ class BlogViewTestCase(TestCase):
         url = f"/blog/delete_blog/{key}/"
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 404)
+
+    
+
+
