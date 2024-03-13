@@ -11,6 +11,7 @@ import Guides from './Components/Pages/Guides'
 import SignIn from './Components/Pages/SignIn'
 import CreateGuide from './Components/Pages/CreateGuide'
 import Settings from './Components/Pages/Settings'
+import BlogDetail from './Components/Pages/BlogDetail'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path='/signin' component={SignIn} />
         <Route path='/createguide' component={CreateGuide} />
         <Route path='/settings' component={Settings} />
+        <Route path='/blog/:id' component={BlogDetail} />
       </Switch>
     </Router>
     </>

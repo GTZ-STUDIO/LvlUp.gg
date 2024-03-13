@@ -81,24 +81,26 @@
 .guides-button {
   padding: 5px 10px;
   font-size: 12px;
-  background-color: #0e94e2;
+  background-color: #12b9e2;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: OCR A Std, monospace;
 }
 
 .guides-button:hover {
-  background-color: #0c7abf;
+  background-color: #043b3f;
 }
 
 .guide-titles {
-  font-size: 30px;
-  margin-top: 0; /* Remove default margin */
-  margin-bottom: 70px; /* Add margin to separate from buttons */
-  position: absolute; /* Position absolute to move to top left corner */
-  top: 40px; /* Distance from top */
-  left: 20px; /* Distance from left */
+  font-size: 25px;
+  margin-top: 0; 
+  margin-bottom: 70px; 
+  position: absolute; 
+  top: 60px; 
+  left: 50px; 
+  font-family: OCR A Std, monospace;
 }
 
 .guide-list {
@@ -120,16 +122,34 @@
   padding: 10px;
   background-color: #0e94e2;
   color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 150px;
-  height: 150px;
+  border-radius: 0 0 5px 5px; 
+  width: 100%; 
+  height: 50px; 
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.guide-item {
+  width: 150px;
+  height: 200px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.guide-image {
+  width: 100%; /* Make image fill the container width */
+  height: 150px; /* Adjust height as necessary */
+  border-radius: 5px 5px 0 0; /* Round top corners */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
 }
 
 .guide-title:hover {
@@ -160,13 +180,64 @@
   font-weight: bold;
 }
 
-
-
 .top-right {
   position: absolute;
   top: 30px;
   right: 20px;
 }
+
+/* BlogDetail.css */
+.page-container {
+  position: relative;
+  width: 100%;
+  height: 98vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.blog-detail-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); 
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.blog-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.blog-content {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+}
+
+.blog-metadata {
+  font-size: 14px;
+  color: #999;
+  margin-top: 10px;
+}
+
+.blog-metadata span {
+  font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+  .blog-detail-content {
+    padding: 15px;
+  }
+}
+
 
 .settings {
   display: flex;
@@ -285,12 +356,10 @@
   background-color: #0c7abf;
 }
 
-/* Style the dropdown container */
 .dropdown-container {
   position: relative;
 }
 
-/* Style the dropdown select */
 .dropdown-select {
   width: 100%;
   max-width: 500px;
@@ -302,23 +371,21 @@
   color: gray
 }
 
-/* Style the dropdown arrow */
 .dropdown-arrow {
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
-  pointer-events: none; /* Ensure the arrow does not interfere with clicking the select */
+  pointer-events: none; 
 }
 
-/* Style the dropdown options */
 .dropdown-options {
   position: absolute;
   top: 100%;
   left: 0;
   z-index: 1000;
   width: 100%;
-  max-height: 200px; /* Adjust as needed */
+  max-height: 200px; 
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -326,14 +393,13 @@
   box-shadow: 0 2px 4px rgba(124, 124, 124, 0.1);
 }
 
-/* Style the dropdown option items */
+
 .dropdown-option {
   padding: 8px 12px;
   cursor: pointer;
   color: gray
 }
 
-/* Style the selected option */
 .dropdown-option.selected {
   background-color: #f0f0f0;
 }
