@@ -39,15 +39,6 @@ export default function Guides() {
     history.push(`/blog/${blogId}`);
   };
 
-  const formatDate = (dateString) => {
-    const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-    return formattedDate;
-  };
-
   return (
     <div className='guides'>
     <div className='top-right'>
