@@ -147,7 +147,7 @@ class GetBlogs(View):
             queryset = queryset.order_by('-date_posted')[:10]
 
         # Convert each blog instance into a dictionary with only id and title
-        blogs_list = list(queryset.values('id', 'title'))
+        blogs_list = list(queryset.values('id', 'title', 'game'))
 
         return JsonResponse({'blogs': blogs_list})
         
