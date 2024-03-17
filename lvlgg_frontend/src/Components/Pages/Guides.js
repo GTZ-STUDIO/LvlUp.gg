@@ -40,7 +40,7 @@ export default function Guides() {
   };
 
   return (
-    <div className='guides'>
+  <div className='guides'>
     <div className='top-right'>
       {isSignedIn ? (
         <Link to='/createguide'>
