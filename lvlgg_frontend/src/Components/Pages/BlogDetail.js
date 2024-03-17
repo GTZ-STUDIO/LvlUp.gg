@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import '../../App.css';
 
 const BlogDetail = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
+  const history = useHistory();
 
   const gameImageMap = {
     "EldenRing": "url(/images/eldenRing.png)",
@@ -16,6 +17,10 @@ const BlogDetail = () => {
   };
   
   useEffect(() => {
+    if (isNaN(id)) {
+      history.push("/about");
+      return;
+    }  
     axios.get(`http://localhost:8000/blog/get_blog/?id=${id}`)
       .then(response => {
         setBlog(response.data.blogs[0]); 
@@ -23,7 +28,7 @@ const BlogDetail = () => {
       .catch(error => {
         console.error('Error fetching blog:', error);
       });
-  }, [id]); // Re-run the effect if the ID changes
+  }, [id, history]); // Re-run the effect if the ID changes
 
 
 
