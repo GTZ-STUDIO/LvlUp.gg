@@ -20,7 +20,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000',
-                        'lvlupgg-backend.azurewebsites.net']
+                        'http://lvlupgg-backend.azurewebsites.net']
 
 STORAGES = {
     "default": {
