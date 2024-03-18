@@ -22,7 +22,6 @@ const SignIn = () => {
         if (response.status === 200) {
           console.log("Successful login:", response.data);
           setIsSignedIn(true);
-          console.log(response.data.id);
           setUserPk(parseInt(response.data.id));
           history.push("/");
         } else {

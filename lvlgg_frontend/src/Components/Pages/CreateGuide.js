@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../Contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 export default function CreateGuide() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const { userPk } = useContext(AuthContext);
   const [ game, setGame ] = useState('');
+  const history  = useHistory();
 
   const getCookie = (name) => {
     const cookieValue = document.cookie
@@ -37,10 +39,10 @@ export default function CreateGuide() {
       });
 
       console.log(response.data);
-      // Optionally, you can redirect the user to another page or show a success message
+      alert('Guide Created Successfully')
+      history.push("/guides");
     } catch (error) {
       console.error(error);
-      // Handle error, e.g., show an error message to the user
     }
   };
 
@@ -61,7 +63,6 @@ export default function CreateGuide() {
         name="game"
         value={game}
         onChange={(e) => setGame(e.target.value)}
-        defaultValue={""}
         required
       >
         <option value="" disabled selected>Select a game</option>

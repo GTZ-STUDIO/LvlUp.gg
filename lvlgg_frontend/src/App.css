@@ -122,7 +122,6 @@
   padding: 10px;
   background-color: #0e94e2;
   color: #fff;
-  border-radius: 0 0 5px 5px; 
   width: 100%; 
   height: 50px; 
   display: flex;
@@ -131,6 +130,10 @@
   text-align: center;
   font-size: 14px;
   transition: background-color 0.3s;
+}
+
+.guide-title:hover {
+  background-color: #0056b3;
 }
 
 .guide-item {
@@ -147,13 +150,9 @@
 
 .guide-image {
   width: 100%; /* Make image fill the container width */
-  height: 150px; /* Adjust height as necessary */
+  height: 200px; /* Adjust height as necessary */
   border-radius: 5px 5px 0 0; /* Round top corners */
   object-fit: cover; /* Ensure the image covers the area without distortion */
-}
-
-.guide-title:hover {
-  background-color: #0c7abf;
 }
 
 .guide-content {
@@ -178,6 +177,20 @@
 
 .guide-content .author {
   font-weight: bold;
+}
+
+.myguides-btn-delete {
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.myguides-btn-delete:hover {
+  background-color: #c82333;
 }
 
 .top-right {
