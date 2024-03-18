@@ -8,6 +8,7 @@ from blog.models import Blog
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
     content = models.TextField()
+    username = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
     blogId = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True)

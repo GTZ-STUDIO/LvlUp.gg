@@ -19,6 +19,7 @@ class Comments(View):
         content = data.get('content')
         author_id = data.get('author')
         blog_id = data.get('blog')
+        username = (Client.objects.get(id=author_id)).username
         
         if not content:
             return JsonResponse({'error': 'Content is required'}, status=400)
@@ -34,6 +35,7 @@ class Comments(View):
                 content=content,
                 author=author,
                 blogId=blog,
+                username=username
             )
             return JsonResponse({'message': 'Comment created successfully'}, status=200)
         except Exception as e:
@@ -41,7 +43,7 @@ class Comments(View):
 
     def get(self, request, blog_Id):
         comments = Comment.objects.filter(blogId=blog_Id)  
-        comments_list = list(comments.values('id','content','date_posted','author','blogId'))
+        comments_list = list(comments.values('id','content','date_posted','author','blogId','username'))
         return JsonResponse({'comments':comments_list})
     
 
