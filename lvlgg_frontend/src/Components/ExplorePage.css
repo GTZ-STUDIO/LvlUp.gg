@@ -9,8 +9,6 @@ video {
 }
 
 .explore-container {
-    /*background: url('images/img-home.jpg') center center/cover 
-    no-repeat; */
     height: 90vh;
     width: 100%;
     display:flex;

@@ -34,7 +34,7 @@ export default function MyGuides() {
     .then(response => {
       if(response.status === 200) {
         console.log('got all blogs successfully');   
-        setBlogs(response.data.blogs); // Assuming response.data is an array of blogs   
+        setBlogs(response.data.blogs); 
       } else {
         console.log('unsuccessful');
       }
