@@ -123,7 +123,7 @@ const BlogDetail = () => {
           {comments.map(comment => (
             <div key={comment.id} className="comment">
               <p>{comment.content}</p>
-              <p>Posted by: {comment.author}</p>
+              <p>Posted by: {user}</p>
             </div>
           ))}
         </div>
