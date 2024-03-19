@@ -44,7 +44,7 @@
   text-align: center;
   width: 60vw;
   justify-content: end;
-  margin-right: 2rem;
+  margin-right: 1.5rem;
 }
 
 .nav-item {
@@ -128,9 +128,9 @@
 }
 
 .username {
-  position: absolute;
-  top: 18px; 
-  right: 200px; 
+  position: relative;
+  top: 2px; 
+  right: -150px; 
   color: #17faef;
   font-size: 16px;
   font-weight: bold;

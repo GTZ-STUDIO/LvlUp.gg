@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-//import { AuthContext } from '../../Contexts/AuthContext';
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -28,9 +27,7 @@ const SignUp = () => {
           history.push("/signin");
         } else {
           console.error("Unexpected response status:", response.status);
-        }
-
-        // Redirect or perform other actions upon successful account creation
+        }  
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {

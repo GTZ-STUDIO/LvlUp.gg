@@ -520,6 +520,151 @@ class BlogViewTestCase(TestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 404)
 
-    
+class reccomended(TestCase):
+
+    def setUp(self):
+        # Create a Client instance
+        self.client_user = Client.objects.create_user(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
+        self.client_friend = Client.objects.create_user(username="Dave", email="friend1@example.com", password="friendpassword", firstname="Tom", lastname="Cat")
+        self.client_extra = Client.objects.create_user(username="Extra", email="extra1@example.com", password="friendpassword", firstname="Random", lastname="Cat")
+        # Save the primary key for later use
+        self.user_pk = self.client_user.pk
+        self.friend_pk = self.client_friend.pk
+        self.extra_pk = self.client_extra.pk
+
+        #Login
+        payload = {
+            "username" : "user1",
+            "password" : "testpassword"
+        }
+
+        url = "/account/signin/"
+
+        self.client.post(url, payload, content_type="application/json")
+        
+        #Friend other user
+        payload = {
+            "username" : "Dave",
+        }
+
+        url = "/account/follow/"
+
+        self.client.post(url, payload, content_type="application/json")
+
+        #Make A Blog
+        self.blog_post = Blog.objects.create(
+            title="Sample Blog Post",
+            content="This is a sample blog post content.",
+            author=self.client_friend,  
+        )
+        self.blog_pk = self.blog_post.pk
+
+        #Make A Blog to be saved
+        self.blog_post2 = Blog.objects.create(
+            title="Saved Blog",
+            content="This is a sample blog post content for one that has been saved.",
+            author=self.client_extra,  
+            game = "Minecraft",
+        )
+        self.blog_pk2 = self.blog_post2.pk
+
+        self.blog_post2 = Blog.objects.create(
+            title="Random Blog",
+            content="This is a random blog",
+            author=self.client_extra,  
+            game = "Minecraft",
+        )
+
+        #Save  Blog
+        url = f"/favourite/subscribe/{self.blog_pk2}/"
+
+        self.client.post(url, payload, content_type="application/json")
+
+    def test_getReccomended(self):
+
+        url = "/blog/recommended/"
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
+        data = json.loads(response.content.decode('utf-8'))
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+        self.assertEqual( len(blogs), 2)
+
+class reccomended_no_user(TestCase):
+
+    def setUp(self):
+        # Create a Client instance
+        self.client_user = Client.objects.create_user(username="user1", email="user1@example.com", password="testpassword", firstname="Jerry", lastname="Tom")
+        self.client_friend = Client.objects.create_user(username="Dave", email="friend1@example.com", password="friendpassword", firstname="Tom", lastname="Cat")
+        self.client_extra = Client.objects.create_user(username="Extra", email="extra1@example.com", password="friendpassword", firstname="Random", lastname="Cat")
+        # Save the primary key for later use
+        self.user_pk = self.client_user.pk
+        self.friend_pk = self.client_friend.pk
+        self.extra_pk = self.client_extra.pk
+        
+
+        #Make A Blog
+        self.blog_post = Blog.objects.create(
+            title="Sample Blog Post",
+            content="This is a sample blog post content.",
+            author=self.client_friend,  
+        )
+
+        #Make A Blog to be saved
+        self.blog_post2 = Blog.objects.create(
+            title="Saved Blog",
+            content="This is a sample blog post content for one that has been saved.",
+            author=self.client_extra,  
+            game = "Minecraft",
+        )
+
+        self.blog_post2 = Blog.objects.create(
+            title="Random Blog",
+            content="This is a random blog",
+            author=self.client_extra,  
+            game = "Minecraft",
+        )
+
+    def test_get_recommended_notuser(self):
+
+        url = "/blog/recommended/"
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
+        data = json.loads(response.content.decode('utf-8'))
+        # Check if the response contains a 'blogs' key
+        self.assertIn('blogs', data)
+        # Get the list of blogs from the response
+        blogs = data['blogs']
+        self.assertEqual( len(blogs), 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -29,7 +29,7 @@ const Settings = () => {
       .delete(`http://localhost:8000/account/delete/${userPk}/`, {
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken": getCookie("csrftoken"), // Replace 'csrftoken' with your CSRF token cookie name
+          "X-CSRFToken": getCookie("csrftoken"), 
         },
         withCredentials: true, // Send cookies with the request
       })
@@ -83,7 +83,6 @@ const Settings = () => {
       })
       .catch((error) => {
         console.error("Error updating username:", error);
-        // Optionally, you can handle the error or show an error message
       });
   };
 
@@ -111,7 +110,6 @@ const Settings = () => {
       })
       .catch((error) => {
         console.error("Error updating password:", error);
-        // Optionally, you can handle the error or show an error message
       });
   };
 
@@ -139,7 +137,6 @@ const Settings = () => {
       })
       .catch((error) => {
         console.error("Error updating email:", error);
-        // Optionally, you can handle the error or show an error message
       });
   };
 

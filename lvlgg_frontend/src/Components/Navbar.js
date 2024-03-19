@@ -126,46 +126,47 @@ function Navbar() {
           ) : (
             <Button buttonStyle="btn--outline">SIGN IN</Button>
           )}
-          <div className="dropdown">
-            <button className="btn--outline" onClick={handleDropDown}>
-              <div className="profile-icon">
-                <img src="/images/defaultUser.png" alt="Profile" />
-              </div>
-            </button>
-            {isDropdownOpen && (
-              <div className="dropdown-content">
-                <Link to="/settings">
+          {isSignedIn && (
+            <div className="dropdown">
+              <button className="btn--outline" onClick={handleDropDown}>
+                <div className="profile-icon">
+                  <img src="/images/defaultUser.png" alt="Profile" />
+                </div>
+              </button>
+              {isDropdownOpen && (
+                <div className="dropdown-content">
+                  <Link to="/settings">
+                    <button
+                      onClick={() => {
+                        handleDropDown();
+                      }}
+                    >
+                      Settings
+                    </button>
+                  </Link>
+                  <Link to="/myguides">
+                    <button
+                      onClick={() => {
+                        handleDropDown();
+                      }}
+                    >
+                      My Guides
+                    </button>
+                  </Link>
                   <button
                     onClick={() => {
-                      handleDropDown();
+                      handleSignOut();
                     }}
                   >
-                    Settings
+                    Sign Out
                   </button>
-                </Link>
-                <button
-                  onClick={() => {
-                    handleSignOut();
-                  }}
-                >
-                  Sign Out
-                </button>
-                <Link to="/myguides">
-                  <button
-                    onClick={() => {
-                      handleDropDown();
-                    }}
-                  >
-                    My Guides
-                  </button>
-                </Link>
-              </div>
-            )}
-          </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </nav>
     </>
-  );
-}
+  )};
 
 export default Navbar;

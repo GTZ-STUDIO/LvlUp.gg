@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.core import serializers
 from django.views import View
 from account.models import Client
+from favourite.models import Favourite
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 from .models import Blog
@@ -180,3 +181,45 @@ class GetBlogs(View):
             return JsonResponse({'error': 'Blog not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+
+class reccomendedBlogs(View):
+    def get(self, request):
+
+        #Reccomended Blogs
+        queryset = Blog.objects.none() #Get an empty query set
+        size = 10
+
+        if request.user.is_authenticated:
+            client = request.user
+            
+            # Get Friends
+            friends = client.friends.all()
+            friend_pks = friends.values_list('pk', flat=True)
+            friend_blogs = Blog.objects.filter(author__in=friend_pks)
+            remaining = size - len(friend_blogs)
+
+            # Look at favorites
+            if remaining > 0:
+                saved_blog_ids = Favourite.objects.filter(client=client).values_list('blog_id', flat=True)
+                favorite_games = Blog.objects.filter(id__in=saved_blog_ids).values_list('game', flat=True).distinct()
+                recommended_blogs = Blog.objects.filter(game__in=favorite_games).exclude(id__in=saved_blog_ids)
+
+                recommended_blogs_list = list( (recommended_blogs.order_by('-date_posted')[:remaining]).values('id', 'title', 'game') )
+                friend_blogs_list = list(Blog.objects.filter(author__in=friend_pks).order_by('-date_posted').values('id', 'title', 'game'))
+                queryset = friend_blogs_list + recommended_blogs_list
+
+            else:
+                queryset = friend_blogs.order_by('-date_posted')[:10]
+                queryset = list(queryset.values('id', 'title', 'game'))
+
+            return JsonResponse({'blogs': queryset}, status=200)
+
+        else:
+            queryset = Blog.objects.all()
+            queryset = queryset.order_by('-likes')[:10]
+            queryset = list(queryset.values('id', 'title', 'game'))
+            return JsonResponse({'blogs': queryset}, status=200)
+
+
+
+
