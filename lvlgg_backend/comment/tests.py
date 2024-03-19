@@ -88,6 +88,7 @@ class CommentViewTestCase(TestCase):
             self.assertIn('content', comment)
             self.assertIn('author', comment)
             self.assertIn('blogId', comment)
+            self.assertIn('username',comment)
 
         first_comment = comments[0] 
         expected_content = "I am the Comment"

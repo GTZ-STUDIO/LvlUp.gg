@@ -19,8 +19,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000',
-                        'lvlupgg-backend.azurewebsites.net']
+CORS_ALLOWED_ORIGINS = ['https://delightful-grass-08a6ea310.5.azurestaticapps.net']
 
 STORAGES = {
     "default": {
