@@ -73,20 +73,22 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  font-family: OCR A Std, monospace;
-  color: #02f2ff;
+  font-family: OCR A Std, monospace; 
+  color: #fff;
   padding: 20px;
+  font-size: 18;
 }
 
 .guides-button {
-  padding: 5px 10px;
-  font-size: 12px;
-  background-color: #12b9e2;
+  padding: 6px 30px;
+  font-size: 14px;
+  background-color: #054453;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-family: OCR A Std, monospace;
+  font-family: OCR A Std, monospace; 
+  transition: background-color 0.3s;
 }
 
 .guides-button:hover {
@@ -94,40 +96,37 @@
 }
 
 .guide-titles {
-  font-size: 25px;
-  margin-top: 0; 
-  margin-bottom: 70px; 
-  position: absolute; 
-  top: 60px; 
-  left: 50px; 
-  font-family: OCR A Std, monospace;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 50px;
+  position: absolute;
+  top: 70px;
+  left: 70px;
+  font-family: OCR A Std, monospace; 
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
 .guide-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   list-style: none;
   padding: 0;
 }
- 
 
 .guide-list li {
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .guide-title {
-  padding: 10px;
-  background-color: #0e94e2;
+  padding: 8px 68px;
+  background-color: #073652;
   color: #fff;
-  width: 100%; 
-  height: 50px; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  border-radius: 3px;
+  font-family: OCR A Std, monospace; 
   font-size: 14px;
   transition: background-color 0.3s;
 }
@@ -137,38 +136,46 @@
 }
 
 .guide-item {
-  width: 150px;
-  height: 200px; 
+  width: 200px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-right: 20px;
+  margin-bottom: 20px;
   cursor: pointer;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  transition: transform 0.3s;
+}
+
+.guide-item:hover {
+  transform: translateY(-5px);
 }
 
 .guide-image {
-  width: 100%; /* Make image fill the container width */
-  height: 200px; /* Adjust height as necessary */
-  border-radius: 5px 5px 0 0; /* Round top corners */
-  object-fit: cover; /* Ensure the image covers the area without distortion */
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px 5px 0 0;
 }
 
 .guide-content {
-  margin-top: 20px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .guide-content h2 {
-  font-size: 14px;
-  margin-bottom: 10px;
-  font-family: OCR A Std, monospace;
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
 .guide-content p {
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 5px;
-  font-family: OCR A Std, monospace;
 }
 
 .guide-content .date {
@@ -178,6 +185,8 @@
 .guide-content .author {
   font-weight: bold;
 }
+
+
 
 .myguides-btn-delete {
   width: 100%;
@@ -213,10 +222,9 @@
 }
 
 .blog-detail-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 10%;
+  left: 10%;
   width: 80%;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.8); 
@@ -244,7 +252,8 @@
 }
 
 .comments-container {
-  margin-top: 20px;
+  max-height: 200px; 
+  overflow-y: auto;
 }
 
 .comment {

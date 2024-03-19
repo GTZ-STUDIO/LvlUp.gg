@@ -12,7 +12,6 @@ const BlogDetail = () => {
   const history = useHistory();
   const { userPk } = useContext(AuthContext);
   const { isSignedIn } = useContext(AuthContext);
-  const [user, setUser] = useState("");
 
   const gameImageMap = {
     "EldenRing": "url(/images/eldenRing.png)",
@@ -42,30 +41,7 @@ const BlogDetail = () => {
       });
   }, [id]);
 
-  const handleUsername = useCallback(() => {
-    axios
-      .get(`http://localhost:8000/account/${userPk}/`, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie("csrftoken"),
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("got Username successfully");
-          setUser(response.data.username);
-        } else {
-          console.log("Username change unsuccessful");
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating username:", error);
-      });
-  }, [userPk]);
-
   useEffect(() => {
-    handleUsername();
     if (isNaN(id)) {
       history.push("/about");
       return;
@@ -78,7 +54,7 @@ const BlogDetail = () => {
       .catch(error => {
         console.error('Error fetching blog:', error);
       });
-  }, [id, history, fetchComments, handleUsername]);
+  }, [id, history, fetchComments]);
 
   const handleCommentSubmit = (e) => {
     const csrfToken = getCookie('csrftoken');
@@ -123,7 +99,7 @@ const BlogDetail = () => {
           {comments.map(comment => (
             <div key={comment.id} className="comment">
               <p>{comment.content}</p>
-              <p>Posted by: {user}</p>
+              <p>Posted by: {comment.username}</p>
             </div>
           ))}
         </div>
