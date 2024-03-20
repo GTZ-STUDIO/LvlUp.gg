@@ -7,3 +7,14 @@ on:
     branches: ['main']
 
 jobs:
+  Scan-Build:
+    runs-on: ubuntu-latest
+    steps:
+    -  uses: actions/checkout@v3
+       with:
+        fetch-depth: 0
+    -  name: Perform Scan
+       uses: AppThreat/sast-scan-action@master
+       with:
+        type: "python"
+        
