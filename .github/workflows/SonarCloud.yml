@@ -2,7 +2,7 @@ name: Build
 on:
   push:
     branches:
-      - SonarCloud-test-branch
+      - master
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
