@@ -81,6 +81,8 @@
 
 .guides-button {
   padding: 6px 30px;
+  margin-top: 50px;
+  margin-right: 100px;
   font-size: 14px;
   background-color: #054453;
   color: #fff;
@@ -110,7 +112,8 @@
 .guide-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
+  max-width: 1200px;
   align-items: flex-start;
   list-style: none;
   padding: 0;
@@ -118,7 +121,6 @@
 
 .guide-list li {
   margin-right: 20px;
-  margin-bottom: 20px;
 }
 
 .guide-title {
@@ -514,14 +516,38 @@
 
 .about {
   flex-direction: column;
-  height: 98vh;
+  height: 190vh;
   background-color: #020913;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  font-size: 70px;
   font-family: OCR A Std, monospace;
   color: #02f2ff;
+}
+
+.about h1 {
+  margin-top: -80px;
+  font-size: 40px;
+  color: #dad9d9;
+}
+
+.about h2 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-size: 24px;
+  color: #dad9d9;
+}
+
+.about p {
+  max-width: 1000px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #c0bfbf;
+}
+
+.about p:last-child {
+  margin-bottom: 0;
 }
 
 
