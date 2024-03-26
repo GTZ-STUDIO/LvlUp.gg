@@ -1,0 +1,39 @@
+.friends-list {
+    position: relative;
+    background-color: #021125d3;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 3vh;
+    width: 16%;
+}
+
+.friends-list h2 {
+    color: white;
+    font-family: OCR A Std, monospace;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.friends-list input {
+    margin-bottom: 300px;
+    padding: 8px;
+    box-sizing: border-box;
+    width: 30%;
+    height: 5%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.friend-item {
+    background-color: #fff;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.friend-item:hover {
+    background-color: #f0f0f0;
+}

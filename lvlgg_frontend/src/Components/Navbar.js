@@ -153,6 +153,15 @@ function Navbar() {
                       My Guides
                     </button>
                   </Link>
+                  <Link to="/social">
+                    <button
+                      onClick={() => {
+                        handleDropDown();
+                      }}
+                    >
+                      Social
+                    </button>
+                  </Link>
                   <button
                     onClick={() => {
                       handleSignOut();
