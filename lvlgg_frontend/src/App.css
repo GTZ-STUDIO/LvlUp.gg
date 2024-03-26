@@ -84,7 +84,10 @@
   margin-top: 50px;
   margin-right: 100px;
   font-size: 14px;
-  background-color: #054453;
+  background-color: transparent;
+  box-shadow: 0 6px 20px rgb(95, 238, 243);
+  -webkit-filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
+  filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -106,7 +109,7 @@
   left: 70px;
   font-family: OCR A Std, monospace; 
   color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+  text-shadow: 2px 2px 4px rgba(107, 227, 243, 0.5); 
 }
 
 .guide-list {
@@ -114,6 +117,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   max-width: 1200px;
+  width: 70%;
   align-items: flex-start;
   list-style: none;
   padding: 0;
@@ -124,33 +128,30 @@
 }
 
 .guide-title {
-  padding: 10px 68px;
-  background-color: #073652;
+  padding: 10px 70px;
+  background-color: transparent;
   color: #fff;
-  border-radius: 3px;
   font-family: OCR A Std, monospace; 
-  font-size: 12px;
+  font-size: 11px;
   transition: background-color 0.3s;
 }
 
-.guide-title:hover {
-  background-color: #0056b3;
-}
 
 .guide-item {
-  width: 200px;
-  height: 250px;
+  position: relative;
+  width: 10vw;
+  height: 21vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   cursor: pointer;
   border-radius: 5px;
   overflow: hidden;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  box-shadow: 0 6px 20px rgb(95, 238, 243);
+  -webkit-filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
+  filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
   transition: transform 0.3s;
 }
 
@@ -552,46 +553,41 @@
 
 /* social.css */
 .social {
+  position: relative;
+  width: 100vw;
+  height: 98vh;
+  background-color: #020913;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-size: cover;
-  background-color: #020913;
-  height: 98vh; 
-  width: 100%; 
 }
 
-.social .form-container {
-  width: 300px;
-  margin-top: 10vh;
+.form-container {
+  margin-top: 20vh;
 }
 
 .social form {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  font-family: OCR A Std, monospace;
 }
 
-.social input[type='text'],
-.social button {
-  margin-top: 11vh;
-  padding: 5px 10px;
-  width: 100%;
-  box-sizing: border-box;
+.social input[type='text'] {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
 }
 
-.social button {
-  margin-top: 0px;
-  padding: 8px 16px;
-  background-color:  #021125d3;
-  color: white;
+.social button[type='submit'] {
+  padding: 10px 20px;
+  background-color: #0e94e2; /* dark blue */
+  color: #fff;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-.social button:hover {
-  background-color: #353535;
+.social button[type='submit']:hover {
+  background-color: #041d1f; /* bright turquoise */
 }
 
 
