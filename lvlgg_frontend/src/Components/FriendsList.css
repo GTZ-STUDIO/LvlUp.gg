@@ -1,39 +1,44 @@
 .friends-list {
-    position: relative;
-    background-color: #021125d3;
-    align-items: center;
+    margin-top: 20px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-    margin-top: 3vh;
-    width: 16%;
-}
-
-.friends-list h2 {
-    color: white;
-    font-family: OCR A Std, monospace;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.friends-list input {
-    margin-bottom: 300px;
-    padding: 8px;
-    box-sizing: border-box;
-    width: 30%;
-    height: 5%;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.friend-item {
-    background-color: #fff;
-    text-align: center;
-    padding: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #020913; /* dark blue */
+    box-shadow: 0 6px 20px rgb(4, 224, 231);
+    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    color: #fff;
+    width: 400px;
+    font-family: OCR A Std, monospace;
+  }
+  
+  .friends-list h2 {
+    margin-bottom: 10px;
+  }
+  
+  .friends-list input[type='text'] {
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .friend-item {
+    padding: 5px 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .friend-item:last-child {
+    border-bottom: none;
+  }
+  
+  .friend-item:hover {
     cursor: pointer;
-}
-
-.friend-item:hover {
-    background-color: #f0f0f0;
-}
+  }
