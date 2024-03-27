@@ -20,6 +20,7 @@ export default function Guides() {
     "BaldursGate3": "images/baldursGate.jpeg",
   };
 
+
   useEffect(() => {
     let url = 'http://localhost:8000/blog/get_blog/';
     if (game) {

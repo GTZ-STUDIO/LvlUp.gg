@@ -6,6 +6,16 @@ function FriendsList() {
     const [friends, setFriends] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
+    const getCookie = (name) => {
+        const cookieValue = document.cookie
+          .split('; ')
+          .find((row) => row.startsWith(`${name}=`));
+        if (cookieValue) {
+          return cookieValue.split('=')[1];
+        }
+        return null;
+      };
+
     useEffect(() => {
         const fetchFriends = async () => {
             try {
@@ -20,6 +30,21 @@ function FriendsList() {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
+    };
+
+    const handleUnfriend = async (friendId) => {
+        const csrfToken = getCookie('csrftoken');
+        try {
+            await axios.post('http://localhost:8000/account/unfollow/', { username: friends.find(friend => friend.id === friendId).username }, 
+            {headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+              },});
+            setFriends(friends.filter(friend => friend.id !== friendId));
+            alert('Unfollowed Successfully')
+        } catch (error) {
+            console.error('Error removing friend:', error);
+        }
     };
 
     const filteredFriends = friends.filter((friend) =>
@@ -39,6 +64,7 @@ function FriendsList() {
                 {filteredFriends.map((friend) => (
                     <li key={friend.id} className='friend-item'>
                         {friend.username}
+                        <button onClick={() => handleUnfriend(friend.id)} className='unfriend-button'>Unfollow</button>
                     </li>
                 ))}
             </ul>

@@ -12,6 +12,11 @@ const BlogDetail = () => {
   const history = useHistory();
   const { userPk } = useContext(AuthContext);
   const { isSignedIn } = useContext(AuthContext);
+  const [likes, setLikes] = useState(blog?.likes || 0);
+  const [dislikes, setDislikes] = useState(blog?.dislikes || 0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+
 
   const gameImageMap = {
     "EldenRing": "url(/images/eldenRing.png)",
@@ -29,6 +34,50 @@ const BlogDetail = () => {
       return cookieValue.split('=')[1];
     }
     return null;
+  };
+
+
+  const handleLike = () => {
+    if(isLiked){
+      return;
+    } 
+    const csrfToken = getCookie('csrftoken');
+    axios.put(`http://localhost:8000/blog/likes/${id}/`, { action: 'like', value: 1 },{
+      headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken,
+    },
+    withCredentials: true,})
+      .then(response => {
+        setLikes(response.data.likes);
+        alert('Guide Liked')
+        setIsLiked(true);
+      })
+      .catch(error => {
+        console.error('Error liking blog:', error);
+      });
+  };
+
+  const handleDislike = () => {
+    if (isDisliked) {
+      return; 
+    }
+    const csrfToken = getCookie('csrftoken');
+    axios.put(`http://localhost:8000/blog/likes/${id}/`, { action: 'dislike', value: 1 },{
+      headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken,
+    },
+    withCredentials: true,}
+    )
+      .then(response => {
+        setDislikes(response.data.dislikes);
+        alert('Guide Disiked')
+        setIsDisliked(true);
+      })
+      .catch(error => {
+        console.error('Error disliking blog:', error);
+      });
   };
 
   const fetchComments = useCallback(() => {
@@ -93,6 +142,13 @@ const BlogDetail = () => {
         <p className="blog-content">{blog?.content}</p>
         <p className="blog-metadata">Date Posted: {blog?.date_posted}</p>
         <p className="blog-metadata">Author: {blog?.author}</p>
+        <p className="blog-metadata">Likes: {blog?.likes}</p>
+        <p className="blog-metadata">Dislikes: {blog?.dislikes}</p>
+
+        <div className="like-dislike-buttons">
+          <button onClick={handleLike}>Like</button>
+          <button onClick={handleDislike}>Dislike</button>
+        </div>
         
         <h2>Comments</h2>
         <div className="comments-container">
@@ -106,13 +162,13 @@ const BlogDetail = () => {
   
         {isSignedIn ? (
           <form onSubmit={handleCommentSubmit}>
-            <textarea
+            <textarea className='comment-textarea'
               placeholder="Write a comment..."
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               required
             ></textarea>
-            <button type="submit">Submit</button>
+            <button type="submit" className='comment-button'>Submit</button>
           </form>
         ) : (
           <p>Please sign in to leave a comment</p>
