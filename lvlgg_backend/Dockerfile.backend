@@ -10,8 +10,8 @@ WORKDIR /LvlUp.gg/lvlgg_backend
 
 # Copy requirements file and install dependencies
 COPY requirements.txt .
-RUN /bin/sh -c pip install --no-cache-dir -r requirements.txt
 RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install djangorestframework
 RUN pip install django-cors-headers
 

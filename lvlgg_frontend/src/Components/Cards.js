@@ -6,8 +6,8 @@ function Cards() {
   return (
     <div className='cards'>
       <div className='cards__container'>
-        <h1>View Games</h1>
         <div className='cards__wrapper'>
+          <h1>View Games</h1>
           <ul className='cards__items'>
             <CardItem
               src='images/eldenRing.png'
@@ -37,6 +37,7 @@ function Cards() {
           </ul>
         </div>
       </div>
+      <h2>Recommended Games</h2>
     </div>
   );
 }

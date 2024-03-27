@@ -187,7 +187,7 @@ class reccomendedBlogs(View):
 
         #Reccomended Blogs
         queryset = Blog.objects.none() #Get an empty query set
-        size = 10
+        size = 5
 
         if request.user.is_authenticated:
             client = request.user
@@ -207,10 +207,19 @@ class reccomendedBlogs(View):
                 recommended_blogs_list = list( (recommended_blogs.order_by('-date_posted')[:remaining]).values('id', 'title', 'game') )
                 friend_blogs_list = list(Blog.objects.filter(author__in=friend_pks).order_by('-date_posted').values('id', 'title', 'game'))
                 queryset = friend_blogs_list + recommended_blogs_list
+                remaining = size - len(queryset)
 
             else:
                 queryset = friend_blogs.order_by('-date_posted')[:10]
                 queryset = list(queryset.values('id', 'title', 'game'))
+                remaining = 0
+
+            if ( remaining > 0):
+                extraqueryset = Blog.objects.all()
+                extraqueryset = extraqueryset.order_by('-likes')[:remaining]
+                extraqueryset = list(extraqueryset.values('id', 'title', 'game'))
+                queryset = queryset + extraqueryset
+
 
             return JsonResponse({'blogs': queryset}, status=200)
 

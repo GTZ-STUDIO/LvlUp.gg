@@ -80,20 +80,20 @@
 
 .profile-icon {
   position: relative;
-  width: 30px; /* Adjust size as needed */
-  height: 30px; /* Adjust size as needed */
-  border-radius: 90%; /* To make it round */
+  width: 30px; 
+  height: 30px;
+  border-radius: 90%; 
 }
 
 .profile-icon img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Maintain aspect ratio and fill container */
+  object-fit: cover; 
 }
 
 .profile-icon:hover {
-  border: 2px solid #06ebcc; /* Add a border around the profile icon */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow effect */
+  border: 2px solid #06ebcc; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
 }
 
 .dropdown {
@@ -108,6 +108,7 @@
   top: 100%;
   right: -40px;
   background-color: #020913;
+  border-radius: 3px;
   min-width: 160px;
   z-index: 50;
 }
@@ -120,7 +121,7 @@
   border: none;
   outline: none;
   cursor: pointer;
-  color: #02f2ff;
+  color: #ffffff;
 }
 
 .dropdown-content button:hover {
@@ -131,7 +132,7 @@
   position: relative;
   top: 2px; 
   right: -150px; 
-  color: #17faef;
+  color: #ffffff;
   font-size: 16px;
   font-weight: bold;
 }

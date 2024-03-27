@@ -61,7 +61,7 @@ function Social() {
                 <form onSubmit={handleFormSubmit}>
                     <input
                         type='text'
-                        placeholder='Enter username'
+                        placeholder='Search for a user to follow'
                         value={username}
                         onChange={handleInputChange}
                     />
