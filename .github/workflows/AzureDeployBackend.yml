@@ -32,7 +32,7 @@ jobs:
         run: |
           cd lvlgg_backend
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install -r requirements.txt
           python -m pip install django-cors-headers
           python -m pip install djangorestframework
       
