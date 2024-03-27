@@ -593,7 +593,7 @@ class reccomended(TestCase):
         self.assertIn('blogs', data)
         # Get the list of blogs from the response
         blogs = data['blogs']
-        self.assertEqual( len(blogs), 2)
+        self.assertEqual( len(blogs), 5)
 
 class reccomended_no_user(TestCase):
 
