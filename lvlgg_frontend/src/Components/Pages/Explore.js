@@ -3,15 +3,15 @@ import '../../App.css'
 import ExplorePage from '../ExplorePage'
 import Cards from '../Cards'
 import SearchBar from '../SearchBar'
+import RecommendedGuides from '../RecommendedGuides'
 
 function Explore () {
     return (
         <>
             <ExplorePage />
-            <h1>View our games</h1>
-            <h1>Recommened to you</h1>
-            <Cards />
             <SearchBar />
+            <Cards />
+            <RecommendedGuides/>
         </>
     )   
 }

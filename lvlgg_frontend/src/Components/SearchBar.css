@@ -3,11 +3,14 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    top: -55vh; 
+    margin-top: 12vh;
+    margin-left: 50vh;
     z-index: 1000;
+    width: 50%;
   }
   
   .search-bar {
+    position:relative;
     display: flex;
   }
   
@@ -39,11 +42,10 @@
 
   .search-results {
     position: absolute;
-    width: 21%;
-    max-height: 120px;
+    width: 40%;
+    max-height: 80px;
     overflow-y: auto;
-    background-color: #979797e0;
-    border: 1px solid #ccc;
+    background-color: #020913;
     border-top: none;
     border-radius: 0 0 5px 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -52,7 +54,7 @@
   
   .search-result {
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #3e5dc5;
   }
   
   .search-results.show {

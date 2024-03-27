@@ -22,7 +22,7 @@ COPY . /LvlUp.gg/lvlgg_backend/
 
 # Expose the port your Django app runs on
 EXPOSE 8000
-
+EXPOSE 2222 80
 # Add wait-for-it script
 ADD https://github.com/vishnubob/wait-for-it/raw/master/wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it

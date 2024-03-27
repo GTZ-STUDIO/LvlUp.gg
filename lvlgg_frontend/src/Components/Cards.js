@@ -6,6 +6,7 @@ function Cards() {
   return (
     <div className='cards'>
       <div className='cards__container'>
+        <h1>View Games</h1>
         <div className='cards__wrapper'>
           <ul className='cards__items'>
             <CardItem
