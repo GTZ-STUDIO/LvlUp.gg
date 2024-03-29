@@ -32,8 +32,7 @@ const RecommendedGuides = () => {
     }, []);
 
     return (
-        <div style={{position: 'relative', marginLeft: '23.5vw'} }>
-            <h1 style={{ fontSize: '14px', position: 'absolute', top: '0', left: '0',  }}>Recommended Guides</h1>
+        <div style={{position: 'relative', marginLeft: '23.5vw'} }>  
             <ul className='guide-list'>
                 {recommendedGuides.slice(0, 5).map((blog) => (
                     <div className='guide-item' key={blog.id} onClick={() => handleBlogClick(blog.id)}>

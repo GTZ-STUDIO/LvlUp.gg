@@ -40,65 +40,71 @@ const SignUp = () => {
   return (
     <div className="signup">
       <div className="signup-form">
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="signin-input"
-        />
+        <h1>SIGN UP</h1>
+        <div className="signup-content">
+          <div className="input-container">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="signin-input"
+            />
+          </div>
+          <div className="input-container">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="signin-input"
+            />
+          </div>
+          <div className="input-container">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="signin-input"
+            />
+          </div>
+          <div className="input-container">
+            <label htmlFor="firstname">FirstName:</label>
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              value={firstname}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="signin-input"
+            />
+          </div>
+          <div className="input-container">
+            <label htmlFor="lastname">LastName:</label>
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              value={lastname}
+              onChange={(e) => setLastName(e.target.value)}
+              className="signin-input"
+            />
+          </div>
+          <button onClick={handleSignUp} className="signup-create-button">
+            Create Account
+          </button>
+        </div>
       </div>
-      <div className="signup-form">
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="signin-input"
-        />
-      </div>
-      <div className="signup-form">
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="signin-input"
-        />
-      </div>
-      <div className="signup-form">
-        <label htmlFor="firstname">First:</label>
-        <input
-          type="text"
-          id="firstname"
-          name="firstname"
-          value={firstname}
-          onChange={(e) => setFirstName(e.target.value)}
-          className="signin-input"
-        />
-      </div>
-      <div className="signup-form">
-        <label htmlFor="lastname">Last:</label>
-        <input
-          type="text"
-          id="lastname"
-          name="lastname"
-          value={lastname}
-          onChange={(e) => setLastName(e.target.value)}
-          className="signin-input"
-        />
-      </div>
-      <button onClick={handleSignUp} className="signup-button">
-        Create Account
-      </button>
     </div>
   );
+
 };
 
 export default SignUp;

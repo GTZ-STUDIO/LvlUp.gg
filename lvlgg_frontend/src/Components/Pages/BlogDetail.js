@@ -137,6 +137,14 @@ const BlogDetail = () => {
   
   return (
     <div className="page-container" style={{ backgroundImage: gameImageMap[blog?.game] }}>
+      <div className="overlay" style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+      }}></div>
       <div className="blog-detail-container">
         <h1 className="blog-title">{blog?.title}</h1>
         <p className="blog-content">{blog?.content}</p>

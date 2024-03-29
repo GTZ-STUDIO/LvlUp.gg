@@ -52,6 +52,11 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top:39px;
   }
+
+  .search-bar select {
+    padding: 6px;
+    font-size: 12px;
+  }
   
   .search-result {
     padding: 10px;
