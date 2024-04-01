@@ -142,6 +142,7 @@ function Navbar() {
                       }}
                     >
                       Settings
+                      
                     </button>
                   </Link>
                   <Link to="/myguides">

@@ -135,7 +135,7 @@
   left: 10vw;
   font-family: OCR A Std, monospace; 
   color: #fff;
-  text-shadow: 3px 2px 2px rgb(0, 0, 0); 
+  text-shadow: 3px 2px 2px rgb(12, 70, 67); 
 }
 
 .guide-list {
@@ -175,7 +175,7 @@
   cursor: pointer;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgb(95, 238, 243);
+  box-shadow: 0 6px 20px rgb(255, 255, 255);
   -webkit-filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
   filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
   transition: transform 0.3s;
@@ -183,6 +183,9 @@
 
 .guide-item:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgb(95, 238, 243);
+  -webkit-filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
+  filter: drop-shadow(0 6px 10px rgba(56, 125, 255, 0.017));
 }
 
 .guide-image {

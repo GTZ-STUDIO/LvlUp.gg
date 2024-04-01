@@ -99,19 +99,39 @@
 .dropdown {
   position: relative;
   display: inline-block;
-  z-index: 100;
 }
 
 .dropdown-content {
-  display: block;
+  display: none;
   position: absolute;
-  top: 100%;
-  right: -40px;
-  background-color: #020913;
-  border-radius: 3px;
-  min-width: 160px;
-  z-index: 50;
+  min-width: 70px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #041425;
+  z-index: 1;
+  top: 100%; 
+  left: 0; 
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 4px;
 }
+
+.dropdown-content button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  padding: 10px 15px;
+}
+
+.dropdown-content button:hover {
+  background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 
 .dropdown-content button {
   width: 100%;
