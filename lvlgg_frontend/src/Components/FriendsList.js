@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './FriendsList.css'; // Import CSS file for styling
+import './FriendsList.css'; 
 
 function FriendsList() {
     const backendUrl = process.env.REACT_APP_BACKEND_URL;

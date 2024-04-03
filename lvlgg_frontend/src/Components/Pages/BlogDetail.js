@@ -24,7 +24,7 @@ const BlogDetail = () => {
     "LeagueOfLegends": "url(/images/league.png)",
     "Dota2": "url(/images/dota.jpg)",
     "CSGO": "url(/images/csgo.jpg)",
-    "BaldursGate3": "url(/images/baldursGate.jpeg)",
+    "BaldursGate3": "url(/images/baldursGate.png)",
   };
 
   const getCookie = (name) => {
