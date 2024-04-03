@@ -6,6 +6,8 @@ import SignIn from '../../Components/Pages/SignIn';
 import axios from 'axios';
 import { AuthContext, AuthProvider } from '../../Contexts/AuthContext.js';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 jest.mock('axios');
 
 test('renders SignIn component', () => {
@@ -46,7 +48,7 @@ test('allows user to sign in', async () => {
   fireEvent.click(button);
 
   await waitFor(() => {
-    expect(axios.post).toHaveBeenCalledWith('http://localhost:8000/account/signin/', {
+    expect(axios.post).toHaveBeenCalledWith(`${backendUrl}/account/signin/`, {
       username: 'testuser',
       password: 'testpassword',
     });
