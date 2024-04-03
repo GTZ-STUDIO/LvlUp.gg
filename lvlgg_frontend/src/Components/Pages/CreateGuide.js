@@ -4,6 +4,8 @@ import { AuthContext } from '../../Contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 
 export default function CreateGuide() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const { userPk } = useContext(AuthContext);
@@ -25,7 +27,7 @@ export default function CreateGuide() {
 
     try {
       const csrfToken = getCookie('csrftoken');
-      const response = await axios.post('http://localhost:8000/blog/create_blog/', {
+      const response = await axios.post(`${backendUrl}/blog/create_blog/`, {
         title,
         content,
         author: userPk, // Use the current user's ID as the author

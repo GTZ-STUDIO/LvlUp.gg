@@ -4,6 +4,8 @@ import axios from "axios";
 import { AuthContext } from "../../Contexts/AuthContext";
 
 const SignIn = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const { setIsSignedIn } = useContext(AuthContext);
   const { setUserPk } = useContext(AuthContext);
   const [username, setUsername] = useState("");
@@ -14,7 +16,7 @@ const SignIn = () => {
     // Handle sign-in logic here
     console.log("Signing in...");
     axios
-      .post("http://localhost:8000/account/signin/", {
+      .post(`${backendUrl}/account/signin/`, {
         username,
         password,
       })

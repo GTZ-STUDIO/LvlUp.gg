@@ -6,6 +6,8 @@ import { AuthContext } from '../../Contexts/AuthContext'
 
 
 export default function Guides() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const {isSignedIn} = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   const location = useLocation();
@@ -22,9 +24,9 @@ export default function Guides() {
 
 
   useEffect(() => {
-    let url = 'http://localhost:8000/blog/get_blog/';
+    let url = `${backendUrl}/blog/get_blog/`;
     if (game) {
-      url = `http://localhost:8000/blog/get_blog/?game=${game}`;
+      url = `${backendUrl}/blog/get_blog/?game=${game}`;
     }
 
     axios.get(url)
@@ -34,7 +36,7 @@ export default function Guides() {
       .catch(error => {
         console.error('Error fetching blogs:', error);
       });
-  }, [game]); 
+  }, [game, backendUrl]); 
 
   const handleBlogClick = (blogId) => {
     history.push(`/blog/${blogId}`);

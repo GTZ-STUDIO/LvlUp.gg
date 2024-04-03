@@ -3,6 +3,8 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const SignUp = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +15,7 @@ const SignUp = () => {
   const handleSignUp = () => {
     console.log("Sending Data");
     axios
-      .post("http://localhost:8000/account/signup/", {
+      .post(`${backendUrl}/account/signup/`, {
         username,
         email,
         password,

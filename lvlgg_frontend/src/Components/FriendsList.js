@@ -3,6 +3,8 @@ import axios from 'axios';
 import './FriendsList.css'; // Import CSS file for styling
 
 function FriendsList() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
     const [friends, setFriends] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -19,14 +21,14 @@ function FriendsList() {
     useEffect(() => {
         const fetchFriends = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/account/friends/');
+                const response = await axios.get(`${backendUrl}/account/friends/`);
                 setFriends(response.data);
             } catch (error) {
                 console.error('Error:', error);
             }
         };
         fetchFriends();
-    }, []);
+    }, [backendUrl]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -35,7 +37,7 @@ function FriendsList() {
     const handleUnfriend = async (friendId) => {
         const csrfToken = getCookie('csrftoken');
         try {
-            await axios.post('http://localhost:8000/account/unfollow/', { username: friends.find(friend => friend.id === friendId).username }, 
+            await axios.post(`${backendUrl}/account/unfollow/`, { username: friends.find(friend => friend.id === friendId).username }, 
             {headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrfToken,

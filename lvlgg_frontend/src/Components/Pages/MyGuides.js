@@ -5,6 +5,8 @@ import { AuthContext } from '../../Contexts/AuthContext'
 import { useHistory } from 'react-router-dom';
 
 export default function MyGuides() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const { userPk } = useContext(AuthContext);
   const [blogs, setBlogs] = useState([]);
   const history = useHistory();
@@ -28,7 +30,7 @@ export default function MyGuides() {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/blog/get_blog/?author=${userPk}`, {
+    axios.get(`${backendUrl}/blog/get_blog/?author=${userPk}`, {
       withCredentials: true
     })
     .then(response => {
@@ -42,11 +44,11 @@ export default function MyGuides() {
     .catch(error => {
       console.error('Error getting blogs:', error);
     });
-  }, [userPk]);
+  }, [userPk, backendUrl]);
 
   const handleDelete = (blogId) => {
     const csrfToken = getCookie('csrftoken');
-    axios.delete(`http://localhost:8000/blog/delete_blog/${blogId}/`, {
+    axios.delete(`${backendUrl}/blog/delete_blog/${blogId}/`, {
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrfToken,
