@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import "./SearchBar.css";
 
 function SearchBar() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGame, setSelectedGame] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -32,8 +34,8 @@ function SearchBar() {
         Object.entries(params).filter(([_, value]) => value !== "")
       );
   
-      const response = await axios.get("/blog/get_blog/", {
-        baseURL: "http://localhost:8000", 
+      const response = await axios.get(`/blog/get_blog/`, {
+        baseURL: `${backendUrl}`, 
         params: filteredParams,
       });
       setSearchResults(response.data.blogs);

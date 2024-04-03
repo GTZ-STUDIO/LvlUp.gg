@@ -14,7 +14,7 @@
 
 .cards h2 {
   position: relative;
-  font-size: 14px;
+  font-size: 15px;
   margin-left: 23.5vw;
   color: white;
   font-family: OCR A Std, monospace;
@@ -28,7 +28,7 @@
 
 .cards__wrapper h1 {
   position: relative;
-  font-size: 14px;
+  font-size: 15px;
   margin-left: 1vw;
   color: white;
   font-family: OCR A Std, monospace;
@@ -50,13 +50,20 @@
   display: flex;
   flex-flow: column;
   width: 100%;
-  box-shadow: 0 6px 20px rgb(4, 224, 231);
-  -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+  box-shadow: 0 6px 20px rgb(255, 255, 255);
+  -webkit-filter: drop-shadow(0 6px 20px rgb(6, 240, 248));
   filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   border-radius: 10px;
   overflow: hidden;
   text-decoration: none;
 }
+
+.cards__item__link:hover{
+  box-shadow: 0 6px 20px rgb(41, 230, 236);
+  -webkit-filter: drop-shadow(0 6px 20px rgb(6, 240, 248));
+  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
+
 
 .cards__item__pic-wrap {
   position: relative;
@@ -100,6 +107,7 @@
 
 .cards__item__img:hover {
   transform: scale(1.1);
+  
 }
 
 .cards__item__info {

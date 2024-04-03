@@ -99,19 +99,39 @@
 .dropdown {
   position: relative;
   display: inline-block;
-  z-index: 100;
 }
 
 .dropdown-content {
-  display: block;
+  display: none;
   position: absolute;
-  top: 100%;
-  right: -40px;
-  background-color: #020913;
-  border-radius: 3px;
-  min-width: 160px;
-  z-index: 50;
+  min-width: 100px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #041425;
+  z-index: 1;
+  top: 100%; 
+  margin-left: -0.7vw; 
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 4px;
 }
+
+.dropdown-content button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  padding: 10px 15px;
+}
+
+.dropdown-content button:hover {
+  background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 
 .dropdown-content button {
   width: 100%;
@@ -136,7 +156,110 @@
   font-size: 16px;
   font-weight: bold;
 }
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.favorites-dropdown {
+  position: absolute;
+  margin-left: -14vw;
+  margin-top: 1vh;
+  z-index: 1000;
+  transition: margin-left 0.5s ease;
+}
+
+.favorites-dropdown.open {
+  margin-left: -12vw; 
+}
+
+.favorites-dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorites-dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 100px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #000000;
+  z-index: 1;
+  margin-top: -1vh;
+  height: 100vh;
+  margin-left: -3vw;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 4px;
+}
+
+.favorites-dropdown-content button {
+  display: block;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  width: 100%;
+  text-align: left;
+}
+
+.favorites-dropdown:hover .favorites-dropdown-content {
+  display: block;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border-radius: 50%;
+  margin-top:4vh;
+  margin-bottom: 10px;
+  margin-left: 27%;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 6px 20px rgb(255, 255, 255);
+  -webkit-filter: drop-shadow(0 6px 20px rgb(6, 240, 248));
+  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
+
+.circle:hover {
+  box-shadow: 0 6px 20px rgb(41, 230, 236);
+  -webkit-filter: drop-shadow(0 6px 20px rgb(6, 240, 248));
+  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
+
+.circle:hover .tooltip {
+  display: block;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  background-color: white;
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap; /* Ensures tooltip stays on one line */
+}
+
+@media (max-width: 960px) {
+  .favorites-dropdown {
+    display: none;
+  }
+}
 
 @media screen and (max-width: 960px) {
   .NavbarItems {
