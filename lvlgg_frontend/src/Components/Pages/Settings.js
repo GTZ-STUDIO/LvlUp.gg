@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Settings = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const { userPk } = useContext(AuthContext);
   const { setIsSignedIn } = useContext(AuthContext);
   const history = useHistory();
@@ -26,7 +28,7 @@ const Settings = () => {
   const handleDeleteAccount = () => {
     console.log("CSRF Token:", getCookie("csrftoken"));
     axios
-      .delete(`http://localhost:8000/account/delete/${userPk}/`, {
+      .delete(`${backendUrl}/account/delete/${userPk}/`, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": getCookie("csrftoken"), 
@@ -63,7 +65,7 @@ const Settings = () => {
     console.log("CSRF Token:", getCookie("csrftoken"));
     axios
       .put(
-        `http://localhost:8000/account/update/${userPk}/`,
+        `${backendUrl}/account/update/${userPk}/`,
         { username: newUsername },
         {
           headers: {
@@ -90,7 +92,7 @@ const Settings = () => {
     console.log("CSRF Token:", getCookie("csrftoken"));
     axios
       .put(
-        `http://localhost:8000/account/update/${userPk}/`,
+        `${backendUrl}/account/update/${userPk}/`,
         { password: newPassword },
         {
           headers: {
@@ -117,7 +119,7 @@ const Settings = () => {
     console.log("CSRF Token:", getCookie("csrftoken"));
     axios
       .put(
-        `http://localhost:8000/account/update/${userPk}/`,
+        `${backendUrl}/account/update/${userPk}/`,
         { email: newEmail },
         {
           headers: {

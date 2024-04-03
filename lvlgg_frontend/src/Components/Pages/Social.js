@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios'; // Import Axios
 import '../../App.css';
 import FriendsList from '../FriendsList';
 
 function Social() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
     const [username, setUsername] = useState('');
     const [friends, setFriends] = useState([]);
 
@@ -24,7 +26,7 @@ function Social() {
       const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/account/follow/', {
+            const response = await axios.post(`${backendUrl}/account/follow/`, {
                 username
             }, {
                 headers: {
@@ -42,18 +44,18 @@ function Social() {
         }
     };
 
-    const fetchFriends = async () => {
+    const fetchFriends = useCallback(async () => {
         try {
-            const response = await axios.get('http://localhost:8000/account/friends/');
+            const response = await axios.get(`${backendUrl}/account/friends/`);
             setFriends(response.data);
         } catch (error) {
             console.error('Error:', error);
         }
-    };
+    }, [backendUrl]);
 
     useEffect(() => {
         fetchFriends();
-    }, []);
+    }, [fetchFriends]);
 
     return (
         <div className='social'>

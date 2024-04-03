@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, {useState,useContext,useEffect, useCallback} from "react";
 import { Link, useHistory } from "react-router-dom";
 import "./Navbar.css";
 import { Button } from "./Button";
@@ -7,11 +7,15 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function Navbar() {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const [click, setClick] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const { userPk } = useContext(AuthContext);
   const [user, setUser] = useState("");
+  const [favorites, setFavorites] = useState([]);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -22,8 +26,14 @@ function Navbar() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const closeDropdown = () => {
+  const handleFavorites = () => {
+    setIsFavoritesOpen(!isFavoritesOpen);
     setIsDropdownOpen(false);
+  };
+
+  const closeDropdowns = () => {
+    setIsDropdownOpen(false);
+    setIsFavoritesOpen(false);
   };
 
   const getCookie = (name) => {
@@ -36,9 +46,33 @@ function Navbar() {
     return null;
   };
 
+  const fetchFavorites = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/favourite/list/`, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        withCredentials: true,
+      });
+      const userFavorites = response.data
+        .filter((favorite) => favorite.client === parseInt(userPk))
+        .map((favorite) => favorite.blog);
+      setFavorites(userFavorites);
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      fetchFavorites();
+    }
+  },);
+
   const handleUsername = useCallback(() => {
     axios
-      .get(`http://localhost:8000/account/${userPk}/`, {
+      .get(`${backendUrl}/account/${userPk}/`, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": getCookie("csrftoken"),
@@ -57,7 +91,7 @@ function Navbar() {
         console.error("Error updating username:", error);
         // Optionally, you can handle the error or show an error message
       });
-  }, [userPk]);
+  }, [userPk, backendUrl]);
 
   useEffect(() => {
     if (isSignedIn) {
@@ -66,15 +100,14 @@ function Navbar() {
   }, [isSignedIn, handleUsername]);
 
   const handleSignOut = () => {
-    axios
-      .get("http://localhost:8000/account/signout/", { withCredentials: true })
+    axios.get(`${backendUrl}/account/signout/`, { withCredentials: true })
       .then((response) => {
         if (response.status === 200) {
           console.log("Successful logout:", response.data);
           alert(JSON.stringify(response.data));
           setIsSignedIn(false);
           localStorage.removeItem("isSignedIn");
-          closeDropdown();
+          closeDropdowns();
           history.push("/");
         } else {
           // Handle error
@@ -86,6 +119,7 @@ function Navbar() {
         console.error(error);
       });
   };
+
   return (
     <>
       <nav className="navbar">
@@ -135,40 +169,34 @@ function Navbar() {
               </button>
               {isDropdownOpen && (
                 <div className="dropdown-content">
-                  <Link to="/settings">
-                    <button
-                      onClick={() => {
-                        handleDropDown();
-                      }}
-                    >
-                      Settings
-                    </button>
-                  </Link>
                   <Link to="/myguides">
-                    <button
-                      onClick={() => {
-                        handleDropDown();
-                      }}
-                    >
-                      My Guides
-                    </button>
+                    <button onClick={closeDropdowns}>My Guides</button>
+                  </Link>
+                  <Link to="/settings">
+                    <button onClick={closeDropdowns}>Settings</button>
                   </Link>
                   <Link to="/social">
-                    <button
-                      onClick={() => {
-                        handleDropDown();
-                      }}
-                    >
-                      Social
-                    </button>
+                    <button onClick={closeDropdowns}>Social</button>
                   </Link>
-                  <button
-                    onClick={() => {
-                      handleSignOut();
-                    }}
-                  >
-                    Sign Out
-                  </button>
+                  <button onClick={handleSignOut}>Sign Out</button>
+                </div>
+              )}
+            </div>
+          )}
+          {isSignedIn && (
+            <div className="favorites-dropdown">
+              <div className="profile-icon" onClick={handleFavorites}>
+                <img src="/images/star.png" alt="Favourites" />
+              </div>
+              {isFavoritesOpen && (
+                <div className="favorites-dropdown-content">
+                  {favorites.map((favorite) => (
+                    <Link key={favorite} to={`/blog/${favorite}`}>
+                      <div className="circle">
+                        <div className="tooltip">{favorite}</div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
@@ -176,6 +204,6 @@ function Navbar() {
         </div>
       </nav>
     </>
-  )};
-
+  );
+}
 export default Navbar;

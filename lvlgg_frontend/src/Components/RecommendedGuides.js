@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 const RecommendedGuides = () => {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
     const [recommendedGuides, setRecommendedGuides] = useState([]);
     const history = useHistory();
 
@@ -21,7 +23,7 @@ const RecommendedGuides = () => {
     useEffect(() => {
         const fetchRecommendedGuides = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/blog/recommended/');
+                const response = await axios.get(`${backendUrl}/blog/recommended/`);
                 setRecommendedGuides(response.data.blogs);
             } catch (error) {
                 console.error('Error fetching recommended guides:', error);
@@ -29,11 +31,10 @@ const RecommendedGuides = () => {
         };
 
         fetchRecommendedGuides();
-    }, []);
+    }, [backendUrl]);
 
     return (
-        <div style={{position: 'relative', marginLeft: '23.5vw'} }>
-            <h1 style={{ fontSize: '14px', position: 'absolute', top: '0', left: '0',  }}>Recommended Guides</h1>
+        <div style={{position: 'relative', marginLeft: '23.5vw'} }>  
             <ul className='guide-list'>
                 {recommendedGuides.slice(0, 5).map((blog) => (
                     <div className='guide-item' key={blog.id} onClick={() => handleBlogClick(blog.id)}>
