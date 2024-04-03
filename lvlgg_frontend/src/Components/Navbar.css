@@ -164,9 +164,14 @@
 
 .favorites-dropdown {
   position: absolute;
-  margin-left: -12vw;
+  margin-left: -14vw;
   margin-top: 1vh;
   z-index: 1000;
+  transition: margin-left 0.5s ease;
+}
+
+.favorites-dropdown.open {
+  margin-left: -12vw; 
 }
 
 .favorites-dropdown button {

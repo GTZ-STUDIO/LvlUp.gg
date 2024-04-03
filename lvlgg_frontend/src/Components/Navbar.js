@@ -89,7 +89,6 @@ function Navbar() {
       })
       .catch((error) => {
         console.error("Error updating username:", error);
-        // Optionally, you can handle the error or show an error message
       });
   }, [userPk, backendUrl]);
 
@@ -184,8 +183,8 @@ function Navbar() {
             </div>
           )}
           {isSignedIn && (
-            <div className="favorites-dropdown">
-              <div className="profile-icon" onClick={handleFavorites}>
+             <div className={`favorites-dropdown ${isFavoritesOpen ? 'open' : ''}`} onMouseEnter={handleFavorites} onMouseLeave={handleFavorites}>
+              <div className="profile-icon">
                 <img src="/images/star.png" alt="Favourites" />
               </div>
               {isFavoritesOpen && (

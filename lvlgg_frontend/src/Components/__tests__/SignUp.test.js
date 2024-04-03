@@ -4,6 +4,8 @@ import '@testing-library/jest-dom/extend-expect';
 import SignUp from '../../Components/Pages/SignUp.js';
 import axios from 'axios';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 jest.mock('axios');
 
 test('renders SignUp component', () => {
@@ -11,8 +13,8 @@ test('renders SignUp component', () => {
   const usernameInput = screen.getByLabelText('Username:');
   const emailInput = screen.getByLabelText('Email:');
   const passwordInput = screen.getByLabelText('Password:');
-  const firstNameInput = screen.getByLabelText('First:');
-  const lastNameInput = screen.getByLabelText('Last:');
+  const firstNameInput = screen.getByLabelText('FirstName:');
+  const lastNameInput = screen.getByLabelText('LastName:');
   const button = screen.getByText('Create Account');
 
   expect(usernameInput).toBeInTheDocument();
@@ -28,8 +30,8 @@ test('allows user to sign up', async () => {
   const usernameInput = screen.getByLabelText('Username:');
   const emailInput = screen.getByLabelText('Email:');
   const passwordInput = screen.getByLabelText('Password:');
-  const firstNameInput = screen.getByLabelText('First:');
-  const lastNameInput = screen.getByLabelText('Last:');
+  const firstNameInput = screen.getByLabelText('FirstName:');
+  const lastNameInput = screen.getByLabelText('LastName:');
   const button = screen.getByText('Create Account');
 
   fireEvent.change(usernameInput, { target: { value: 'testuser' } });
@@ -43,7 +45,7 @@ test('allows user to sign up', async () => {
   fireEvent.click(button);
 
   await waitFor(() => {
-    expect(axios.post).toHaveBeenCalledWith('http://localhost:8000/account/signup/', {
+    expect(axios.post).toHaveBeenCalledWith(`${backendUrl}/account/signup/`, {
       username: 'testuser',
       email: 'test@example.com',
       password: 'testpassword',
