@@ -19,7 +19,7 @@ export default function Guides() {
     "LeagueOfLegends": "images/league.png",
     "Dota2": "images/dota.jpg",
     "CSGO": "images/csgo.jpg",
-    "BaldursGate3": "images/baldursGate.jpeg",
+    "BaldursGate3": "images/baldursGate.png",
   };
 
 

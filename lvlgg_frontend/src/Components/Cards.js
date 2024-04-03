@@ -25,7 +25,7 @@ function Cards() {
               gameName='LeagueOfLegends'
             />
             <CardItem
-              src='images/baldursgate.jpeg'
+              src='images/baldursgate.png'
               text='Explore Baldurs gate 3 Guides'
               gameName='BaldursGate3'
             />
