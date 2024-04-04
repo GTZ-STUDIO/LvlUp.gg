@@ -22,7 +22,16 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = ["https://delightful-grass-08a6ea310.5.azurestaticapps.net"]
 CSRF_TRUSTED_ORIGINS = ["https://delightful-grass-08a6ea310.5.azurestaticapps.net"]
-
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
