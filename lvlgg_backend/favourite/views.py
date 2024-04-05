@@ -84,7 +84,7 @@ class FavouriteBlogsListView(generics.ListAPIView):
             200: Success
             403: Unauthorized
         """
-        favourite = Favourite.objects.all()
         client = self.request.user
-        client_favourite = favourite.filter(client=client)
-        return client_favourite
+        return Favourite.objects.filter(client=client)
+
+
