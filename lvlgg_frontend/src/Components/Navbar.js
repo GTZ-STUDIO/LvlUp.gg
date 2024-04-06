@@ -22,6 +22,14 @@ function Navbar() {
 
   const history = useHistory();
 
+  const gameImageMap = {
+    EldenRing: 'images/eldenRing.png',
+    Dota2: 'images/dota.jpg',
+    LeagueOfLegends: 'images/league.png',
+    BaldursGate3: 'images/baldursGate.png',
+    CSGO: 'images/csgo.jpg',
+};
+
   const handleDropDown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -56,9 +64,9 @@ function Navbar() {
         withCredentials: true,
       });
       const userFavorites = response.data
-        .filter((favorite) => favorite.client === parseInt(userPk))
-        .map((favorite) => favorite.blog);
+      console.log(userFavorites);
       setFavorites(userFavorites);
+      console.log(favorites[0].blog_id);
     } catch (error) {
       console.error("Error fetching favorites:", error);
     }
@@ -68,7 +76,8 @@ function Navbar() {
     if (isSignedIn) {
       fetchFavorites();
     }
-  },);
+  }, [isSignedIn]);
+  
 
   const handleUsername = useCallback(() => {
     axios
@@ -190,9 +199,10 @@ function Navbar() {
               {isFavoritesOpen && (
                 <div className="favorites-dropdown-content">
                   {favorites.map((favorite) => (
-                    <Link key={favorite} to={`/blog/${favorite}`}>
+                    <Link key={favorite} to={`/blog/${favorite.blog_id}`}>
                       <div className="circle">
-                        <div className="tooltip">{favorite}</div>
+                        <img className="game-image" src={gameImageMap[favorite.blog_game]} alt={favorite.blog_game} />
+                        <div className="tooltip">{favorite.blog_title}</div>
                       </div>
                     </Link>
                   ))}

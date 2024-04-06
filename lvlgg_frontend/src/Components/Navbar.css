@@ -216,7 +216,6 @@
 .circle {
   width: 50px;
   height: 50px;
-  background-color: #333;
   border-radius: 50%;
   margin-top:33%;
   margin-left: 33%;
@@ -225,6 +224,13 @@
   box-shadow: 0 6px 20px rgb(255, 255, 255);
   -webkit-filter: drop-shadow(0 6px 20px rgb(6, 240, 248));
   filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
+
+.game-image {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .circle:hover {

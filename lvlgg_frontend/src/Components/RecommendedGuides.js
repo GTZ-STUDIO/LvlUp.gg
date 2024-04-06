@@ -13,7 +13,7 @@ const RecommendedGuides = () => {
         EldenRing: 'images/eldenRing.png',
         Dota2: 'images/dota.jpg',
         LeagueOfLegends: 'images/league.png',
-        BaldursGate3: 'images/baldursgate.png',
+        BaldursGate3: 'images/baldursGate.png',
         CSGO: 'images/csgo.jpg',
     };
 
