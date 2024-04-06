@@ -1,5 +1,5 @@
 import React, {useState,useContext,useEffect, useCallback} from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { Button } from "./Button";
 import { AuthContext } from "../Contexts/AuthContext";
@@ -17,10 +17,16 @@ function Navbar() {
   const [user, setUser] = useState("");
   const [favorites, setFavorites] = useState([]);
 
-  const handleClick = () => setClick(!click);
+  const handleClick = () => {
+    setClick(!click);
+    if(isSignedIn){
+      fetchFavorites();
+    }
+  };
   const closeMobileMenu = () => setClick(false);
 
   const history = useHistory();
+  const location = useLocation();
 
   const gameImageMap = {
     EldenRing: 'images/eldenRing.png',
@@ -54,7 +60,7 @@ function Navbar() {
     return null;
   };
 
-  const fetchFavorites = async () => {
+  const fetchFavorites = useCallback(async () => {
     try {
       const response = await axios.get(`${backendUrl}/favourite/list/`, {
         headers: {
@@ -64,19 +70,19 @@ function Navbar() {
         withCredentials: true,
       });
       const userFavorites = response.data
-      console.log(userFavorites);
       setFavorites(userFavorites);
-      console.log(favorites[0].blog_id);
+    
     } catch (error) {
       console.error("Error fetching favorites:", error);
     }
-  };
+  }, [backendUrl]);
 
   useEffect(() => {
     if (isSignedIn) {
       fetchFavorites();
     }
-  }, [isSignedIn]);
+ 
+  }, [isSignedIn, fetchFavorites]);
   
 
   const handleUsername = useCallback(() => {
@@ -90,7 +96,6 @@ function Navbar() {
       })
       .then((response) => {
         if (response.status === 200) {
-          console.log("got Username successfully");
           setUser(response.data.username);
         } else {
           console.log("Username change unsuccessful");
@@ -128,10 +133,14 @@ function Navbar() {
       });
   };
 
+  useEffect(() => {
+    setIsFavoritesOpen(false); 
+  }, [location.pathname]);
+
   return (
     <>
       <nav className="navbar">
-        <div data-testid="Navbar-1" className="navbar-container">
+        <div data-testid="Navbar-1" className="navbar-container" onClick={handleClick}>
           <Link to="/" className="navbar-logo">
             LVLUP <i className="fa-solid fa-arrow-up"></i>
           </Link>
@@ -191,7 +200,7 @@ function Navbar() {
               )}
             </div>
           )}
-          {isSignedIn && (
+          {isSignedIn && !location.pathname.includes('/blog/') && (
              <div className={`favorites-dropdown ${isFavoritesOpen ? 'open' : ''}`} onMouseEnter={handleFavorites} onMouseLeave={handleFavorites}>
               <div className="profile-icon">
                 <img src="/images/star.png" alt="Favourites" />
