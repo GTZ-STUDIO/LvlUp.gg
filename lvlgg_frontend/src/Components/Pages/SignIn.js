@@ -13,7 +13,6 @@ const SignIn = () => {
   const history = useHistory();
 
   const handleSignIn = () => {
-    // Handle sign-in logic here
     console.log("Signing in...");
     axios
       .post(`${backendUrl}/account/signin/`, {
