@@ -247,12 +247,16 @@ class FavouriteBlogsListTestCase(TestCase):
         # Test without sign in
         response = self.client.get(reverse("favourite_list"))
         self.assertEqual(response.status_code, 403)
-
-        # User1 sign in check favourite list
+        
+        #Sign In
         sign_in_payload = {"username": "user1", "password": "12345"}
-        self.client.post(
-            reverse("sign_in"), sign_in_payload, content_type="application/json"
-        )
+
+        url = "/account/signin/"
+
+        response = self.client.post(url, sign_in_payload, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        #Check Favourites
         response = self.client.get(reverse("favourite_list"))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)

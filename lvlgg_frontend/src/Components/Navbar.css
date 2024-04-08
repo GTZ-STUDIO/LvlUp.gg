@@ -1,30 +1,31 @@
 .navbar {
   background: linear-gradient(90deg, #060f1b 0%, #080808 100%);
-  height: 50px;
+  height: 5.5%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
   position: fixed;
-  top: 0;
+  top: 0%;
   width: 100%;
   z-index: 40;
 }
 
 .navbar-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 80px;
-  max-width: 1500px;
+  margin-right: 10%;
+  width:100%;
 }
 
 .navbar-logo {
   color: #3bf5f5;
   justify-self: start;
-  margin-left: 0px;
   cursor: pointer;
   text-decoration: none;
+  margin-left: 14%;
   font-size: 1.8rem;
   display: flex;
   align-items: center;
@@ -44,7 +45,7 @@
   text-align: center;
   width: 60vw;
   justify-content: end;
-  margin-right: 1.5rem;
+  margin-right: 5%;
 }
 
 .nav-item {
@@ -150,28 +151,23 @@
 
 .username {
   position: relative;
-  top: 2px; 
-  right: -150px; 
+  margin-top: 0.2%;
+  right: -10%; 
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;
 }
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .favorites-dropdown {
   position: absolute;
-  margin-left: -14vw;
-  margin-top: 1vh;
+  margin-left: 1%;
+  margin-top: 0.5%;
   z-index: 1000;
   transition: margin-left 0.5s ease;
 }
 
 .favorites-dropdown.open {
-  margin-left: -12vw; 
+  margin-left: 2%; 
 }
 
 .favorites-dropdown button {
@@ -220,16 +216,21 @@
 .circle {
   width: 50px;
   height: 50px;
-  background-color: #333;
   border-radius: 50%;
-  margin-top:4vh;
-  margin-bottom: 10px;
-  margin-left: 27%;
+  margin-top:33%;
+  margin-left: 33%;
   cursor: pointer;
   position: relative;
   box-shadow: 0 6px 20px rgb(255, 255, 255);
   -webkit-filter: drop-shadow(0 6px 20px rgb(6, 240, 248));
   filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
+
+.game-image {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .circle:hover {

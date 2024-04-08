@@ -1,5 +1,5 @@
 import React, {useState,useContext,useEffect, useCallback} from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { Button } from "./Button";
 import { AuthContext } from "../Contexts/AuthContext";
@@ -17,10 +17,24 @@ function Navbar() {
   const [user, setUser] = useState("");
   const [favorites, setFavorites] = useState([]);
 
-  const handleClick = () => setClick(!click);
+  const handleClick = () => {
+    setClick(!click);
+    if(isSignedIn){
+      fetchFavorites();
+    }
+  };
   const closeMobileMenu = () => setClick(false);
 
   const history = useHistory();
+  const location = useLocation();
+
+  const gameImageMap = {
+    EldenRing: 'images/eldenRing.png',
+    Dota2: 'images/dota.jpg',
+    LeagueOfLegends: 'images/league.png',
+    BaldursGate3: 'images/baldursGate.png',
+    CSGO: 'images/csgo.jpg',
+};
 
   const handleDropDown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -46,7 +60,7 @@ function Navbar() {
     return null;
   };
 
-  const fetchFavorites = async () => {
+  const fetchFavorites = useCallback(async () => {
     try {
       const response = await axios.get(`${backendUrl}/favourite/list/`, {
         headers: {
@@ -56,19 +70,20 @@ function Navbar() {
         withCredentials: true,
       });
       const userFavorites = response.data
-        .filter((favorite) => favorite.client === parseInt(userPk))
-        .map((favorite) => favorite.blog);
       setFavorites(userFavorites);
+    
     } catch (error) {
       console.error("Error fetching favorites:", error);
     }
-  };
+  }, [backendUrl]);
 
   useEffect(() => {
     if (isSignedIn) {
       fetchFavorites();
     }
-  },);
+ 
+  }, [isSignedIn, fetchFavorites]);
+  
 
   const handleUsername = useCallback(() => {
     axios
@@ -81,7 +96,6 @@ function Navbar() {
       })
       .then((response) => {
         if (response.status === 200) {
-          console.log("got Username successfully");
           setUser(response.data.username);
         } else {
           console.log("Username change unsuccessful");
@@ -119,10 +133,14 @@ function Navbar() {
       });
   };
 
+  useEffect(() => {
+    setIsFavoritesOpen(false); 
+  }, [location.pathname]);
+
   return (
     <>
       <nav className="navbar">
-        <div data-testid="Navbar-1" className="navbar-container">
+        <div data-testid="Navbar-1" className="navbar-container" onClick={handleClick}>
           <Link to="/" className="navbar-logo">
             LVLUP <i className="fa-solid fa-arrow-up"></i>
           </Link>
@@ -182,7 +200,7 @@ function Navbar() {
               )}
             </div>
           )}
-          {isSignedIn && (
+          {isSignedIn && !location.pathname.includes('/blog/') && (
              <div className={`favorites-dropdown ${isFavoritesOpen ? 'open' : ''}`} onMouseEnter={handleFavorites} onMouseLeave={handleFavorites}>
               <div className="profile-icon">
                 <img src="/images/star.png" alt="Favourites" />
@@ -190,9 +208,10 @@ function Navbar() {
               {isFavoritesOpen && (
                 <div className="favorites-dropdown-content">
                   {favorites.map((favorite) => (
-                    <Link key={favorite} to={`/blog/${favorite}`}>
+                    <Link key={favorite} to={`/blog/${favorite.blog_id}`}>
                       <div className="circle">
-                        <div className="tooltip">{favorite}</div>
+                        <img className="game-image" src={gameImageMap[favorite.blog_game]} alt={favorite.blog_game} />
+                        <div className="tooltip">{favorite.blog_title}</div>
                       </div>
                     </Link>
                   ))}

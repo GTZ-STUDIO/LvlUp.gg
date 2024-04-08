@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContext'
+import FavoriteButton from '../FavoriteButton';
 import axios from 'axios';
 import '../../App.css';
 
@@ -18,13 +19,12 @@ const BlogDetail = () => {
   const [isDisliked, setIsDisliked] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
 
-
   const gameImageMap = {
     "EldenRing": "url(/images/eldenRing.png)",
     "LeagueOfLegends": "url(/images/league.png)",
     "Dota2": "url(/images/dota.jpg)",
     "CSGO": "url(/images/csgo.jpg)",
-    "BaldursGate3": "url(/images/baldursGate.jpeg)",
+    "BaldursGate3": "url(/images/baldursGate.png)",
   };
 
   const getCookie = (name) => {
@@ -87,29 +87,6 @@ const BlogDetail = () => {
       });
   };
 
-  const handleFavorite = () => {
-    const csrfToken = getCookie('csrftoken');
-    const action = isFavorited ? 'unsubscribe' : 'subscribe';
-    const method = isFavorited ? 'DELETE' : 'POST';  
-    axios.request({
-      url: `${backendUrl}/favourite/${action}/${id}/`,
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      withCredentials: true,
-    })
-    .then(response => {
-      setIsFavorited(!isFavorited);
-      localStorage.setItem(`favorited-${id}`, !isFavorited);
-      alert(`Guide ${isFavorited ? 'Unfavorited' : 'Favorited'}`);
-    })
-    .catch(error => {
-      console.error(`Error ${isFavorited ? 'unfavoriting' : 'favoriting'} blog:`, error);
-    });
-  };
-
   const fetchComments = useCallback(() => {
     axios.get(`${backendUrl}/comment/get_comments/${id}/`)
       .then(response => {
@@ -158,15 +135,12 @@ const BlogDetail = () => {
     axios.get(`${backendUrl}/blog/get_blog/?id=${id}`)
       .then(response => {
         setBlog(response.data.blogs[0]);
-        
-        const isFavoritedLocal = localStorage.getItem(`favorited-${id}`);
-        setIsFavorited(isFavoritedLocal === 'true');
-      
         fetchComments();
       })
       .catch(error => {
         console.error('Error fetching blog:', error);
       });
+
   }, [id, history, backendUrl, fetchComments]);
   
   return (
@@ -185,9 +159,11 @@ const BlogDetail = () => {
             <div className="like-dislike-buttons">
               <button onClick={handleLike}>Like</button>
               <button onClick={handleDislike}>Dislike</button>
-              <button onClick={handleFavorite} className="favorite-button">
-                {isFavorited ? 'Unfavorite' : 'Favorite'}
-              </button>
+              <FavoriteButton
+                blogId={blog?.id}
+                initialIsFavorited={isFavorited}
+                onToggle={() => setIsFavorited(!isFavorited)}
+              />
             </div>
           </div>
         )}
